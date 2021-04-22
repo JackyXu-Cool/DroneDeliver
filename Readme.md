@@ -22,8 +22,36 @@ sample input format:
     "cvv": "863",
     "exp_date": "2023-06-01"
 }
+
+successful output format
+{
+    "success": true
+}
+
+```
+2. /user/login
+```json
+sample input format
+{
+    "username": "testcustomers", 
+    "password": "password4"
+}
+
+successful output format
+{
+    "success": true
+}
+
 ```
 
+Note:
+对于任意以上的API，如果遇到request failure了，返回的response是这样子的
+```json
+{
+    "message": "xxxxxxxxx"
+}
+具体message的信息却决于真正失败的原因 (Wrong credentials, wrong input foramt, etc..)
+```
 
 ### Backend setup instructions
 1. Change environment variables in **‘nodemon.json’**.
@@ -35,7 +63,7 @@ sample input format:
 // 这个SQL file是Phase3 TA提供给我们用来create database的
 
 打开./SQL_database底下cs4400_phase3_shell，并运行。
-// 现在这个file和我们phase3写的procedure是一模一样的，但是之后如果要加新的procedure，就在这里面加
+// 这个file是我们所有的procedure
 ```
 3. run backend
 ```
@@ -47,6 +75,7 @@ npm install
 // Start the server
 npm start
 ```
+Note:
 
 如果遇到bug的话，可以参考这个文章：
 https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-does-not-support-authentication-protocol-requ
@@ -54,6 +83,8 @@ https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-d
 
 如果需要初始化database，直接在workbench里，再把grocery_drone_delivery.mysql 跑一遍就好了。
 <br />
+
+如果需要加新的procedure, 在./SQL_database/cs4400_phase3_shell.sql 里面改
 
 ### Developers
 Yulai Cui <br/>

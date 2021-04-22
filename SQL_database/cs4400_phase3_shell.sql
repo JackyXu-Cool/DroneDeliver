@@ -668,3 +668,17 @@ end if;
 END //
 DELIMITER ;
 
+
+-- Login Procedure
+DROP PROCEDURE IF EXISTS user_login;
+DELIMITER //
+CREATE PROCEDURE user_login(
+        IN i_username VARCHAR(40),
+    	IN i_password VARCHAR(40)
+)
+BEGIN
+	set @hashedpassword = MD5(i_password);
+	select count(*) as count from users where username = i_username and pass = @hashedpassword;
+END //
+DELIMITER ;
+
