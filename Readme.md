@@ -3,8 +3,27 @@ The repository for Phase 4
 <br/>
 
 ### Backend API
-<br/>
-<br/>
+
+需要前端send request时，将data放在request body里面
+
+1. /user/register
+```json
+sample input format:
+{
+    "username": "testcustomers", 
+    "password": "password42", 
+    "fname": "Jacky",
+    "lname": "Xu",
+    "street": "930 Spring street",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipcode": "30309",
+    "ccnumber": "2254 7787 8856 4990",
+    "cvv": "863",
+    "exp_date": "2023-06-01"
+}
+```
+
 
 ### Backend setup instructions
 1. Change environment variables in **‘nodemon.json’**.
