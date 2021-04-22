@@ -12,11 +12,11 @@ The repository for Phase 4
 ```
 打开 MySQL workbench
 
-// 这个SQL file是Phase3 TA提供给我们的
-运行 grocery_drone_delivery.sql
+打开./SQL_database底下grocery_drone_delivery，并运行。
+// 这个SQL file是Phase3 TA提供给我们用来create database的
 
-// 这个SQL file是我们写的procedure
-运行 cs4400_phase3_shell.sql
+打开./SQL_database底下cs4400_phase3_shell，并运行。
+// 现在这个file和我们phase3写的procedure是一模一样的，但是之后如果要加新的procedure，就在这里面加
 ```
 3. run backend
 ```
@@ -25,6 +25,7 @@ cd node_backend
 // Install all the dependencies
 npm install
 
+// Start the server
 npm start
 ```
 
