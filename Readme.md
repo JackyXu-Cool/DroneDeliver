@@ -129,10 +129,10 @@ https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-d
 ### SQL Procudure Edition
 如果需要加新的procedure, 在./SQL_database/cs4400_phase3_shell.sql 里面改
 
-目前的新增的procedure：
-Line 672 user_login （会检查 Wrong credentials）
-Line 685 register_drone_technician （会检查 Input chainName or storeName exist or not）
-Line 713 register_manager （会检查 input chainName has been assigned a manager or not)
+目前的新增的procedure： 
+- Line 672 user_login （会检查 Wrong credentials）
+- Line 685 register_drone_technician （会检查 Input chainName or storeName exist or not）
+- Line 713 register_manager （会检查 input chainName has been assigned a manager or not)
 
 ### Developers
 Yulai Cui <br/>
