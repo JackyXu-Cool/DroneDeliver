@@ -5,6 +5,10 @@ const router = express.Router();
 
 router.post("/login", userController.login);
 
-router.post("/register", userController.signup);
+router.post("/register/customer", userController.signupCustomer);
+
+router.post("/register/manager", userController.signUpManager);
+
+router.post("/register/dronetech", userController.signupDroneTech);
 
 module.exports = router;

@@ -6,7 +6,7 @@ The repository for Phase 4
 
 需要前端send request时，将data放在request body里面
 
-1. /user/register
+1. /user/register/customer   POST
 ```json
 sample input format:
 {
@@ -29,7 +29,49 @@ successful output format
 }
 
 ```
-2. /user/login
+2. /user/register/dronetech  POST
+```json
+sample input format
+{
+    "username": "testdronetech", 
+    "password": "password42", 
+    "fname": "test",
+    "lname": "dronetech",
+    "street": "930 Spring street",
+    "city": "Boston",
+    "state": "MA",
+    "zipcode": "20119",
+    "storeName": "College Park",
+    "chainName": "Moss Market"
+}
+
+successful output
+{
+    "success": true
+}
+
+```
+3. /user/register/manager  POST
+```json
+{
+    "username": "testmanager", 
+    "password": "password42", 
+    "fname": "test",
+    "lname": "manager",
+    "street": "930 Spring street",
+    "city": "Boston",
+    "state": "MA",
+    "zipcode": "20119",
+    "chainName": "Moss Market"
+}
+
+{
+    "success": true
+}
+
+```
+
+4. /user/login  POST
 ```json
 sample input format
 {
@@ -84,7 +126,13 @@ https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-d
 如果需要初始化database，直接在workbench里，再把grocery_drone_delivery.mysql 跑一遍就好了。
 <br />
 
+### SQL Procudure Edition
 如果需要加新的procedure, 在./SQL_database/cs4400_phase3_shell.sql 里面改
+
+目前的新增的procedure：
+Line 672 user_login （会检查 Wrong credentials）
+Line 685 register_drone_technician （会检查 Input chainName or storeName exist or not）
+Line 713 register_manager （会检查 input chainName has been assigned a manager or not)
 
 ### Developers
 Yulai Cui <br/>
