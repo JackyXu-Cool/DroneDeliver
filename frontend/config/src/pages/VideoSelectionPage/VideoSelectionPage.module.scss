@@ -1,0 +1,68 @@
+@import "../../assets/imutube-designs.scss";
+
+.videoSelection {
+  background-color: $imutube-black;
+  height: 100vh;
+  width: $imutube-screen-width;
+  font-family: $imutube-font-family;
+
+  display: grid;
+  grid-template-columns: 9% auto 19% 9%;
+  grid-template-rows: 15% 70% 15%;
+
+  .content {
+    position: relative;
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 1;
+  }
+
+  .routeButtons {
+    position: relative;
+    display: flex;
+    align-content: center;
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+    top: 10%;
+
+    .back {
+      position: relative;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      top: 2%;
+      margin-left: 10%;
+
+      .linkBack {
+        position: relative;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-gray-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-gray-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+}

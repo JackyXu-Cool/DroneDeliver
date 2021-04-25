@@ -1,0 +1,30 @@
+.suggestedActivities {
+  width: 100%; // Meaning % of the parent
+  min-width: 70%;
+  height: 110px;
+  margin: auto;
+  border-radius: 8px;
+  background-color: white;
+  .paragraph {
+    font-family: "Avenir", serif;
+    font-size: 18px;
+    color: #adb1b7;
+    position: relative;
+    top: 16px;
+    left: 22px;
+    height: 2px;
+    margin: 3%;
+    margin-left: 0;
+    margin-bottom: 2%;
+  }
+  .grid {
+    position: relative;
+    top: 16px;
+
+    display: grid;
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+    grid-auto-flow: column;
+  }
+}

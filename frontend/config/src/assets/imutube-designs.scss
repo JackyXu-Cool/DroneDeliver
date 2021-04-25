@@ -1,0 +1,67 @@
+/*    Colors    */
+$imutube-blue: #582eff;
+$imutube-blue-low: rgba(88, 46, 255, 0.35);
+$imutube-blue-hovered: #7958ff;
+$imutube-blue-clicked: #4b2bc9;
+
+$imutube-black: #222328;
+$imutube-gray: #575b61;
+$imutube-gray-black: #2f3036;
+$imutube-gray-dark: #adb1b7;
+$imutube-gray-hovered: #797c81;
+$imutube-gray-clicked: #4a4d53;
+$imutube-shadow: 0px 2px 6px 3px rgba(0, 0, 0, 0.06);
+
+/* Opacity */
+$imutube_disabled_button: 30%;
+
+/*    Fonts    */
+$imutube-font-family: "Avenir", serif;
+
+/*    Sizes    */
+$imutube-tag-height: 28px;
+$imutube-tag-font-size: 16px;
+$imutube-searchbar-font-size: 18px;
+$imutube-screen-height: 100%;
+$imutube-screen-width: 100%;
+$imutube-min-screen-height: 1024px;
+$imutube-min-screen-width: 1440px;
+
+input {
+  font-family: $imutube-font-family;
+  &:focus {
+    outline: none;
+  }
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  font-family: $imutube-font-family;
+  font-size: 16px;
+  color: white;
+  display: inline;
+  height: 22px;
+  margin: 0;
+}
+
+button {
+  outline: none;
+  border: none;
+}
+
+p {
+  margin: 0;
+}
+
+label {
+  color: white;
+  font-size: 16px;
+}
+
+Canvas {
+  background: $imutube-gray-black;
+  border-radius: 8px;
+}

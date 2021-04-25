@@ -1,0 +1,57 @@
+@import "../../assets/design.scss";
+
+.loginPage {
+  position: relative;
+  width: 100vh;
+  height: 100vh;
+  background-color: white;
+  margin: 0;
+
+  .content {
+    position: relative;
+    width: 600px;
+    height: 550px;
+    top: 10%;
+    left: 10%;
+    border: 4px solid $tech-metallic-gold;
+    border-radius: 8px;
+    align-content: center;
+
+    .title {
+      position: relative;
+      align-self: center;
+      left: 40%;
+      margin-bottom: 20%;
+    }
+
+    .entry {
+      margin-top: 5%;
+      position: relative;
+      left: 20%;
+      height: 50px;
+      width: 400px;
+    }
+
+    .buttons {
+      display: flex;
+      position: relative;
+      width: 500px;
+      height: 60px;
+      top: 10%;
+      left: 20%;
+
+      .button_login {
+        position: relative;
+        width: 150px;
+        height: 100%;
+      }
+
+      .button_register {
+        position: relative;
+        width: 150px;
+        height: 100%;
+        margin-left: 10%;
+      }
+    }
+  }
+}
