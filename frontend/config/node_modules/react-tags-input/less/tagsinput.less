@@ -1,0 +1,126 @@
+/**
+ * React TagsInput
+ * ===============
+ */
+
+// Variables
+// ---------------------
+
+// base
+@TagsInput-bg:                       #FFFFFF;
+@TagsInput-border-color:             #CCCCCC;
+@TagsInput-border-width:             1px;
+@TagsInput-box-sizing:               border-box;
+@TagsInput-min-height:               36px;
+@TagsInput-padding:                  3px 0 0 5px;
+
+// tag options
+@TagsInput-tag-bg:                   #CDE69C;
+@TagsInput-tag-border-color:         #A5D24A;
+@TagsInput-tag-border-radius:        2px;
+@TagsInput-tag-border-width:         1px;
+@TagsInput-tag-color:                #638421;
+@TagsInput-tag-font-family:          sans-serif;
+@TagsInput-tag-font-size:            13px;
+@TagsInput-tag-font-weight:          400;
+@TagsInput-tag-margin:               0 5px 3px 0;
+@TagsInput-tag-padding:              5px;
+@TagsInput-tag-vertical-align:       middle;
+
+// tag remove btn options
+@TagsInput-remove-cursor:            pointer;
+@TagsInput-remove-font-weight:       bold;
+
+// input options
+@TagsInput-input-bg-color:           transparent;
+@TagsInput-input-border:             0;
+@TagsInput-input-color:              #777777;
+@TagsInput-input-font-family:        sans-serif;
+@TagsInput-input-font-size:          13px;
+@TagsInput-input-font-weight:        400;
+@TagsInput-input-margin:             1px 0 3px 0;
+@TagsInput-input-padding:            5px;
+@TagsInput-input-placeholder:        lighten(#000000, 60%); // #999
+@TagsInput-input-width:              100px;
+
+// base
+
+.TagsInput {
+  background-color: @TagsInput-bg;
+  border: @TagsInput-border-width solid @TagsInput-border-color;
+  min-height: @TagsInput-min-height;
+  overflow: hidden;
+  padding: @TagsInput-padding;
+  -webkit-box-sizing: @TagsInput-box-sizing;
+     -moz-box-sizing: @TagsInput-box-sizing;
+          box-sizing: @TagsInput-box-sizing;
+}
+
+// tag
+
+.TagsInput-tag {
+  background: @TagsInput-tag-bg;
+  border-radius: @TagsInput-tag-border-radius;
+  border: @TagsInput-tag-border-width solid @TagsInput-tag-border-color;
+  color: @TagsInput-tag-color;
+  display: inline-block;
+  font-family: @TagsInput-tag-font-family;
+  font-size: @TagsInput-tag-font-size;
+  font-weight: @TagsInput-tag-font-weight;
+  margin: @TagsInput-tag-margin;
+  padding: @TagsInput-tag-padding;
+  vertical-align: @TagsInput-tag-vertical-align;
+  -webkit-box-sizing: @TagsInput-box-sizing;
+     -moz-box-sizing: @TagsInput-box-sizing;
+          box-sizing: @TagsInput-box-sizing;
+}
+
+// tag remove btn
+
+.TagsInput-remove {
+  cursor: @TagsInput-remove-cursor;
+  font-weight: @TagsInput-remove-font-weight;
+  -webkit-box-sizing: @TagsInput-box-sizing;
+     -moz-box-sizing: @TagsInput-box-sizing;
+          box-sizing: @TagsInput-box-sizing;
+
+  &:before {
+    content: " ×";
+  }
+}
+
+// input
+
+.TagsInput-input {
+  background-color: @TagsInput-input-bg-color;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: @TagsInput-input-border;
+  color: @TagsInput-input-color;
+  font-family: @TagsInput-input-font-family;
+  font-size: @TagsInput-input-font-size;
+  font-weight: @TagsInput-input-font-weight;
+  margin: @TagsInput-input-margin;
+  outline: none;
+  padding: @TagsInput-input-padding;
+  width: @TagsInput-input-width;
+  -webkit-box-sizing: @TagsInput-box-sizing;
+     -moz-box-sizing: @TagsInput-box-sizing;
+          box-sizing: @TagsInput-box-sizing;
+
+  // placeholder text
+  // ----------------
+
+  // Firefox
+  &::-moz-placeholder {
+    color: @TagsInput-input-placeholder;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    color: @TagsInput-input-placeholder;
+  }
+  // Safari and Chrome
+  &::-webkit-input-placeholder  {
+    color: @TagsInput-input-placeholder;
+  }
+}

@@ -1,0 +1,31 @@
+@import "../../assets/imutube-designs.scss";
+
+.home {
+  background-color: $imutube-black;
+  height: 100vh; // 100% of the viewing window height
+  // height: $imutube-screen-height;
+  width: $imutube-screen-width;
+  min-height: 450px;
+  min-width: 700px;
+  background-image: url("../../assets/mask.png");
+  background-repeat: repeat-x;
+  background-position-y: bottom;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center; // align vertically
+  justify-content: center; // align horizontally
+
+  .content {
+    width: 60%;
+    //left: 20%;
+    min-width: 570px;
+  }
+
+  .title {
+    text-align: center; // centers it
+    color: white;
+    font-family: "Avenir", serif;
+    font-size: 72px;
+  }
+}

@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css?family=Avenir");
+@import "../../assets/imutube-designs.scss";
+
+.searchBox {
+  width: 100%;
+  margin: auto;
+  border-radius: 8px;
+
+  background-image: url("../../assets/len.svg");
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-position-x: 18px;
+  background-position-y: 14px;
+  background-color: white;
+
+  .ReactTags__tags {
+    position: relative;
+    max-height: 57px;
+  }
+
+  .ReactTags__tagInput {
+    display: inline-block;
+    position: relative;
+    height: 57px;
+  }
+
+  .ReactTags__tagInputField {
+    position: relative;
+    height: 55px;
+    border: 0px;
+    border-radius: 8px;
+    font-size: $imutube-searchbar-font-size;
+    font-family: $imutube-font-family;
+
+    &:focus {
+      outline-width: 0px;
+    }
+  }
+
+  .ReactTags__selected {
+    position: relative;
+    left: 55px;
+  }
+
+  .ReactTags__tag {
+    position: relative;
+    font-size: $imutube-tag-font-size;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-family: $imutube-font-family;
+    font-size: $imutube-tag-font-size;
+    background: $imutube-blue-low;
+    border: thin;
+    color: $imutube-blue;
+    align-self: center;
+    top: -1px;
+    height: 20px;
+    cursor: none;
+  }
+
+  .ReactTags__remove {
+    color: $imutube-blue;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

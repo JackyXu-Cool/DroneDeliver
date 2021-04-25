@@ -1,0 +1,19 @@
+@import "../../assets/imutube-designs.scss";
+
+.topBar {
+  width: $imutube-screen-width;
+  min-height: 61px;
+  position: fixed;
+  top: 0px;
+  background-color: $imutube-gray-black;
+  box-shadow: $imutube-shadow;
+  display: flex;
+  align-items: center; // vertically align child elements
+
+  .h1 {
+    margin-left: 2%;
+    font-family: $imutube-font-family;
+    color: white;
+    font-size: 18px;
+  }
+}

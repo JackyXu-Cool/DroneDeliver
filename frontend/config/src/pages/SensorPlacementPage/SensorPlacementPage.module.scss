@@ -1,0 +1,270 @@
+@import "../../assets/imutube-designs.scss";
+
+.sensorPlacement {
+  z-index: 1;
+  background-color: $imutube-black;
+  height: 100vh;
+  width: $imutube-screen-width;
+  font-family: $imutube-font-family;
+  display: grid;
+  grid-template-columns: 9% auto 19% 9%;
+  grid-template-rows: 15% 70% 15%;
+
+  .content {
+    position: relative;
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 3;
+  }
+
+  .routeBottons {
+    position: relative;
+    display: flex;
+    align-content: center;
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+    top: 10%;
+
+    .back {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      top: 2%;
+      margin-left: 10%;
+
+      .link_back {
+        position: relative;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-gray-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-gray-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .next {
+      position: relative;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      margin-left: 5%;
+      top: 2%;
+
+      .link_next {
+        position: relative;
+        text-align: center;
+        left: 0;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .userActionButtons {
+    position: relative;
+    display: flex;
+    align-content: center;
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 2;
+    top: 33%;
+    height: 50px;
+    z-index: 3;
+
+    .rotateBody {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .rotateBody_Blue {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .addSensor {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+    .addSensor_Blue {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .removeSensor {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+    .removeSensor_Blue {
+      position: relative;
+      color: white;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      text-align: center;
+      margin-left: 1%;
+      width: 100px;
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+}

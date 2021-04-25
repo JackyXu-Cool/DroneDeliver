@@ -1,0 +1,41 @@
+@import "../../assets/imutube-designs.scss";
+
+.activityConfirmation {
+  width: 10vw; //10% of ViewWidth - about 140px
+  height: 57px;
+
+  text-align: center;
+  font-family: $imutube-font-family;
+  font-size: 18px;
+
+  border-radius: 8px;
+  background: $imutube-blue;
+  color: white;
+
+  // margin-left: 10%;
+  vertical-align: middle;
+  position: relative;
+  left: 2%;
+  top: -20px;
+
+  .link {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 25%;
+    padding-right: 30%;
+  }
+
+  &:hover {
+    background-color: $imutube-blue-hovered;
+    cursor: pointer;
+  }
+
+  &:focus {
+    background-color: $imutube-blue-clicked;
+    outline-width: 0px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,792 @@
+@import "../../assets/imutube-designs.scss";
+
+.searchParameterInfo {
+  font-family: $imutube-font-family;
+  position: relative;
+  width: 100%;
+  height: 94%;
+  min-height: 480px;
+
+  display: grid;
+  grid-template-rows: 29.6% auto;
+  row-gap: 6.17%;
+
+  .message {
+    position: relative;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    top: 34%;
+    height: 66%;
+    min-width: 375px;
+    min-height: 100px;
+
+    .title {
+      font-size: 32px;
+      height: 17%;
+      color: white;
+    }
+
+    .searchParameterMessage {
+      position: absolute;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 10%;
+      bottom: 20%;
+
+      /* IMUTube_Grey dark */
+      color: $imutube-gray-dark;
+    }
+  }
+
+  .parametersMain {
+    position: relative;
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    height: 100%;
+    min-width: 1024px;
+    min-height: 100px;
+
+    display: grid;
+    grid-template-columns: 49% auto;
+    grid-template-rows: 46% 46% 46%;
+    column-gap: 1.3%;
+    row-gap: 5.2%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .heightRange {
+      /* Height Range Block */
+      position: relative;
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 380px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .heightRangeTitle {
+        /* Select height range */
+        position: relative;
+        width: 60%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        /* identical to box height */
+        color: white;
+      }
+
+      .heightRangeMessage {
+        position: relative;
+        width: 60%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+
+      .heightInput {
+        position: relative;
+        left: 5%;
+        top: 5%;
+        bottom: 20%;
+        width: 100%;
+        height: 30%;
+
+        .heightMessage {
+          bottom: 5%;
+          position: relative;
+          font-size: 13px;
+          height: 15px;
+          color: $imutube-gray;
+
+          display: flex;
+          align-content: flex-start;
+
+          .heightMessageFrom {
+            position: relative;
+            flex-direction: row;
+            width: 35%;
+            color: $imutube-gray;
+            display: inline-block;
+          }
+
+          .heightMessageTo {
+            position: relative;
+            flex-direction: row;
+            display: inline-block;
+          }
+        }
+        .heightQuery {
+          position: relative;
+          font-family: $imutube-font-family;
+          height: 65%;
+
+          display: flex;
+          align-content: flex-start;
+
+          .ft1 {
+            position: relative;
+            flex-direction: row;
+            flex-direction: row;
+            margin-left: 2%;
+            width: 2%;
+            top: 30%;
+          }
+
+          .ft2 {
+            position: relative;
+            flex-direction: row;
+            margin-left: 2%;
+            top: 30%;
+          }
+
+          .in1 {
+            position: relative;
+            flex-direction: row;
+            margin-left: 2%;
+            top: 28%;
+          }
+
+          .in2 {
+            position: relative;
+            flex-direction: row;
+            margin-left: 2%;
+            top: 28%;
+          }
+
+          .heightFromFt {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 8%;
+            text-indent: 4px;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+
+          .heightFromIn {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 8%;
+            text-indent: 4px;
+            margin-left: 2%;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+
+          .heightToFt {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 8%;
+            text-indent: 4px;
+            margin-left: 6%;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+
+          .heightToIn {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 8%;
+            text-indent: 4px;
+            margin-left: 2%;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+        }
+      }
+    }
+
+    .bmiRange {
+      /* BMI Range Block */
+      position: relative;
+      grid-column: 2 / span 1;
+      grid-row: 1 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 380px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .bmiRangeTitle {
+        /* Select height range */
+        position: relative;
+        width: 60%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        /* identical to box height */
+        color: white;
+      }
+
+      .bmiRangeMessage {
+        position: relative;
+        width: 60%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+
+      .bmiInput {
+        position: relative;
+        left: 5%;
+        top: 5%;
+        bottom: 20%;
+        width: 100%;
+        height: 30%;
+
+        .bmiMessage {
+          bottom: 5%;
+          position: relative;
+          font-size: 13px;
+          height: 15px;
+          color: $imutube-gray;
+
+          display: flex;
+          align-content: flex-start;
+
+          .bmiMessageFrom {
+            position: relative;
+            flex-direction: row;
+            width: 20%;
+            color: $imutube-gray;
+            display: inline-block;
+          }
+          .bmiMessageTo {
+            position: relative;
+            flex-direction: row;
+            width: 45%;
+            color: $imutube-gray;
+            display: inline-block;
+          }
+        }
+        .bmiQuery {
+          position: relative;
+          font-family: $imutube-font-family;
+          height: 65%;
+
+          display: flex;
+          align-content: flex-start;
+
+          .bmiFrom {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 13%;
+            text-indent: 4px;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+
+          .bmiTo {
+            position: relative;
+            flex-direction: row;
+            border-radius: 6px;
+            background-color: $imutube-gray;
+            border: 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: white;
+            width: 13%;
+            text-indent: 4px;
+            margin-left: 6%;
+
+            &:focus {
+              background-color: $imutube-black;
+              border: 1px solid $imutube-blue;
+            }
+          }
+        }
+      }
+    }
+
+    .humanNum {
+      position: relative;
+      grid-column: 1 / span 1;
+      grid-row: 2 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 350px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .humanNumTitle {
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        color: white;
+      }
+
+      .humanNumMessage {
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+
+      .humanNumQuery {
+        position: relative;
+        font-family: $imutube-font-family;
+        height: 19%;
+        left: 5%;
+        top: 15%;
+        display: flex;
+        align-content: flex-start;
+
+        .people {
+          position: relative;
+          flex-direction: row;
+          flex-direction: row;
+          margin-left: 2%;
+          width: 2%;
+          top: 18%;
+        }
+
+        .humanNumInput {
+          position: relative;
+          flex-direction: row;
+          border-radius: 6px;
+          background-color: $imutube-gray;
+          border: 0px;
+          font-size: 16px;
+          line-height: 22px;
+          color: white;
+          width: 13%;
+          text-indent: 4px;
+
+          &:focus {
+            background-color: $imutube-black;
+            border: 1px solid $imutube-blue;
+          }
+        }
+      }
+    }
+
+    .videoDuration {
+      /* Video Duration Block */
+      position: relative;
+      grid-column: 1 / span 1;
+      grid-row: 3 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 350px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .videoDurationTitle {
+        /* Select video duration */
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        /* identical to box height */
+        color: white;
+      }
+
+      .videoDurationMessage {
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+      .durationLabel {
+        top: 6%;
+        position: relative;
+        left: 5%;
+        font-size: 13px;
+        height: 15px;
+        color: $imutube-gray;
+
+        display: flex;
+        align-content: flex-start;
+
+        .durationFrom {
+          position: relative;
+          flex-direction: row;
+          color: $imutube-gray;
+          display: inline-block;
+        }
+        .durationTo {
+          position: relative;
+          flex-direction: row;
+          display: inline-block;
+          margin-left: 26%;
+        }
+      }
+
+      .videoDurationQuery {
+        position: relative;
+        font-family: $imutube-font-family;
+        height: 19%;
+        left: 5%;
+        top: 8%;
+        display: flex;
+        align-content: flex-start;
+
+        .fromDuration {
+          position: relative;
+          flex-direction: row;
+          flex-direction: row;
+          margin-left: 2%;
+          width: 2%;
+          top: 20%;
+        }
+
+        .fromDurationInput {
+          position: relative;
+          flex-direction: row;
+          border-radius: 6px;
+          background-color: $imutube-gray;
+          border: 0px;
+          font-size: 16px;
+          line-height: 22px;
+          color: white;
+          width: 13%;
+          text-indent: 4px;
+
+          &:focus {
+            background-color: $imutube-black;
+            border: 1px solid $imutube-blue;
+          }
+        }
+
+        .toDuration {
+          position: relative;
+          flex-direction: row;
+          flex-direction: row;
+          margin-left: 2%;
+          width: 2%;
+          top: 20%;
+        }
+
+        .toDurationInput {
+          position: relative;
+          flex-direction: row;
+          border-radius: 6px;
+          background-color: $imutube-gray;
+          border: 0px;
+          font-size: 16px;
+          line-height: 22px;
+          color: white;
+          width: 13%;
+          text-indent: 4px;
+          margin-left: 15%;
+
+          &:focus {
+            background-color: $imutube-black;
+            border: 1px solid $imutube-blue;
+          }
+        }
+      }
+    }
+
+    .videoResolution {
+      /* Video Resolution Block */
+      position: relative;
+      grid-column: 2 / span 1;
+      grid-row: 2 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 380px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .videoResolutionTitle {
+        /* Select video resolution */
+        position: relative;
+        width: 60%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        /* identical to box height */
+        color: white;
+      }
+
+      .videoResolutionMessage {
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+
+      .videoResolutionOptions {
+        top: 8%;
+        position: relative;
+        left: 5%;
+        font-size: 13px;
+        height: 15px;
+        color: $imutube-gray;
+
+        display: flex;
+        align-content: flex-start;
+
+        .option1 {
+          display: table-column;
+
+          .label {
+            position: relative;
+            flex-direction: row;
+            display: inline-block;
+          }
+          .radioButton1 {
+            position: relative;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            margin-top: 10%;
+            margin-left: 30%;
+
+            border-radius: 50%;
+            width: 16px;
+            min-width: 16px;
+            height: 16px;
+            min-height: 16px;
+
+            border: 2px solid #999;
+            transition: 0.2s all linear;
+            margin-right: 5px;
+
+            &:hover {
+              border: 8px solid $imutube-blue-clicked;
+              cursor: pointer;
+            }
+
+            &:checked {
+              border: 8px solid $imutube-blue-clicked;
+            }
+          }
+        }
+
+        .option2_6 {
+          margin-left: 4%;
+          display: table-column;
+
+          .label {
+            position: relative;
+            flex-direction: row;
+            display: inline-block;
+          }
+          .radioButton2_6 {
+            position: relative;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            margin-top: 10%;
+            margin-left: 20%;
+
+            border-radius: 50%;
+            width: 16px;
+            min-width: 16px;
+            height: 16px;
+            min-height: 16px;
+
+            border: 2px solid #999;
+            transition: 0.2s all linear;
+            margin-right: 5px;
+
+            &:hover {
+              border: 8px solid $imutube-blue-clicked;
+              cursor: pointer;
+            }
+
+            &:checked {
+              border: 8px solid $imutube-blue-clicked;
+            }
+          }
+        }
+      }
+    }
+
+    .videoNum {
+      /* Video Resolution Block */
+      position: relative;
+      grid-column: 2 / span 1;
+      grid-row: 3 / span 1;
+      height: 100%;
+      width: 100%;
+      min-width: 380px;
+      min-height: 150px;
+
+      /* IMUTube_Grey back */
+      background: $imutube-gray-black;
+      border-radius: 8px;
+
+      .videoNumTitle {
+        /* Select video resolution */
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        /* identical to box height */
+        color: white;
+      }
+
+      .videoNumMessage {
+        position: relative;
+        width: 100%;
+        height: 15%;
+        left: 5%;
+        margin: 0;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        /* identical to box height */
+        color: $imutube-gray-dark;
+      }
+
+      .videoNumQuery {
+        position: relative;
+        font-family: $imutube-font-family;
+        height: 19%;
+        left: 5%;
+        top: 16%;
+        display: flex;
+        align-content: flex-start;
+
+        .videos {
+          position: relative;
+          flex-direction: row;
+          flex-direction: row;
+          margin-left: 2%;
+          width: 2%;
+          top: 18%;
+        }
+
+        .videoNumInput {
+          position: relative;
+          flex-direction: row;
+          border-radius: 6px;
+          background-color: $imutube-gray;
+          border: 0px;
+          font-size: 16px;
+          line-height: 22px;
+          color: white;
+          width: 9%;
+          text-indent: 4px;
+
+          &:focus {
+            background-color: $imutube-black;
+            border: 1px solid $imutube-blue;
+          }
+        }
+      }
+    }
+  }
+}

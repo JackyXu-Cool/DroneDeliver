@@ -1,0 +1,75 @@
+@import "../../../assets/imutube-designs.scss";
+
+.selectedActivity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  width: 8%;
+  height: 100%;
+  min-width: 72px;
+  min-height: 30px;
+  margin-right: 16px;
+
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  color: white;
+  cursor: pointer;
+
+  font-family: $imutube-font-family;
+  font-size: 18px;
+
+  border: 1px solid $imutube-gray;
+  background-color: $imutube-black;
+
+  &:hover {
+    background: $imutube-blue;
+    border: 1px solid $imutube-blue;
+  }
+
+  &:focus {
+    outline: 0px;
+    background: $imutube-blue;
+    border: 1px solid $imutube-blue;
+  }
+}
+
+.selectedActivityBlue {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  width: 8%;
+  height: 100%;
+  min-width: 72px;
+  min-height: 30px;
+  margin-right: 16px;
+
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  color: white;
+  cursor: pointer;
+
+  font-family: $imutube-font-family;
+  font-size: 18px;
+
+  border: 1px solid $imutube-blue;
+  background-color: $imutube-blue;
+
+  &:hover {
+    background: $imutube-blue;
+    border: 1px solid $imutube-blue;
+  }
+
+  &:focus {
+    outline: 0px;
+    background: $imutube-blue;
+    border: 1px solid $imutube-blue;
+  }
+}

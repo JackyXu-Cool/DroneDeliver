@@ -1,0 +1,337 @@
+@import "../../assets/imutube-designs.scss";
+
+.searchParamaters {
+  background-color: $imutube-black;
+  height: 100vh;
+  width: $imutube-screen-width;
+  font-family: $imutube-font-family;
+
+  display: grid;
+  grid-template-columns: 9% auto 19% 9%;
+  grid-template-rows: 15% 70% 15%;
+
+  .overlay_left {
+    z-index: 5;
+    position: relative;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+    background-color: black;
+    opacity: 0.6;
+
+    width: 26.7%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: all 0.6s;
+  }
+
+  .overlay_right {
+    z-index: 5;
+    position: relative;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+    background-color: black;
+    opacity: 0.6;
+
+    width: 26.6%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 73.4%;
+    transition: all 0.6s;
+  }
+
+  .overlay_top {
+    z-index: 5;
+    position: relative;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+    background-color: black;
+    opacity: 0.6;
+
+    width: 46.7%;
+    height: 34%;
+    top: 0;
+    left: 26.7%;
+    transition: all 0.6s;
+  }
+
+  .overlay_bottom {
+    z-index: 5;
+    position: relative;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+    background-color: black;
+    opacity: 0.6;
+
+    width: 46.7%;
+    height: 34%;
+    top: 66%;
+    left: 26.7%;
+    transition: all 0.6s;
+  }
+
+  .overlay {
+    z-index: 5;
+    position: relative;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+    left: 26.7%;
+    width: 46.7%;
+    height: 32%;
+    top: 34%;
+    background-color: $imutube-black;
+
+    min-width: 430px;
+    min-height: 234px;
+
+    .popup {
+      z-index: 6;
+      position: relative;
+      vertical-align: center;
+      height: 100%;
+      background-color: $imutube-black;
+      opacity: 1;
+
+      background-image: url("../../assets/warningSign.svg");
+      background-repeat: no-repeat;
+      background-position-x: 3%;
+      background-position-y: 12%;
+
+      .square {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        right: 0;
+        background-color: $imutube-blue;
+      }
+
+      .warning {
+        position: relative;
+        width: 75%;
+        left: 15%;
+        top: 10%;
+        margin: 0;
+        font-size: 18px;
+        max-width: 450px;
+      }
+
+      .warningMessage {
+        position: absolute;
+        left: 15%;
+        top: 40%;
+        width: 70%;
+        min-width: 357px;
+        color: $imutube-gray-dark;
+        font-size: 14px;
+      }
+
+      .actions {
+        position: relative;
+        width: 75%;
+        top: 55%;
+        left: 15%;
+        height: 17.4%;
+        display: flex;
+
+        .applyAll {
+          position: relative;
+          font-family: $imutube-font-family;
+          font-size: 16px;
+          background: $imutube-blue;
+          border-radius: 8px;
+          vertical-align: center;
+          text-align: center;
+
+          height: 100%;
+          width: 45%;
+          top: 2%;
+
+          color: white;
+
+          &:hover {
+            background-color: $imutube-blue-hovered;
+            cursor: pointer;
+          }
+
+          &:focus {
+            background-color: $imutube-blue-clicked;
+            outline-width: 0px;
+            cursor: pointer;
+          }
+        }
+
+        .manually {
+          position: relative;
+          font-family: $imutube-font-family;
+          font-size: 16px;
+
+          background: $imutube-gray;
+          border-radius: 8px;
+          vertical-align: center;
+          text-align: center;
+
+          height: 100%;
+          width: 45%;
+          top: 2%;
+          margin-left: 5%;
+
+          color: white;
+
+          &:hover {
+            background-color: $imutube-gray-hovered;
+            cursor: pointer;
+          }
+
+          &:focus {
+            background-color: $imutube-gray-clicked;
+            outline-width: 0px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    position: relative;
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 1;
+  }
+
+  .routeButtons {
+    position: relative;
+    display: flex;
+    align-content: center;
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+    top: 10%;
+
+    .back {
+      position: relative;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-gray;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      top: 2%;
+      margin-left: 10%;
+
+      .linkBack {
+        position: relative;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-gray-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-gray-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .next {
+      position: relative;
+
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      margin-left: 5%;
+      top: 2%;
+
+      .link_next {
+        position: relative;
+        text-align: center;
+        left: 0;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .nextDisabled {
+      position: relative;
+      font-family: $imutube-font-family;
+      font-size: 18px;
+
+      background: $imutube-blue;
+      border-radius: 8px;
+      vertical-align: center;
+      text-align: center;
+
+      height: 39%;
+      width: 49%;
+      min-height: 40px;
+      min-width: 83px;
+      margin-left: 5%;
+      top: 2%;
+      opacity: $imutube-disabled-button;
+      pointer-events: none;
+
+      .link_next {
+        position: relative;
+        text-align: center;
+        left: 0;
+        color: white;
+        text-decoration: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 25%;
+        padding-right: 30%;
+      }
+
+      &:hover {
+        background-color: $imutube-blue-hovered;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background-color: $imutube-blue-clicked;
+        outline-width: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+}
