@@ -96,7 +96,11 @@ CREATE PROCEDURE admin_create_new_store(
 )
 BEGIN
 -- Type solution below
-	insert into store values (i_store_name, i_chain_name, i_street, i_city, i_state, i_zipcode);
+	if i_zipcode in (select zipcode from store where chainName = i_chain_name) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'A chain cannot have two stores in the same zip code';
+	else
+		insert into store values (i_store_name, i_chain_name, i_street, i_city, i_state, i_zipcode);
+	end if;
 -- End of solution
 END //
 DELIMITER ;
