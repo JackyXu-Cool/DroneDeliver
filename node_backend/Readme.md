@@ -127,6 +127,22 @@ successful response
 
 ```
 
+6. admin/create/store
+```json
+{
+    "storeName": "Cumberland",
+    "chainName": "Moss Market",
+    "street": "2860 Cumberland Mall SE",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipcode": "30334"
+}
+
+{
+    "success": true
+}
+```
+
 Note:
 对于任意以上的API，如果遇到request failure了，返回的response是这样子的
 ```json
