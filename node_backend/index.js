@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const userRoute = require("./routes/user-route");
+const adminRoute = require("./routes/admin_route");
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/user", userRoute);
+
+app.use("/admin", adminRoute);
 
 app.use((req, res, next) => {
     const error = new Error("Could not find the route", 404);

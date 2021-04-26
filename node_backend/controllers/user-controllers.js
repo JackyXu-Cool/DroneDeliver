@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
             return res.status(201)
                   .json({success: true});
         } else {
-            return next(new Error("Wrong Credentials"));
+            return next(new Error("Wrong Credentials or User does not exist in the database"));
         }
     });
 };
