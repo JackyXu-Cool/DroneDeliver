@@ -34,7 +34,7 @@ https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-d
 
 需要前端send request时，将data放在request body里面
 
-1. /user/register/customer   POST
+1. **/user/register/customer**   POST
 ```json
 sample input format:
 {
@@ -57,7 +57,7 @@ successful output format
 }
 
 ```
-2. /user/register/dronetech  POST
+2. **/user/register/dronetech**  POST
 ```json
 sample input format
 {
@@ -79,7 +79,7 @@ successful output
 }
 
 ```
-3. /user/register/manager  POST
+3. **/user/register/manager**  POST
 ```json
 {
     "username": "testmanager", 
@@ -99,7 +99,7 @@ successful output
 
 ```
 
-4. /user/login  POST
+4. **/user/login**  POST
 ```json
 sample input format
 {
@@ -113,7 +113,7 @@ successful output format
 }
 
 ```
-5. admin/create/grocerychain
+5. **admin/create/grocerychain**  POST
 ```json
 {
     "chainName": "Wegmans"
@@ -127,7 +127,7 @@ successful response
 
 ```
 
-6. admin/create/store
+6. **admin/create/store**   POST
 ```json
 {
     "storeName": "Cumberland",
@@ -140,6 +140,38 @@ successful response
 
 {
     "success": true
+}
+```
+
+7. **/admin/get/zipcode**  GET <br/>
+This API will return all zipcodes of existing stores <br />
+针对Screen 6 “Dropdown for zip codes should only display zip codes of existing store locations."会比较有用
+```json
+successful response
+
+{
+    "result": [ "30332","30047","30313", "30022" ]
+}
+
+```
+
+8. **/admin/get/usernameforstore**  GET <br />
+Get all usernames of employees who work for a store in the given zipcode <br />
+对于Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”。会比较有用
+```json
+input 
+
+{
+    "zipcode": "30332"
+}
+
+output
+
+{
+    "result": [
+        "nshea230",
+        "cforte58"
+    ]
 }
 ```
 
