@@ -2,13 +2,11 @@
 1. Change environment variables in **‘nodemon.json’**.
 2. MySQL database clean-up and setup
 ```
-打开 MySQL workbench
+Open MySQL workbench
 
-打开./SQL_database底下grocery_drone_delivery，并运行。
-// 这个SQL file是Phase3 TA提供给我们用来create database的
+Run ./SQL_database/grocery_drone_deliverym.sql
 
-打开./SQL_database底下cs4400_phase3_shell，并运行。
-// 这个file是我们所有的procedure
+Run ./SQL_database/cs4400_phase3_shell.sql
 ```
 3. run backend
 ```
@@ -22,17 +20,17 @@ npm start
 ```
 Note:
 
-如果遇到bug的话，可以参考这个文章：
+Check out these articles if you run into some bugs
 https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-does-not-support-authentication-protocol-requ
 <br />
 
-如果需要初始化database，直接在workbench里，再把grocery_drone_delivery.mysql 跑一遍就好了。
+To initialize the database，run grocery_drone_delivery.mysql in the workbench
 <br />
 
 
 ### Backend API
 
-需要前端send request时，将data放在request body里面
+When sending request from frontend，put data in request body
 
 1. **/user/register/customer**   POST
 ```json
@@ -145,7 +143,7 @@ successful response
 
 7. **/admin/get/zipcode**  GET <br/>
 This API will return all zipcodes of existing stores <br />
-针对Screen 6 “Dropdown for zip codes should only display zip codes of existing store locations."会比较有用
+Especially for Screen 6 “Dropdown for zip codes should only display zip codes of existing store locations."
 ```json
 successful response
 
@@ -157,7 +155,7 @@ successful response
 
 8. **/admin/get/usernameforstore**  GET <br />
 Get all usernames of employees who work for a store in the given zipcode <br />
-对于Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”。会比较有用
+Especially for Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”
 ```json
 input 
 
@@ -199,10 +197,10 @@ output
 ```
 
 Note:
-对于任意以上的API，如果遇到request failure了，返回的response是这样子的
+For any of the above APIs, if there is a request failure，the response will be like this.
 ```json
 {
     "message": "xxxxxxxxx"
 }
-具体message的信息却决于真正失败的原因 (Wrong credentials, wrong input foramt, etc..)
+the value in message depends on the reasons for failure (Wrong credentials, wrong input foramt, etc..)
 ```

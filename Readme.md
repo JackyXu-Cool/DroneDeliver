@@ -2,11 +2,15 @@
 The repository for Phase 4
 <br/>
 
-### Backend setup instruction and API
-follow this [link](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/node_backend/)
+### How to run it
+- Set up backend environment [(link)](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/node_backend/)
+- Set up frontend environment and run it [(link)](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/frontend)
 
-### SQL Procudure Edition
-follow this [link](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/SQL_database)
+### Backend API
+Follow this [link](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/node_backend/)
+
+### SQL Procudure Edition Log
+Follow this [link](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/SQL_database)
 
 ### Developers
 Yulai Cui <br/>
