@@ -112,7 +112,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_create_drone;
 DELIMITER //
 CREATE PROCEDURE admin_create_drone(
-	   IN i_drone_id INT,
+	   IN i_id INT,
        IN i_zip CHAR(5),
        IN i_radius INT,
        IN i_drone_tech VARCHAR(40)
@@ -121,8 +121,11 @@ BEGIN
 -- Type solution below
 	if (i_zip in (select Zipcode from store) and i_drone_tech in
 		(select username from drone_tech where (storename, chainname) in
-		(select storename, chainname from store where zipcode = i_zip)))
-		then insert into drone values (i_drone_id, "Available", i_zip, i_radius, i_drone_tech); end if;
+		(select storename, chainname from store where zipcode = i_zip))) then 
+        insert into drone values (i_id, "Available", i_zip, i_radius, i_drone_tech);
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wrong zipcode or dronetech information';
+	end if;
 -- End of solution
 END //
 DELIMITER ;

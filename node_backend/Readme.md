@@ -174,6 +174,29 @@ output
     ]
 }
 ```
+9. **/admin/get/droneid** GET
+Get the (lastID+1) from the drone table. Might be helpful for Screen 6, Drone ID textfield
+```json
+{
+    "id": 122
+}
+```
+
+10 **/admin/create/drone** POST
+```json
+input
+{
+    "id": 121,
+    "zipcode": "30363",
+    "radius": 10,
+    "dronetech": "hliu88"
+}
+
+output
+{
+    "success": true
+}
+```
 
 Note:
 对于任意以上的API，如果遇到request failure了，返回的response是这样子的
