@@ -1,0 +1,186 @@
+@import "../../assets/design.scss";
+
+.register_option {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 3px solid $tech-blue;
+  border-radius: 3px;
+
+  .navbar {
+    position: relative;
+    height: 40px;
+    background-color: $tech-blue;
+    display: flex;
+    flex-direction: row;
+
+    .selection {
+      position: relative;
+      margin-left: 1%;
+      margin-right: 0.5%;
+      top: 10%;
+      height: 80%;
+      width: 48.5%;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: $tech-blue-hovered;
+        cursor: pointer;
+      }
+
+      .selection_title {
+        position: relative;
+        color: white;
+        font-size: 20px;
+        font-weight: normal;
+        align-self: center;
+        left: 5px;
+      }
+    }
+
+    .selection_blue {
+      position: relative;
+      margin-left: 1%;
+      margin-right: 0.5%;
+      top: 10%;
+      height: 80%;
+      width: 48.5%;
+      background-color: $tech-blue-hovered;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: $tech-blue-hovered;
+        cursor: pointer;
+      }
+
+      .selection_title {
+        position: relative;
+        color: white;
+        font-size: 20px;
+        font-weight: normal;
+        align-self: center;
+        left: 5px;
+      }
+    }
+  }
+
+  .customer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .card_number {
+      position: relative;
+      display: flex;
+      height: 49%;
+      bottom: 1%;
+
+      .card_number_label {
+        position: relative;
+        align-self: center;
+        font-size: 15px;
+        top: 10px;
+        margin-left: 5%;
+      }
+
+      .card_number_input {
+        position: relative;
+        margin-left: 3%;
+        align-self: center;
+        height: 80%;
+        width: 40%;
+      }
+    }
+
+    .card_info {
+      position: relative;
+      display: flex;
+      height: 49%;
+      bottom: 1%;
+
+      .cvv_label {
+        position: relative;
+        align-self: center;
+        font-size: 15px;
+        top: 10px;
+        margin-left: 5%;
+        width: 5%;
+      }
+
+      .cvv_input {
+        position: relative;
+        margin-left: 5%;
+        align-self: center;
+        height: 80%;
+        width: 20%;
+      }
+
+      .exp_label {
+        position: relative;
+        align-self: center;
+        font-size: 15px;
+        top: 10px;
+        margin-left: 5%;
+      }
+
+      .exp_input {
+        position: relative;
+        margin-left: 2%;
+        align-self: center;
+        height: 80%;
+      }
+    }
+  }
+
+  .employee {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .chain {
+      position: relative;
+      display: flex;
+      height: 49%;
+      bottom: 1%;
+
+      .chain_label {
+        position: relative;
+        align-self: center;
+        font-size: 15px;
+        top: 10px;
+        margin-left: 5%;
+      }
+
+      .chain_input {
+        position: relative;
+        margin-left: 3%;
+        align-self: center;
+        height: 80%;
+        width: 40%;
+      }
+    }
+
+    .store {
+      position: relative;
+      display: flex;
+      height: 49%;
+      bottom: 1%;
+
+      .store_label {
+        position: relative;
+        align-self: center;
+        font-size: 15px;
+        top: 10px;
+        margin-left: 5%;
+      }
+
+      .store_input {
+        position: relative;
+        margin-left: 3%;
+        align-self: center;
+        height: 80%;
+        width: 40%;
+      }
+    }
+  }
+}

@@ -490,3 +490,6 @@ INSERT INTO `grocery_drone_delivery`.`contains`(`OrderID`,`ItemName`,`ChainName`
 INSERT INTO `grocery_drone_delivery`.`contains`(`OrderID`,`ItemName`,`ChainName`,`PLUNumber`,`Quantity`) VALUES ('10015','Black Tea',"Trader Joe's",10003,2); 
 INSERT INTO `grocery_drone_delivery`.`contains`(`OrderID`,`ItemName`,`ChainName`,`PLUNumber`,`Quantity`) VALUES ('10015','Rosemary Tea',"Trader Joe's",10004,2); 
 INSERT INTO `grocery_drone_delivery`.`contains`(`OrderID`,`ItemName`,`ChainName`,`PLUNumber`,`Quantity`) VALUES ('10015','Earl Grey Tea',"Trader Joe's",10005,2); 
+
+-- Update all user password to hashed
+update users set Pass = MD5(Pass);

@@ -96,7 +96,11 @@ CREATE PROCEDURE admin_create_new_store(
 )
 BEGIN
 -- Type solution below
-	insert into store values (i_store_name, i_chain_name, i_street, i_city, i_state, i_zipcode);
+	if i_zipcode in (select zipcode from store where chainName = i_chain_name) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'A chain cannot have two stores in the same zip code';
+	else
+		insert into store values (i_store_name, i_chain_name, i_street, i_city, i_state, i_zipcode);
+	end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -108,7 +112,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_create_drone;
 DELIMITER //
 CREATE PROCEDURE admin_create_drone(
-	   IN i_drone_id INT,
+	   IN i_id INT,
        IN i_zip CHAR(5),
        IN i_radius INT,
        IN i_drone_tech VARCHAR(40)
@@ -117,8 +121,11 @@ BEGIN
 -- Type solution below
 	if (i_zip in (select Zipcode from store) and i_drone_tech in
 		(select username from drone_tech where (storename, chainname) in
-		(select storename, chainname from store where zipcode = i_zip)))
-		then insert into drone values (i_drone_id, "Available", i_zip, i_radius, i_drone_tech); end if;
+		(select storename, chainname from store where zipcode = i_zip))) then 
+        insert into drone values (i_id, "Available", i_zip, i_radius, i_drone_tech);
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wrong zipcode or dronetech information';
+	end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -679,6 +686,61 @@ CREATE PROCEDURE user_login(
 BEGIN
 	set @hashedpassword = MD5(i_password);
 	select count(*) as count from users where username = i_username and pass = @hashedpassword;
+END //
+DELIMITER ;
+
+-- Register drone technician
+DROP PROCEDURE IF EXISTS register_drone_technician;
+DELIMITER //
+CREATE PROCEDURE register_drone_technician(
+	   IN i_username VARCHAR(40),
+       IN i_password VARCHAR(40),
+	   IN i_fname VARCHAR(40),
+       IN i_lname VARCHAR(40),
+       IN i_street VARCHAR(40),
+       IN i_city VARCHAR(40),
+       IN i_state VARCHAR(2),
+       IN i_zipcode CHAR(5),
+       IN i_storeName CHAR(50),
+       IN i_chainName CHAR(50)
+)
+BEGIN
+-- Type solution below
+	if i_chainName in (select chainName from chain) and i_storeName in (select storeName from store) then
+		insert into users values (i_username, MD5(i_password), i_fname, i_lname, i_street, i_city, i_state, i_zipcode);
+		insert into employee values (i_username);
+        insert into drone_tech values (i_username, i_storeName, i_chainName);
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Input chainName or storeName does not exist';
+	end if;
+-- End of solution
+END //
+DELIMITER ;
+
+-- Register manager
+DROP PROCEDURE IF EXISTS register_manager;
+DELIMITER //
+CREATE PROCEDURE register_manager(
+	   IN i_username VARCHAR(40),
+       IN i_password VARCHAR(40),
+	   IN i_fname VARCHAR(40),
+       IN i_lname VARCHAR(40),
+       IN i_street VARCHAR(40),
+       IN i_city VARCHAR(40),
+       IN i_state VARCHAR(2),
+       IN i_zipcode CHAR(5),
+       IN i_chainName CHAR(50)
+)
+BEGIN
+-- Type solution below
+	if i_chainName in (select chainName from chain) and (select count(*) from manager where chainName = i_chainName) = 0 then
+		insert into users values (i_username, MD5(i_password), i_fname, i_lname, i_street, i_city, i_state, i_zipcode);
+		insert into employee values (i_username);
+        insert into manager values (i_username, i_chainName);
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Incorrect chain name or chainname has already been assigned a manager';
+	end if;
+-- End of solution
 END //
 DELIMITER ;
 

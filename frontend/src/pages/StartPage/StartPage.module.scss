@@ -1,0 +1,39 @@
+@import "../../assets/design.scss";
+
+.startPage {
+  position: relative;
+  width: 100vh;
+  height: 100vh;
+  background-color: white;
+  margin: 0;
+
+  .content {
+    position: relative;
+    width: 600px;
+    height: 550px;
+    top: 10%;
+    left: 10%;
+    border: 4px solid $tech-metallic-gold;
+    border-radius: 8px;
+    align-content: center;
+
+    .start {
+      position: relative;
+      width: 200px;
+      height: 100px;
+      top: 45%;
+      left: 30%;
+
+      .link {
+        position: relative;
+        color: white;
+        text-decoration: none;
+        font-size: 50px;
+        padding-left: 23.5%;
+        padding-right: 23.5%;
+        padding-top: 9%;
+        padding-bottom: 9%;
+      }
+    }
+  }
+}
