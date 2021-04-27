@@ -44,6 +44,16 @@
         position: relative;
         width: 150px;
         height: 100%;
+
+        .link_login {
+          color: white;
+          text-decoration: none;
+          font-size: 20px;
+          padding-left: 33%;
+          padding-right: 33%;
+          padding-top: 11%;
+          padding-bottom: 11%;
+        }
       }
 
       .button_register {
@@ -51,6 +61,16 @@
         width: 150px;
         height: 100%;
         margin-left: 10%;
+
+        .link_register {
+          color: white;
+          text-decoration: none;
+          font-size: 20px;
+          padding-left: 25%;
+          padding-right: 25%;
+          padding-top: 11%;
+          padding-bottom: 11%;
+        }
       }
     }
   }

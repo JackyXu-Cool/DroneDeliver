@@ -5,7 +5,11 @@ const Entry = (props) => {
   return (
     <div className={classes.entry}>
       <h2 className={classes.label}>{props.text}</h2>
-      <input className={classes.input} />
+      <input
+        className={classes.input}
+        name={props.name}
+        onChange={props.enterLogin}
+      />
     </div>
   );
 };

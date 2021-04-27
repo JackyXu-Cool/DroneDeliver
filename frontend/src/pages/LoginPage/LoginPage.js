@@ -11,14 +11,35 @@ const LoginPage = (props) => {
       <div className={classes.content}>
         <h1 className={classes.title}>Login</h1>
         <div className={classes.entry}>
-          <Entry text={"Username: "} />
+          <Entry
+            text={"Username: "}
+            name="loginUsername"
+            login={props.login}
+            enterLogin={props.enterLogin}
+          />
         </div>
         <div className={classes.entry}>
-          <Entry text={"Password: "} />
+          <Entry
+            text={"Password: "}
+            name="loginPassword"
+            login={props.login}
+            enterLogin={props.enterLogin}
+          />
         </div>
         <div className={classes.buttons}>
-          <button className={classes.button_login}>Login</button>
-          <button className={classes.button_register}>Register</button>
+          <button className={classes.button_login} onClick={props.loginOnClick}>
+            <Link
+              to={props.canLogin && props.loginSuccess ? "/home" : "/login"}
+              className={classes.link_login}
+            >
+              Login
+            </Link>
+          </button>
+          <button className={classes.button_register}>
+            <Link to="/register" className={classes.link_register}>
+              Register
+            </Link>
+          </button>
         </div>
       </div>
     </div>

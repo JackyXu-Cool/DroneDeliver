@@ -1,0 +1,161 @@
+@import "../../assets/design.scss";
+
+.registerPage {
+  position: relative;
+  width: 100vh;
+  height: 100vh;
+  background-color: white;
+  margin: 0;
+
+  .content {
+    position: relative;
+    width: 600px;
+    height: 550px;
+    top: 10%;
+    left: 10%;
+    border: 4px solid $tech-metallic-gold;
+    border-radius: 8px;
+    align-content: center;
+
+    .title {
+      position: relative;
+      align-self: center;
+      left: 40%;
+      margin-bottom: 20%;
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .entries {
+      position: relative;
+      display: grid;
+      height: 250px;
+      width: 80%;
+      left: 10%;
+      grid-template-columns: 49% 49%;
+      column-gap: 2%;
+      grid-template-rows: 100%;
+
+      .left_col {
+        position: relative;
+        grid-column: 1 span 1;
+        display: flex;
+        flex-direction: column;
+
+        .left_entry {
+          position: relative;
+          height: 50px;
+          margin-bottom: 2px;
+          display: flex;
+          flex-direction: row;
+
+          .left_entry_label {
+            position: relative;
+            align-self: center;
+            font-size: 15px;
+            top: 10px;
+          }
+
+          .left_entry_input {
+            position: absolute;
+            left: 40%;
+            align-self: center;
+            height: 70%;
+            width: 60%;
+          }
+        }
+      }
+
+      .right_col {
+        position: relative;
+        grid-column: 2 span 1;
+        display: flex;
+        flex-direction: column;
+
+        .right_entry {
+          position: relative;
+          height: 50px;
+          margin-bottom: 2px;
+          display: flex;
+          flex-direction: row;
+
+          .right_entry_label {
+            position: relative;
+            align-self: center;
+            font-size: 15px;
+            top: 10px;
+          }
+
+          .right_entry_input {
+            position: absolute;
+            left: 30%;
+            align-self: center;
+            height: 70%;
+            width: 70%;
+          }
+        }
+      }
+    }
+
+    .role_options {
+      position: relative;
+      top: 5px;
+      left: 10%;
+      width: 80%;
+      height: 150px;
+    }
+
+    .button_register {
+      position: relative;
+      width: 30%;
+      height: 50px;
+      top: 3%;
+      left: 25%;
+      margin-left: 10%;
+
+      .link_register {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        padding-left: 29%;
+        padding-right: 29%;
+        padding-top: 7%;
+        padding-bottom: 7%;
+      }
+    }
+
+    .back {
+      position: absolute;
+      width: 70px;
+      height: 50px;
+      top: 89%;
+      left: 5%;
+      background-color: gray;
+
+      &:hover {
+        background-color: slategray;
+      }
+
+      .link_back {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        padding-left: 16%;
+        padding-right: 16%;
+        padding-top: 20%;
+        padding-bottom: 20%;
+      }
+    }
+
+    .success {
+      position: absolute;
+      width: 200px;
+      height: 50px;
+      top: 91%;
+      left: 67%;
+      font-size: 11px;
+      font-weight: normal;
+      color: green;
+    }
+  }
+}
