@@ -89,7 +89,11 @@ const App = () => {
   //enter register fields
   const enterRegister = (event) => {
     var temp = register;
-    temp[event.target.name] = event.target.value;
+    if (event.target === undefined) {
+      temp["state"] = event.value;
+    } else {
+      temp[event.target.name] = event.target.value;
+    }
     setRegister(temp);
 
     var basic = register.confirm === register.password;

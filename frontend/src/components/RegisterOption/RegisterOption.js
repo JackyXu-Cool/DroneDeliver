@@ -29,7 +29,7 @@ const RegisterOption = (props) => {
           <h2 className={classes.exp_label}>Exp: </h2>
           <input
             className={classes.exp_input}
-            placeholder="MM/DD/YYYY"
+            placeholder="YYYY-MM-DD"
             name="exp"
             onChange={props.enterRegister}
           />
