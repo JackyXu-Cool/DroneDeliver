@@ -697,6 +697,9 @@ BEGIN
 		if (select count(*) from drone_tech where username = i_username) = 1 then
 			select count(*) as count, chainName, storeName from drone_tech where username = i_username;
 		end if;
+        if (select count(*) from admin where username = i_username) = 1 then
+			select count(*) as count from admin where username = i_username;
+        end if;
     end if;
 END //
 DELIMITER ;

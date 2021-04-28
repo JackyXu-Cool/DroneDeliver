@@ -140,7 +140,7 @@ example for drone_tech
 {
     "success": true,
     "information": {
-        "identity": "Drone_tech",
+        "identity": "Drone Tech",
         "chainName": "Moss Market",
         "storeName": "KSU Center"
     }

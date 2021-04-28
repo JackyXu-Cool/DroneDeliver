@@ -15,6 +15,7 @@ const LoginPage = (props) => {
             text={"Username: "}
             name="loginUsername"
             login={props.login}
+            type="text"
             enterLogin={props.enterLogin}
           />
         </div>
@@ -23,6 +24,7 @@ const LoginPage = (props) => {
             text={"Password: "}
             name="loginPassword"
             login={props.login}
+            type="password"
             enterLogin={props.enterLogin}
           />
         </div>

@@ -5,6 +5,7 @@ import axios from "axios";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import StartPage from "./pages/StartPage/StartPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import HomePage from "./pages/HomePage/HomePage";
 
 import classes from "./App.module.scss";
 
@@ -16,6 +17,7 @@ const App = () => {
   const [login, setLogin] = useState({ loginUsername: "", loginPassword: "" });
   const [canLogin, setCanLogin] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginSuccessInfo, setLoginSuccessInfo] = useState({ information: {} });
 
   //register page states
   const [register, setRegister] = useState({
@@ -71,12 +73,14 @@ const App = () => {
           password: login.loginPassword,
         })
         .then((response) => {
+          var info = {information: response.data.information};
           setLoginSuccess(true);
+          setLoginSuccessInfo(info);
           console.log(response);
         })
         .catch((error) => {
           setLoginSuccess(false);
-          console.log(error);
+          alert(error.response.data.message);
         });
     }
   };
@@ -245,6 +249,11 @@ const App = () => {
           enterRegister={enterRegister}
           registerOnClick={registerOnClick}
         />
+      </Route>
+      <Route path={"/home"} exact>
+          <HomePage 
+            information={loginSuccessInfo}
+          />
       </Route>
     </BrowserRouter>
   );

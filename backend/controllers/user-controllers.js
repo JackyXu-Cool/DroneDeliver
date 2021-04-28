@@ -47,9 +47,11 @@ const login = async (req, res, next) => {
             if (length === 4) {
                 identity = "Customer";
             } else if (length === 3) {
-                identity = "Drone_tech";
+                identity = "Drone Tech";
             } else if (length === 2) {
                 identity = "Manager";
+            } else if (length === 1) {
+                identity = "Admin";
             }
 
             // construct information object

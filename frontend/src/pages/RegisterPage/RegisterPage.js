@@ -25,6 +25,7 @@ const RegisterPage = (props) => {
         <h2 className={classes.left_entry_label}>{text[0]}</h2>
         <input
           className={classes.left_entry_input}
+          type={(text[1] === "password" || text[1] === "confirm") ? "password" : "text"}
           name={text[1]}
           onChange={props.enterRegister}
         />
