@@ -32,7 +32,7 @@ const create_drone = async (req, res, next) => {
 const get_zipcode = async (req, res, next) => {
     let sql = `select zipcode from store`;
     pool.query(sql, (err, result) => {
-        if (err) return next(new HttpError("Fail to get zipcode", 500));
+        if (err) return next(new HttpError(err.message, 500));
         zipcodeList = [];
         for (let i = 0; i < result.length; i++) {
             zipcodeList.push(result[i]["zipcode"]);
@@ -42,12 +42,12 @@ const get_zipcode = async (req, res, next) => {
 };
 
 // Get a list of employee's username who works for a store in the given zipcode
-const get_usernamem_for_store = async (req, res, next) => {
+const get_usernames_for_store = async (req, res, next) => {
     const { zipcode } = req.body;
     let sql =  `select username from drone_tech where (storename, chainname) in
     (select storename, chainname from store where zipcode = ${zipcode})`
     pool.query(sql, (err, result) => {
-        if (err) return next(new HttpError("Fail to get usernames", 500));
+        if (err) return next(new HttpError(err.message, 500));
         usernamesList = [];
         result.forEach(r => {
             usernamesList.push(r["username"]);
@@ -69,15 +69,35 @@ const create_item = async (req, res, next) => {
     let sql = `CALL admin_create_item(?,?,?,?)`;
     const { itemName, type, organic, origin } = req.body;
     pool.query(sql, [itemName, type, organic, origin], (err) => {
-        if (err) return next(new HttpError("Fail to create new item", 500));
+        if (err) return next(new HttpError(err.message, 500));
         return res.status(201).json({success: true});
     });
+};
+
+const view_customers = async (req, res, next) => {
+    let sql = `CALL admin_view_customers(?,?)`;
+    let { firstName, lastName } = req.body;
+
+    if (firstName === "") firstName = null;
+    if (lastName === "") lastName = null;
+
+    // Create admin_view_customers_result table to store information
+    pool.query(sql, [firstName, lastName], (err) => {
+        if (err) return next(new HttpError("Fail to get customer information", 500));
+
+        // Select from admin_view_customer_result table
+        pool.query("select * from admin_view_customers_result", (err, r) => {
+            if (err) return next(new HttpError("Fail to select table", 500));
+            res.status(200).json({result: r});
+        });
+    })
 };
 
 exports.create_grocery_chain = create_grocery_chain;
 exports.create_store = create_store;
 exports.create_drone = create_drone;
 exports.get_zipcode = get_zipcode;
-exports.get_usernamem_for_store = get_usernamem_for_store;
+exports.get_usernames_for_store = get_usernames_for_store;
 exports.get_drone_id = get_drone_id;
 exports.create_item = create_item;
+exports.view_customers = view_customers;

@@ -101,14 +101,51 @@ successful output
 ```json
 sample input format
 {
-    "username": "testcustomers", 
-    "password": "password4"
+    "username": "rgreen97", 
+    "password": "password23"
 }
 
-successful output format
+Successful output will differ according to the identity of the users (customer or drone_tech or manager)
 {
-    "success": true
+    "success": true,
+    "information": {
+        "identity": "Manager",
+        "chainname": "Kroger"
+    }
 }
+
+examples for customer:
+{
+    "username": "mscott845", 
+    "password": "password30"
+}
+
+{
+    "success": true,
+    "information": {
+        "identity": "Customer",
+        "ccnumber": "6518 5559 7446 1663",
+        "cvv": 551,
+        "exp_date": "2024-02-01T05:00:00.000Z"
+    }
+}
+
+----
+example for drone_tech
+{
+    "username": "lchen27", 
+    "password": "password3"
+}
+
+{
+    "success": true,
+    "information": {
+        "identity": "Drone_tech",
+        "chainName": "Moss Market",
+        "storeName": "KSU Center"
+    }
+}
+
 
 ```
 5. **admin/create/grocerychain**  POST
@@ -195,6 +232,86 @@ output
     "success": true
 }
 ```
+
+11. **/admin/create/item** POST
+```json
+{
+    "itemName": "Dog Shampoo",
+    "type": "Personal Care",
+    "organic": "No",
+    "origin": "New Jersey"
+}
+
+output
+
+{
+    "success": true
+}
+```
+
+12. **/admin/view/customers** GET
+```json
+input (Should always have lastName and firstName sent as request body. If the user
+does not enter firstName or lastName, just leave it as empty string)
+
+// To select all the customers
+{
+    "lastName": "",
+    "firstName": ""
+}
+
+// to select customers whose last name is "Allman"
+{
+    "firstName": "",
+    "lastName": "Allman"
+}
+
+sample output
+{
+    "result": [
+        {
+            "Username": "aallman302",
+            "FullName": "Aiysha Allman",
+            "Address": "420 Austerlitz Rd, Atlanta, GA 30318"
+        }
+    ]
+}
+
+```
+
+13. **/manager/create/chainItem** POST
+```json
+{
+    "chainName": "Moss Market",
+    "itemName": "Navel Orange",
+    "quantity": 500,
+    "orderLimit": 20,
+    "PLU": 10098,
+    "price": 0.88
+}
+
+{
+    "success": true
+}
+```
+14. **/manager/get/items**  GET <br/>
+Get all items created by admin. Useful for Screen 9
+```json
+output
+{
+    "items": [ "2% Milk", "4-1 Shampoo", "Almond Milk"]
+}
+```
+
+15. **/manager/get/plu** GET <br />
+Get the (plu of last created item) + 1.
+```json
+output
+{
+    "plu": 10099
+}
+```
+
 
 Note:
 For any of the above APIs, if there is a request failure，the response will be like this.

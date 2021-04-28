@@ -5,7 +5,7 @@ const signupCustomer = async (req, res, next) => {
     let sql = `CALL register_customer(?,?,?,?,?,?,?,?,?,?,?)`;
     const { username, password, fname, lname, street, city, state, zipcode, ccnumber, cvv, exp_date } = req.body;
     pool.query(sql, [username, password, fname, lname, street, city, state, zipcode, ccnumber, cvv, exp_date], (err, result) => {
-        if (err) return next(new HttpError("Customer creation error", 500));
+        if (err) return next(new HttpError(err.message, 500));
         return res.status(201)
                   .json({ success: true });
     });
@@ -40,8 +40,31 @@ const login = async (req, res, next) => {
         if (err) return next(err);
         let count = result[0][0]["count"];
         if (count == 1) {
+            const length = Object.keys(result[0][0]).length;
+
+            // Determine the users' identity
+            let identity = "";
+            if (length === 4) {
+                identity = "Customer";
+            } else if (length === 3) {
+                identity = "Drone_tech";
+            } else if (length === 2) {
+                identity = "Manager";
+            }
+
+            // construct information object
+            info = {identity};
+            let index = 0;
+            for (const key in result[0][0]) {
+                if (index >= 1) {
+                    info[key] = result[0][0][key];
+                }
+                index++;
+            }
+
+            // response
             return res.status(201)
-                  .json({success: true});
+                  .json({success: true, information: info});
         } else {
             return next(new HttpError("Wrong Credentials or User does not exist in the database", 401));
         }

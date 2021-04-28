@@ -685,7 +685,19 @@ CREATE PROCEDURE user_login(
 )
 BEGIN
 	set @hashedpassword = MD5(i_password);
-	select count(*) as count from users where username = i_username and pass = @hashedpassword;
+	if (select count(*) from users where username = i_username and pass = @hashedpassword) = 0 then
+		select count(*) as count from users where username = i_username and pass = @hashedpassword;
+	else
+		if (select count(*) from customer where username = i_username) = 1 then
+			select count(*) as count, ccnumber, cvv, exp_date from customer where username = i_username;
+		end if;
+        if (select count(*) from manager where username = i_username) = 1 then
+			select count(*) as count, chainname from manager where username = i_username;
+		end if;
+		if (select count(*) from drone_tech where username = i_username) = 1 then
+			select count(*) as count, chainName, storeName from drone_tech where username = i_username;
+		end if;
+    end if;
 END //
 DELIMITER ;
 

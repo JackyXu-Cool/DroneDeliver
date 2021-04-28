@@ -10,6 +10,7 @@ router.get("/get/zipcode", adminController.get_zipcode);
 router.get("/get/usernameforstore", adminController.get_usernamem_for_store);
 router.get("/get/droneid", adminController.get_drone_id);
 router.post("/create/item", adminController.create_item);
+router.get("/view/customers", adminController.view_customers);
 
 module.exports = router;
 
