@@ -12,8 +12,8 @@ const HomePage = (props) => {
     if (identity === "Customer") {
         html = (
             <div className={classes.buttons}>
-                <button className={classes.button_click}>
-                    <Link className={classes.link_click} to="/customer/changeCCInfo">
+                <button className={classes.button_click} onClick={props.onCustomerChangeCCInfo}>
+                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom: 15, paddingLeft: 5, paddingRight: 5}} to="/customer/changeCCInfo">
                         Change Credit Card Information
                     </Link></button>
                 <button className={classes.button_click}>Review Order</button>

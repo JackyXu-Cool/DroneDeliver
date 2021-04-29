@@ -90,6 +90,7 @@ const App = () => {
         .then((response) => {
           localStorage.clear();
           localStorage.setItem("identity", response.data.information["identity"]);
+          localStorage.setItem("username", login.loginUsername);
           setLoginSuccess(true);
         })
         .catch((error) => {
@@ -257,6 +258,18 @@ const App = () => {
   }
 
   /*------------------------------ change credit card info page handlers ------------------------------*/
+  const userInfoPrefillChangeCCInfo =  async () => {
+    axios.get("http://localhost:5000/customer/get/userfullname", {
+      username: localStorage.username
+    })
+    .then((res)=> {
+      console.log(res)
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  };
+
   const enterCCInfo = (event) => {
     var temp = ccInfo;
     temp[event.target.name] = event.target.value;
@@ -298,6 +311,7 @@ const App = () => {
       </Route>
       <Route path={"/home"} exact>
           <HomePage 
+            onCustomerChangeCCInfo={userInfoPrefillChangeCCInfo}
           />
       </Route>
       <Route path={"/create/grocerychain"} exact>
@@ -308,7 +322,7 @@ const App = () => {
       </Route>
       
       <Route path={"/customer/changeCCInfo"} exact>
-          <ChangeCreditCardPage onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
+          <ChangeCreditCardPage username={localStorage.username} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
       </Route>
     </BrowserRouter>
   );

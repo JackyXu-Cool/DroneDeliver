@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const userRoute = require("./routes/user-route");
 const adminRoute = require("./routes/admin_route");
 const managerRoute = require("./routes/chainManager-route");
+const customerRoute = require("./routes/customer-route");
 
 const app = express();
 app.use(cors());
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use("/user", userRoute);
 app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
+app.use("/customer", customerRoute);
 
 app.use((req, res, next) => {
   const error = new Error("Could not find the route", 404);
