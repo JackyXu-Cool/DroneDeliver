@@ -7,6 +7,7 @@ import StartPage from "./pages/StartPage/StartPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
 import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGroceryChainPage";
+import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
 
 import classes from "./App.module.scss";
 
@@ -51,6 +52,17 @@ const App = () => {
   ];
   const [actualRole, setActualRole] = useState("Customer");
   const [registerSuccess, setRegisterSuccess] = useState(false);
+
+  // Change Credit Card Information page states
+  const [ccInfo, setCCInfo] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    ccNumber: "",
+    cvv: "",
+    exp_date: "",
+  });
+
 
   // Create Grocery Chain State
   const [chainName, setChainName] = useState("");
@@ -227,7 +239,7 @@ const App = () => {
     }
   };
 
-  // ----------- Create grocery chain handler -----------------
+  /*------------------------------ create grocery chain page handlers ------------------------------*/
   const createChainHandler = (event) => {
     setChainName(event.target.value);
   }
@@ -242,6 +254,17 @@ const App = () => {
     .catch((error) => {
       alert(error.response.data.message);
     })
+  }
+
+  /*------------------------------ change credit card info page handlers ------------------------------*/
+  const enterCCInfo = (event) => {
+    var temp = ccInfo;
+    temp[event.target.name] = event.target.value;
+    setCCInfo(temp);
+  }
+
+  const submitCCInfo = () => {
+    console.log(ccInfo);
   }
 
   return (
@@ -282,6 +305,10 @@ const App = () => {
             onCreateChainHandler={createChainHandler}
             createChain={createChain}
           />
+      </Route>
+      
+      <Route path={"/customer/changeCCInfo"} exact>
+          <ChangeCreditCardPage onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
       </Route>
     </BrowserRouter>
   );

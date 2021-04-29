@@ -1,9 +1,10 @@
-/* Database Initialization for Phase 3
+/* DatabChainNamease Initialization for Phase 3
 CS 4400 - Spring 2021 */
 
 drop database if exists grocery_drone_delivery;
 create database if not exists grocery_drone_delivery;
 use grocery_drone_delivery;
+
 
 Create table CHAIN( 
 	ChainName VARCHAR(40) NOT NULL, 

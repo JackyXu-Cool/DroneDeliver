@@ -12,7 +12,10 @@ const HomePage = (props) => {
     if (identity === "Customer") {
         html = (
             <div className={classes.buttons}>
-                <button className={classes.button_click}>Change Credit Card Info</button>
+                <button className={classes.button_click}>
+                    <Link className={classes.link_click} to="/customer/changeCCInfo">
+                        Change Credit Card Information
+                    </Link></button>
                 <button className={classes.button_click}>Review Order</button>
                 <button className={classes.button_click}>View Order History</button>
                 <button className={classes.button_click}>View Store Item</button>
