@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import StartPage from "./pages/StartPage/StartPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
+import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGroceryChainPage";
 
 import classes from "./App.module.scss";
 
@@ -17,7 +18,6 @@ const App = () => {
   const [login, setLogin] = useState({ loginUsername: "", loginPassword: "" });
   const [canLogin, setCanLogin] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const [loginSuccessInfo, setLoginSuccessInfo] = useState({ information: {} });
 
   //register page states
   const [register, setRegister] = useState({
@@ -52,6 +52,9 @@ const App = () => {
   const [actualRole, setActualRole] = useState("Customer");
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
+  // Create Grocery Chain State
+  const [chainName, setChainName] = useState("");
+
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
   const enterLogin = (event) => {
@@ -73,10 +76,9 @@ const App = () => {
           password: login.loginPassword,
         })
         .then((response) => {
-          var info = {information: response.data.information};
+          localStorage.clear();
+          localStorage.setItem("identity", response.data.information["identity"]);
           setLoginSuccess(true);
-          setLoginSuccessInfo(info);
-          console.log(response);
         })
         .catch((error) => {
           setLoginSuccess(false);
@@ -225,6 +227,23 @@ const App = () => {
     }
   };
 
+  // ----------- Create grocery chain handler -----------------
+  const createChainHandler = (event) => {
+    setChainName(event.target.value);
+  }
+
+  const createChain = async (event) => {
+    axios.post("http://localhost:5000/admin/create/grocerychain", {
+      chainName: chainName
+    })
+    .then(() => {
+      alert("successfully created a new chain")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  }
+
   return (
     <BrowserRouter className={classes.app}>
       <Route path={"/"} exact>
@@ -256,7 +275,12 @@ const App = () => {
       </Route>
       <Route path={"/home"} exact>
           <HomePage 
-            information={loginSuccessInfo}
+          />
+      </Route>
+      <Route path={"/create/grocerychain"} exact>
+          <CreateGroceryChainPage
+            onCreateChainHandler={createChainHandler}
+            createChain={createChain}
           />
       </Route>
     </BrowserRouter>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import classes from "./HomePage.module.scss";
 
 const HomePage = (props) => {
-    var identity = props.information.information["identity"];
+    var identity = localStorage.getItem("identity");
     var text = `${identity} Home Page`;
 
     let html;
