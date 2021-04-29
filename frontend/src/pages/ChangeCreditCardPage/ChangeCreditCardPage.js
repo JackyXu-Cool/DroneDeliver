@@ -23,7 +23,11 @@ const ChangeCreditCardPage = (props) => {
                     type={entry[1] === "cvv" ? "password" : "text"}
                     onChange={props.onEnter}
                     disabled={entry[1] === 'username' || entry[1] === "firstName" || entry[1] === "lastName"}
-                    placeholder = {entry[1] === "username" ? props.username : (entry[1] === "firstName" ? "FirstName" : (entry[1] === "lastName" ? "LastName" : ""))}
+                    placeholder = {entry[1] === "username" ? props.username : 
+                    (entry[1] === "firstName" ? props.firstname : 
+                    (entry[1] === "lastName" ? props.lastname : 
+                    (entry[1] === 'exp_date' ? "YYYY-MM-DD" : ""
+                    )))}
                 />
             </div>
         );

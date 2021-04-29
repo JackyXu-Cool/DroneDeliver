@@ -758,4 +758,3 @@ BEGIN
 -- End of solution
 END //
 DELIMITER ;
-select FirstName, LastName from USERS join CUSTOMER on USERS.Username = CUSTOMER.Username where CUSTOMER.Username = '';
