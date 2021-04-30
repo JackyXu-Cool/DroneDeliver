@@ -24,7 +24,7 @@ Junqi Xu <br/>
 - [x] Screen 3: Home Screen
 - [x] Screen 4: Admin - Create Grocery Chain
 - [x] Screen 5: Admin - Create Store
-- [ ] Screen 6: Admin - Create Drone
+- [ ] Screen 6: Admin - Create Drone (In Progress)
 - [x] Screen 7: Admin - Create Item
 - [ ] Screen 8: Admin - View Customers
 - [ ] Screen 9: Chain Manager - Create Chain Item
