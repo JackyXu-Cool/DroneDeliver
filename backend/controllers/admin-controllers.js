@@ -6,16 +6,28 @@ const create_grocery_chain = async (req, res, next) => {
     const { chainName } = req.body;
     pool.query(sql, [chainName], (err) => {
         if (err) return next(new HttpError("Fail to create new grocery chain (chain name already exists)", 401));
-        return res.status(201).json({ success: true });
+        res.status(201).json({ success: true });
     })
 };
+
+const get_all_chains = async (req, res, next) => {
+    let sql = `select * from chain`;
+    pool.query(sql, (err, result) => {
+        if (err) return next(new HttpError("Fail to get all chains", 500));
+        list = []
+        result.forEach(r => {
+            list.push(r["ChainName"])
+        });
+        res.status(200).json({chainList: list});
+    })
+}
 
 const create_store = async (req, res, next) => {
     let sql = `CALL admin_create_new_store(?,?,?,?,?,?)`;
     const { storeName, chainName, street, city, state, zipcode } = req.body;
     pool.query(sql, [storeName, chainName, street, city, state, zipcode], (err) => {
         if (err) return next(new HttpError("A chain cannot have two stores in the same zip code", 401));
-        return res.status(201).json({ success: true });
+        res.status(201).json({ success: true });
     });
 };
 
@@ -70,7 +82,7 @@ const create_item = async (req, res, next) => {
     const { itemName, type, organic, origin } = req.body;
     pool.query(sql, [itemName, type, organic, origin], (err) => {
         if (err) return next(new HttpError(err.message, 500));
-        return res.status(201).json({success: true});
+        res.status(201).json({success: true});
     });
 };
 
@@ -94,6 +106,7 @@ const view_customers = async (req, res, next) => {
 };
 
 exports.create_grocery_chain = create_grocery_chain;
+exports.get_all_chains = get_all_chains;
 exports.create_store = create_store;
 exports.create_drone = create_drone;
 exports.get_zipcode = get_zipcode;

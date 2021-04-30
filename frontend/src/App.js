@@ -8,6 +8,8 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
 import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGroceryChainPage";
 import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
+import CreateStorePage from "./pages/CreateStorePage/CreateStorePage";
+import states from "./assets/states";
 
 import classes from "./App.module.scss";
 
@@ -66,6 +68,16 @@ const App = () => {
 
   // Create Grocery Chain State
   const [chainName, setChainName] = useState("");
+
+  // Create Store State
+  const [createStoreInfo, setCreateStoreInfo] = useState({
+    storeName: "",
+    chainName: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: ""
+  })
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -243,7 +255,7 @@ const App = () => {
   /*------------------------------ create grocery chain page handlers ------------------------------*/
   const createChainHandler = (event) => {
     setChainName(event.target.value);
-  }
+  };
 
   const createChain = async (event) => {
     axios.post("http://localhost:5000/admin/create/grocerychain", {
@@ -251,6 +263,44 @@ const App = () => {
     })
     .then(() => {
       alert("successfully created a new chain")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  };
+
+  /* ------------------- Create new store handler -----------------------------*/
+  const onCreateStore = (event) => {
+    var temp = createStoreInfo;
+    if (event.target === undefined) {
+      if (states.includes(event.value)) {
+        temp["state"] = event.value;
+      } else {
+        temp["chainName"] = event.value;
+      }
+    } else {
+      temp[event.target.name] = event.target.value;
+    }
+    setCreateStoreInfo(temp);
+    console.log(createStoreInfo);
+  };
+
+  const submitCreateStore = async() => {
+    if (createStoreInfo.storeName === "" || createStoreInfo.chainName === "" || createStoreInfo.street === ""
+        || createStoreInfo.street === "" || createStoreInfo.city === "" || createStoreInfo.state === "" || createStoreInfo.zipcode === "") {
+      alert("Please fill in all the information!");
+      return;
+    }
+    axios.post("http://localhost:5000/admin/create/store", {
+      storeName: createStoreInfo.storeName,
+      chainName: createStoreInfo.chainName,
+      street: createStoreInfo.street,
+      zipcode: createStoreInfo.zipcode,
+      city: createStoreInfo.city,
+      state: createStoreInfo.state
+    })
+    .then(() => {
+      alert("successfully created a new store")
     })
     .catch((error) => {
       alert(error.response.data.message);
@@ -263,7 +313,7 @@ const App = () => {
       username: localStorage.username
     })
     .then((res)=> {
-      console.log(res)
+      console.log(res);
     })
     .catch((error) => {
       alert(error.response.data.message);
@@ -320,7 +370,12 @@ const App = () => {
             createChain={createChain}
           />
       </Route>
-      
+      <Route path={"/create/store"} exact>
+          <CreateStorePage
+            onCreateStore={onCreateStore}
+            createStore={submitCreateStore}
+          />
+      </Route>
       <Route path={"/customer/changeCCInfo"} exact>
           <ChangeCreditCardPage username={localStorage.username} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
       </Route>

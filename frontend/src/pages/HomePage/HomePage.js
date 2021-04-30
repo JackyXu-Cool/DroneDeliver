@@ -48,7 +48,11 @@ const HomePage = (props) => {
                         Create Grocery Chain
                     </Link>
                 </button>
-                <button className={classes.button_click}>Create Store</button>
+                <button className={classes.button_click}>
+                    <Link className={classes.link_click} to="/create/store">
+                        Create Store
+                    </Link>
+                </button>
             </div>
         );
     }
