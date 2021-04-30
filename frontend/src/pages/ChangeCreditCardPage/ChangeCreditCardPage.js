@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState }  from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import classes from "./ChangeCreditCardPage.module.scss";
 
@@ -13,6 +14,22 @@ const ChangeCreditCardPage = (props) => {
         ["Expiration Date: ", "exp_date"]
     ];
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    axios.get("http://localhost:5000/customer/get/userfullname", {
+        params: {
+          username: localStorage.username
+        }
+      })
+      .then((res)=> {
+        setFirstName(res.data.FirstName);
+        setLastName(res.data.LastName);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      })
+
     const form = entries.map((entry) => {
         return (
             <div className={classes.entry_row} key={entry[1]}>
@@ -24,8 +41,8 @@ const ChangeCreditCardPage = (props) => {
                     onChange={props.onEnter}
                     disabled={entry[1] === 'username' || entry[1] === "firstName" || entry[1] === "lastName"}
                     placeholder = {entry[1] === "username" ? props.username : 
-                    (entry[1] === "firstName" ? props.firstname : 
-                    (entry[1] === "lastName" ? props.lastname : 
+                    (entry[1] === "firstName" ? firstName : 
+                    (entry[1] === "lastName" ? lastName : 
                     (entry[1] === 'exp_date' ? "YYYY-MM-DD" : ""
                     )))}
                 />

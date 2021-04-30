@@ -268,8 +268,8 @@ BEGIN
 END //
 DELIMITER ;
 
--- call manager_view_drones("cbing101", null, null);
--- SELECT * FROM grocery_drone_delivery.manager_view_drones_result;
+call manager_view_drones("cbing101", null, null);
+SELECT * FROM grocery_drone_delivery.manager_view_drones_result;
 
 -- ID: 12a
 -- Author: vtata6

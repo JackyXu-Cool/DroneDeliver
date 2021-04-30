@@ -12,12 +12,17 @@ const HomePage = (props) => {
     if (identity === "Customer") {
         html = (
             <div className={classes.buttons}>
-                <button className={classes.button_click} onClick={props.onCustomerChangeCCInfo}>
-                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom: 15, paddingLeft: 5, paddingRight: 5}} to="/customer/changeCCInfo">
+                <button className={classes.button_click}>
+                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom:15}} to="/customer/changeCCInfo">
                         Change Credit Card Information
-                    </Link></button>
+                    </Link>
+                </button>
                 <button className={classes.button_click}>Review Order</button>
-                <button className={classes.button_click}>View Order History</button>
+                <button className={classes.button_click}>
+                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom:15}} to="/customer/view/orderhistory">
+                        View Order History
+                    </Link>
+                </button>
                 <button className={classes.button_click}>View Store Item</button>
             </div>
         );
@@ -32,7 +37,11 @@ const HomePage = (props) => {
         html = (
             <div className={classes.buttons}>
                 <button className={classes.button_click}>View Drone Technicians</button>
-                <button className={classes.button_click}>View Drones</button>
+                <button className={classes.button_click} onClick={props.onEnterViewDrones}>
+                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom:15}} to="/manager/view/drones">
+                        View Drones
+                    </Link>
+                </button>
                 <button className={classes.button_click}>Create Chain Item</button>
                 <button className={classes.button_click}>Manage Stores</button>
             </div>

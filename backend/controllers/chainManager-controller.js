@@ -32,6 +32,25 @@ const get_PLU = async (req, res, next) => {
     })
 };
 
+const get_filtered_drones = async (req, res, next) => {
+    let sql = `call manager_view_drones(?,?,?)`;
+    let { username, droneID, radius } = req.query;
+
+    droneID = droneID === "" ? null : parseInt(droneID, 10);
+    radius = radius === "" ? null : parseInt(radius, 10);
+
+    pool.query(sql, [ username, droneID, radius ], (err) => {
+        if (err) return next(new HttpError("Fail to get customer information", 500));
+
+        // Select from manager_view_drones_result table
+        pool.query("select * from manager_view_drones_result", (err, r) => {
+            if (err) return next(new HttpError("Fail to select table", 500));
+            res.status(200).json({result: r});
+        });
+    })
+}
+
 exports.create_chain_item = create_chain_item;
 exports.get_all_items = get_all_items;
 exports.get_PLU = get_PLU;
+exports.get_filtered_drones = get_filtered_drones;

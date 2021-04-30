@@ -1,0 +1,288 @@
+@import "../../assets/design.scss";
+
+.ViewDronesPage {
+    position: relative;
+    width: 100vh;
+    height: 100vh;
+    background-color: white;
+    margin: 0;
+
+    .content {
+        position: relative;
+        width: 600px;
+        height: 550px;
+        top: 10%;
+        left: 10%;
+        border: 4px solid $tech-metallic-gold;
+        border-radius: 8px;
+        align-content: center;
+        text-align: center;
+
+        .title {
+            position: relative;
+            width: 100%;
+            align-self: center;
+            margin-bottom: 20px;
+        }
+
+        .top_entry_row {
+            position: relative;
+            height: 40px;
+
+            .drone_id_label {
+                font-size: 20px;
+                text-decoration: none;
+                margin-left: 40px;
+                float: left;
+            }
+
+            .input_entry {
+                display: inline;
+                float: left;
+                margin-left: 20px;
+                width: 100px;
+                height: 25px;
+            }
+
+            .radius_label {
+                font-size: 20px;
+                text-decoration: none;
+                margin-left: 100px;
+                float: left;
+            }
+        }
+
+
+        .top_btn_row {
+            position: relative;
+            height:40px;
+
+            .sort_by_label {
+                font-size: 20px;
+                text-decoration: none;
+                margin-left: 40px;
+                float: left;
+            }
+
+            .sort_by_droplist {
+                border-radius: 3px;
+                border: 1px solid black;
+                display: inline;
+                float: left;
+                margin-left: 34px;
+                width: 100px;
+                height: 25px;
+            }
+
+            .btn_filter {
+                width: 100px;
+                height: 30px;
+                float: right;
+                margin-right: 60px;
+            }
+        }
+
+        .header_row {
+            margin: 5px 13px 0px 10px;
+            height: 40px;
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "Avenir", serif;
+            color: white;
+
+            .drone_id_header {
+                float: left;
+                width: 90px;
+                background-color: #4473c4;
+                height: 40px;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+
+            .operator_header {
+                float: left;
+                width: 200px;
+                height: 40px;
+                background-color: #4473c4;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+
+            .radius_header {
+                float: left;
+                width: 80px;
+                background-color: #4473c4;
+                height: 40px;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+
+            .zip_header {
+                float: left;
+                width: 100px;
+                height: 40px;
+                background-color: #4473c4;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+
+            .status_header {
+                float: left;
+                width: 91px;
+                height: 40px;
+                background-color: #4473c4;
+                padding-top: 8px;
+            }
+        }
+
+        .displayed_drones_container {
+            overflow-y: scroll;
+            scrollbar-width: 5px;
+            margin-left: 10px;
+            height: 275px;
+
+            .drone_entry_odd {
+                margin-top: 1px;
+                margin-bottom: 0px;
+                height: 40px;
+                list-style-type: none;
+                padding: 0;
+                font-size: 18px;
+                font-weight: bold;
+                font-family: "Avenir", serif;
+
+                .drone_id_entry {
+                    float: left;
+                    width: 90px;
+                    background-color: #aaa;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .operator_entry {
+                    float: left;
+                    width: 200px;
+                    height: 40px;
+                    background-color: #aaa;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .radius_entry {
+                    float: left;
+                    width: 80px;
+                    background-color: #aaa;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .zip_entry {
+                    float: left;
+                    width: 100px;
+                    height: 40px;
+                    background-color: #aaa;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .status_entry {
+                    float: left;
+                    width: 91px;
+                    height: 40px;
+                    background-color: #aaa;
+                    padding-top: 8px;
+                }
+            }
+
+            .drone_entry_even {
+                margin-top: 1px;
+                margin-bottom: 0px;
+                height: 40px;
+                list-style-type: none;
+                padding: 0;
+                font-size: 18px;
+                font-weight: bold;
+                font-family: "Avenir", serif;
+
+                .drone_id_entry {
+                    float: left;
+                    width: 90px;
+                    background-color: #efefef;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .operator_entry {
+                    float: left;
+                    width: 200px;
+                    height: 40px;
+                    background-color: #efefef;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .radius_entry {
+                    float: left;
+                    width: 80px;
+                    background-color: #efefef;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .zip_entry {
+                    float: left;
+                    width: 100px;
+                    height: 40px;
+                    background-color: #efefef;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .status_entry {
+                    float: left;
+                    width: 91px;
+                    height: 40px;
+                    background-color: #efefef;
+                    padding-top: 8px;
+                }
+            }
+        }
+
+        .btn_back {
+            margin-top: 15px;
+            float: left;
+            margin-left: 10px;
+            width: 100px;
+            height: 30px;
+            background-color: #808080;
+
+            &:hover {
+                background-color: slategray;
+            }
+            
+            .link_back {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                padding-left: 25px;
+                padding-right: 25px;
+                padding-top: 7%;
+                padding-bottom: 7%;
+            }
+        }
+
+        .btn_reset {
+            margin-top: 15px;
+            margin-right: 10px;
+            float: right;
+            width: 100px;
+            height: 30px;
+        }
+    }
+}

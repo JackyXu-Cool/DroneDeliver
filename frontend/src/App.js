@@ -10,6 +10,9 @@ import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGrocery
 import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
 import CreateStorePage from "./pages/CreateStorePage/CreateStorePage";
 import CreateItemPage from "./pages/CreateItemPage/CreateItemPage";
+import ViewOrderHistoryPage from "./pages/ViewOrderHistoryPage/ViewOrderHistoryPage";
+import ViewDronesPage from "./pages/ViewDronesPage/ViewDronesPage";
+
 import states from "./assets/states";
 import types from "./assets/types";
 
@@ -66,8 +69,6 @@ const App = () => {
     cvv: "",
     exp_date: "",
   });
-  const [ccInfoFirstName, setCCInfoFirstName] = useState("First Name");
-  const [ccInfoLastName, setCCInfoLastName] = useState("Last Name");
 
   // Create Grocery Chain State
   const [chainName, setChainName] = useState("");
@@ -89,6 +90,14 @@ const App = () => {
     organic: "",
     origin: ""
   });
+
+  // View drones State
+  const [droneFilters, setDroneFilters] = useState({
+    droneID: "",
+    radius: ""
+  })
+
+  const [displayedDrones, setDisplayedDrones] = useState([]);
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -350,29 +359,101 @@ const App = () => {
       alert(error.response.data.message);
     })
   }
+  /*------------------------------ manager view drones page handlers ------------------------------*/
+  const enterDroneFilter = (event) => {
+    var temp = droneFilters;
+    temp[event.target.name] = event.target.value;
+    setDroneFilters(temp);
+  }
 
-  /*------------------------------ change credit card info page handlers ------------------------------*/
-  const userInfoPrefillChangeCCInfo =  async () => {
-    axios.get("http://localhost:5000/customer/get/userfullname", {
+  const onViewDroneScreen = async () => {
+    setDroneFilters({
+      droneID: "",
+      radius: ""
+    });
+    
+    // Previous set droneFilter statement always lag behind 1 button click for some reason
+    // (i.e. after clicking once, droneFilter does not get reset, after another click it get reset)
+    // thus making get request with hardcoded parameters instead of calling onFilter(). Same reason for functions below
+    axios.get("http://localhost:5000/manager/get/filteredDrones", {
       params: {
-        username: localStorage.username
+        username: localStorage.username,
+        droneID: "",
+        radius: ""
       }
     })
     .then((res)=> {
-      setCCInfoFirstName(res.data.FirstName);
-      setCCInfoLastName(res.data.LastName);      
+      setDisplayedDrones(res.data.result);
     })
     .catch((error) => {
       alert(error.response.data.message);
     })
-  };
+  }
 
+  const onFilterDrones = async () => {
+
+    axios.get("http://localhost:5000/manager/get/filteredDrones", {
+      params: {
+        username: localStorage.username,
+        droneID: droneFilters.droneID,
+        radius: droneFilters.radius
+      }
+    })
+    .then((res)=> {
+      setDisplayedDrones(res.data.result);
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  }
+
+  const onResetDroneFilters = async () => {
+    axios.get("http://localhost:5000/manager/get/filteredDrones", {
+      params: {
+        username: localStorage.username,
+        droneID: "",
+        radius: ""
+      }
+    })
+    .then((res)=> {
+      setDisplayedDrones(res.data.result);
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  }
+
+  const onSelectDroneSortBy = (event) => {
+    let sort_by = event.target.value;
+    let temp = displayedDrones;
+    if (sort_by === "DroneIDUp") {
+      temp.sort((a,b)=>(a.ID - b.ID));
+    } else if (sort_by === "DroneIDDown") {
+      temp.sort((a,b)=>(b.ID - a.ID));
+    } else if (sort_by === "RadiusUp") {
+      temp.sort((a,b) => a.Radius - b.Radius);
+    } else if (sort_by === "RadiusDown") {
+      temp.sort((a,b) => b.Radius - a.Radius);
+    } else if (sort_by === "ZipcodeUp") {
+      temp.sort((a,b) => a.Zip - b.Zip);
+    } else if (sort_by === "ZipcodeDown") {
+      temp.sort((a,b) => b.Zip - a.Zip);
+    } else if (sort_by === "StatusUp") {
+      temp.sort((a,b)=> (a.DroneStatus > b.DroneStatus ? 1 : -1))
+    } else if (sort_by === "StatusDown") {
+      temp.sort((a,b)=> (a.DroneStatus > b.DroneStatus ? -1 : 1))
+    }
+    
+    setDisplayedDrones(temp);
+    setDummy(dummy+1);
+  }
+
+  /*------------------------------ change credit card info page handlers ------------------------------*/
   const enterCCInfo = (event) => {
     var temp = ccInfo;
     temp[event.target.name] = event.target.value;
     setCCInfo(temp);
   }
-
 
   const submitCCInfo = () => {
     console.log({
@@ -398,7 +479,7 @@ const App = () => {
       alert("Expiration Date must not be empty");
       return
     }
-    if (Date.parse(new Date) >= Date.parse(ccInfo.exp_date)) {
+    if (Date.parse(new Date()) >= Date.parse(ccInfo.exp_date)) {
       alert("Card must not be expired");
       return
     }
@@ -449,8 +530,8 @@ const App = () => {
         />
       </Route>
       <Route path={"/home"} exact>
-          <HomePage 
-            onCustomerChangeCCInfo={userInfoPrefillChangeCCInfo}
+          <HomePage
+            onEnterViewDrones={onViewDroneScreen}
           />
       </Route>
       <Route path={"/create/grocerychain"} exact>
@@ -471,8 +552,25 @@ const App = () => {
           submitCreateNewItem={submitNewItem}
         />
       </Route>
+      <Route path={"/manager/view/drones"} exact>
+        <ViewDronesPage
+          droneFilters={droneFilters}
+          onEnter={enterDroneFilter}
+          onFilter={onFilterDrones}
+          onSort={onSelectDroneSortBy}
+          displayedDrones={displayedDrones}
+          onReset={onResetDroneFilters}
+        />
+      </Route>
       <Route path={"/customer/changeCCInfo"} exact>
-          <ChangeCreditCardPage username={localStorage.username} firstname={ccInfoFirstName} lastname={ccInfoLastName} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
+        <ChangeCreditCardPage
+          username={localStorage.username}
+          onEnter={enterCCInfo}
+          onSubmit={submitCCInfo}
+        />
+      </Route>
+      <Route path={"/customer/view/orderhistory"} exact>
+        <ViewOrderHistoryPage/>
       </Route>
     </BrowserRouter>
   );
