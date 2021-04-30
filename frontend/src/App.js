@@ -10,6 +10,7 @@ import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGrocery
 import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
 import CreateStorePage from "./pages/CreateStorePage/CreateStorePage";
 import CreateItemPage from "./pages/CreateItemPage/CreateItemPage";
+import CreateDronePage from "./pages/CreateDronePage/CreateDronePage";
 import ViewOrderHistoryPage from "./pages/ViewOrderHistoryPage/ViewOrderHistoryPage";
 import ViewDronesPage from "./pages/ViewDronesPage/ViewDronesPage";
 
@@ -621,6 +622,11 @@ const App = () => {
           onCreateItem={onCreateNewItem}
           submitCreateNewItem={submitNewItem}
         />
+      </Route>
+      <Route path={"/create/drone"} exact>
+          <CreateDronePage
+
+          />
       </Route>
       <Route path={"/manager/view/drones"} exact>
         <ViewDronesPage

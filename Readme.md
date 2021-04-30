@@ -17,3 +17,45 @@ Yulai Cui <br/>
 Jiayu Lu <br/>
 Shiyi Wang <br/>
 Junqi Xu <br/>
+
+### Frontend Screen
+- [x] Screen 1: Login
+- [x] Screen 2: Register
+- [x] Screen 3: Home Screen
+- [x] Screen 4: Admin - Create Grocery Chain
+- [x] Screen 5: Admin - Create Store
+- [] Screen 6: Admin - Create Drone
+- [x] Screen 7: Admin - Create Item
+- [] Screen 8: Admin - View Customers
+- [] Screen 9: Chain Manager - Create Chain Item
+- [] Screen 10: Chain Manager - View Drone Technicians
+- [] Screen 11: Chain Manager - View Drones
+- [] Screen 12: Chain Manager - Manage Stores
+- [] Screen 13: Customer - Change Credit Card Info
+- [] Screen 14: Customer - View Order History
+- [] Screen 15: Customer - View Store Item
+- [] Screen 16: Customer - Review Order
+- [] Screen 17: Drone Tech - View Store Orders
+- [] Screen 18: Drone Tech - View Order Details
+- [] Screen 19: Drone Tech - Tracke Assigned Drones
+
+### Backend Route
+- [x] Screen 1: Login
+- [x] Screen 2: Register
+- [x] Screen 3: Home Screen
+- [x] Screen 4: Admin - Create Grocery Chain
+- [x] Screen 5: Admin - Create Store
+- [x] Screen 6: Admin - Create Drone
+- [x] Screen 7: Admin - Create Item
+- [x] Screen 8: Admin - View Customers
+- [x] Screen 9: Chain Manager - Create Chain Item
+- [] Screen 10: Chain Manager - View Drone Technicians
+- [] Screen 11: Chain Manager - View Drones
+- [] Screen 12: Chain Manager - Manage Stores
+- [] Screen 13: Customer - Change Credit Card Info
+- [] Screen 14: Customer - View Order History
+- [] Screen 15: Customer - View Store Item
+- [] Screen 16: Customer - Review Order
+- [] Screen 17: Drone Tech - View Store Orders
+- [] Screen 18: Drone Tech - View Order Details
+- [] Screen 19: Drone Tech - Tracke Assigned Drones
