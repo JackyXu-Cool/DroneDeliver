@@ -31,7 +31,7 @@ Junqi Xu <br/>
 - [ ] Screen 10: Chain Manager - View Drone Technicians
 - [x] Screen 11: Chain Manager - View Drones
 - [ ] Screen 12: Chain Manager - Manage Stores
-- [ ] Screen 13: Customer - Change Credit Card Info
+- [x] Screen 13: Customer - Change Credit Card Info
 - [x] Screen 14: Customer - View Order History
 - [ ] Screen 15: Customer - View Store Item
 - [ ] Screen 16: Customer - Review Order
@@ -52,7 +52,7 @@ Junqi Xu <br/>
 - [x] Screen 10: Chain Manager - View Drone Technicians
 - [x] Screen 11: Chain Manager - View Drones
 - [x] Screen 12: Chain Manager - Manage Stores
-- [ ] Screen 13: Customer - Change Credit Card Info
+- [x] Screen 13: Customer - Change Credit Card Info
 - [x] Screen 14: Customer - View Order History
 - [ ] Screen 15: Customer - View Store Item
 - [ ] Screen 16: Customer - Review Order
