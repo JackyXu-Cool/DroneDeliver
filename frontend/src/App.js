@@ -64,7 +64,8 @@ const App = () => {
     cvv: "",
     exp_date: "",
   });
-
+  const [ccInfoFirstName, setCCInfoFirstName] = useState("First Name");
+  const [ccInfoLastName, setCCInfoLastName] = useState("Last Name");
 
   // Create Grocery Chain State
   const [chainName, setChainName] = useState("");
@@ -310,10 +311,13 @@ const App = () => {
   /*------------------------------ change credit card info page handlers ------------------------------*/
   const userInfoPrefillChangeCCInfo =  async () => {
     axios.get("http://localhost:5000/customer/get/userfullname", {
-      username: localStorage.username
+      params: {
+        username: localStorage.username
+      }
     })
     .then((res)=> {
-      console.log(res);
+      setCCInfoFirstName(res.data.FirstName);
+      setCCInfoLastName(res.data.LastName);      
     })
     .catch((error) => {
       alert(error.response.data.message);
@@ -326,8 +330,50 @@ const App = () => {
     setCCInfo(temp);
   }
 
+
   const submitCCInfo = () => {
-    console.log(ccInfo);
+    console.log({
+      username: localStorage.username,
+      ccNumber: ccInfo.ccNumber,
+      cvv: ccInfo.cvv,
+      exp_date: ccInfo.exp_date
+    });
+
+    let today = new Date();
+    console.log(today.getTime())
+    console.log(Date.parse())
+
+    if (ccInfo.ccNumber === "") {
+      alert("Credit Card Number must not be empty");
+      return
+    }
+    if (ccInfo.cvv === "") {
+      alert("Security Code must not be empty");
+      return
+    }
+    if (ccInfo.exp_date === "") {
+      alert("Expiration Date must not be empty");
+      return
+    }
+    if (Date.parse(new Date) >= Date.parse(ccInfo.exp_date)) {
+      alert("Card must not be expired");
+      return
+    }
+    
+    
+    axios.post("http://localhost:5000/customer/change/ccinfo", {
+      username: localStorage.username,
+      ccNumber: ccInfo.ccNumber,
+      cvv: ccInfo.cvv,
+      exp_date: ccInfo.exp_date
+    })
+    .then(() => {
+      alert("successfully updated credit card information")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+
   }
 
   return (
@@ -377,7 +423,7 @@ const App = () => {
           />
       </Route>
       <Route path={"/customer/changeCCInfo"} exact>
-          <ChangeCreditCardPage username={localStorage.username} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
+          <ChangeCreditCardPage username={localStorage.username} firstname={ccInfoFirstName} lastname={ccInfoLastName} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
       </Route>
     </BrowserRouter>
   );
