@@ -8,7 +8,8 @@ const Entry = (props) => {
       <input
         className={classes.input}
         name={props.name}
-        onChange={props.enterLogin}
+        type={props.type}
+        onChange={props.onChange}
       />
     </div>
   );

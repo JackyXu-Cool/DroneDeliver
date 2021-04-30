@@ -15,7 +15,8 @@ const LoginPage = (props) => {
             text={"Username: "}
             name="loginUsername"
             login={props.login}
-            enterLogin={props.enterLogin}
+            type="text"
+            onChange={props.enterLogin}
           />
         </div>
         <div className={classes.entry}>
@@ -23,7 +24,8 @@ const LoginPage = (props) => {
             text={"Password: "}
             name="loginPassword"
             login={props.login}
-            enterLogin={props.enterLogin}
+            type="password"
+            onChange={props.enterLogin}
           />
         </div>
         <div className={classes.buttons}>

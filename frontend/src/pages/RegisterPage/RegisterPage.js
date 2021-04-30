@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 import RegisterOption from "../../components/RegisterOption/RegisterOption";
 import classes from "./RegisterPage.module.scss";
@@ -19,12 +21,18 @@ const RegisterPage = (props) => {
     ["Zip: ", "zip"],
   ];
 
+  const states = ["AL", "AK", "AZ", "AR", "CA","CO", "CT", "DE", "FL", "GA", "HI",
+  "ID", "IL","IN","IA","KS","LA","ME","MD", "MA","MI", "MN", "MS", "MO", "MT",
+  "NE","NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX",
+  "UT", "VT","VA", "WA", "WV", "WI", "WY"]
+
   const leftEntries = leftCol.map((text) => {
     return (
       <div id={text[1]} className={classes.left_entry}>
         <h2 className={classes.left_entry_label}>{text[0]}</h2>
         <input
           className={classes.left_entry_input}
+          type={(text[1] === "password" || text[1] === "confirm") ? "password" : "text"}
           name={text[1]}
           onChange={props.enterRegister}
         />
@@ -33,16 +41,29 @@ const RegisterPage = (props) => {
   });
 
   const rightEntries = rightCol.map((text) => {
-    return (
-      <div id={text[1]} className={classes.right_entry}>
-        <h2 className={classes.right_entry_label}>{text[0]}</h2>
-        <input
-          className={classes.right_entry_input}
-          name={text[1]}
-          onChange={props.enterRegister}
-        />
-      </div>
-    );
+    if (text[1] === "state") {
+      return (
+        <div id={text[1]} className={classes.right_entry}>
+          <h2 className={classes.right_entry_label}>{text[0]}</h2>
+          <Dropdown name={text[1]} 
+                    className={classes.right_entry_input} 
+                    options={states} 
+                    onChange={props.enterRegister} 
+                    value={states[0]} />
+        </div>
+      )
+    } else {
+      return (
+        <div id={text[1]} className={classes.right_entry}>
+          <h2 className={classes.right_entry_label}>{text[0]}</h2>
+          <input
+            className={classes.right_entry_input}
+            name={text[1]}
+            onChange={props.enterRegister}
+          />
+        </div>
+      );
+    }
   });
 
   let success = "";

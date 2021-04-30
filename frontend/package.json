@@ -58,6 +58,7 @@
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^3.0.2",
     "react-dom": "^16.13.1",
+    "react-dropdown": "^1.9.2",
     "react-router-dom": "^5.2.0",
     "react-three": "^0.9.7",
     "react-three-fiber": "^5.3.18",
