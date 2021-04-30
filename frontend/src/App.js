@@ -9,7 +9,9 @@ import HomePage from "./pages/HomePage/HomePage";
 import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGroceryChainPage";
 import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
 import CreateStorePage from "./pages/CreateStorePage/CreateStorePage";
+import CreateItemPage from "./pages/CreateItemPage/CreateItemPage";
 import states from "./assets/states";
+import types from "./assets/types";
 
 import classes from "./App.module.scss";
 
@@ -78,7 +80,15 @@ const App = () => {
     city: "",
     state: "",
     zipcode: ""
-  })
+  });
+
+  // Create Item State
+  const [createItemInfo, setCreateItemInfo] = useState({
+    itemName: "",
+    type: "",
+    organic: "",
+    origin: ""
+  });
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -283,7 +293,6 @@ const App = () => {
       temp[event.target.name] = event.target.value;
     }
     setCreateStoreInfo(temp);
-    console.log(createStoreInfo);
   };
 
   const submitCreateStore = async() => {
@@ -302,6 +311,40 @@ const App = () => {
     })
     .then(() => {
       alert("successfully created a new store")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
+  }
+
+  /** --------------- Create new item handler */
+  const onCreateNewItem = (event) => {
+    var temp = createItemInfo;
+    if (event.target === undefined) {
+      if (types.includes(event.value)) {
+        temp["type"] = event.value;
+      } else {
+        temp["organic"] = event.value;
+      }
+    } else {
+      temp[event.target.name] = event.target.value;
+    }
+    setCreateItemInfo(temp);
+  }
+
+  const submitNewItem = () => {
+    if (createItemInfo.origin === "" || createItemInfo.type === "" || createItemInfo.itemName === "" || createItemInfo.organic === "") {
+      alert("Please fill in all the information!");
+      return;
+    }
+    axios.post("http://localhost:5000/admin/create/item", {
+      itemName: createItemInfo.itemName,
+      type: createItemInfo.type,
+      organic: createItemInfo.organic,
+      origin: createItemInfo.origin
+    })
+    .then(() => {
+      alert("successfully created a new item")
     })
     .catch((error) => {
       alert(error.response.data.message);
@@ -421,6 +464,12 @@ const App = () => {
             onCreateStore={onCreateStore}
             createStore={submitCreateStore}
           />
+      </Route>
+      <Route path={"/create/item"} exact>
+        <CreateItemPage
+          onCreateItem={onCreateNewItem}
+          submitCreateNewItem={submitNewItem}
+        />
       </Route>
       <Route path={"/customer/changeCCInfo"} exact>
           <ChangeCreditCardPage username={localStorage.username} firstname={ccInfoFirstName} lastname={ccInfoLastName} onEnter={enterCCInfo} onSubmit={submitCCInfo}/>
