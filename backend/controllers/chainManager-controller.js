@@ -48,7 +48,7 @@ const get_filtered_drones = async (req, res, next) => {
             res.status(200).json({result: r});
         });
     })
-}
+};
 
 exports.create_chain_item = create_chain_item;
 exports.get_all_items = get_all_items;
