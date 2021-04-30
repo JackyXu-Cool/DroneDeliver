@@ -100,6 +100,17 @@ const App = () => {
 
   const [displayedDrones, setDisplayedDrones] = useState([]);
 
+  // View drones State
+  const [customerViewOrdeRIDs, setCustomerViewOrdeRIDs] = useState([]);
+  const [customerViewOrderInfo, setCustomerViewOrderInfo] = useState({
+    total_amount: "",
+    total_items: "",
+    orderdate: "",
+    droneID: "",
+    dronetech: "",
+    orderstatus: ""
+  });
+
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
   const enterLogin = (event) => {
@@ -501,6 +512,64 @@ const App = () => {
 
   }
 
+  /*------------------------------ customer view order history page handler ------------------------------*/
+  const onViewOrderHistory = async () => {
+    axios.get("http://localhost:5000/customer/get/orderIDs", {
+      params: {
+        username: localStorage.username,
+      }
+    })
+    .then((res)=> {
+      let temp = res.data.res.map((entry=>entry.ID)).sort()
+      setCustomerViewOrdeRIDs(temp);
+      if (temp.length > 0) {
+        let id = temp[0];
+        axios.get("http://localhost:5000/customer/get/orderInfo", {
+          params: {
+            username: localStorage.username,
+            orderId: id
+          }
+        })
+        .then((res)=> {
+          let order_detail_info = res.data.result[0];
+          let order_date = order_detail_info.orderdate;
+          order_detail_info.orderdate = order_date.substring(0,10);
+
+          setCustomerViewOrderInfo(order_detail_info);
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        
+      }
+
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
+
+  const onSelectViewOrderID = async (event) => {
+    let order_id = event.target.value;
+    axios.get("http://localhost:5000/customer/get/orderInfo", {
+      params: {
+        username: localStorage.username,
+        orderId: order_id
+      }
+    })
+    .then((res)=> {
+      let order_detail_info = res.data.result[0];
+      let order_date = order_detail_info.orderdate;
+      order_detail_info.orderdate = order_date.substring(0,10);
+
+      setCustomerViewOrderInfo(order_detail_info);
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
+
+
   return (
     <BrowserRouter className={classes.app}>
       <Route path={"/"} exact>
@@ -533,6 +602,7 @@ const App = () => {
       <Route path={"/home"} exact>
           <HomePage
             onEnterViewDrones={onViewDroneScreen}
+            onEnterViewOrderHistory={onViewOrderHistory}
           />
       </Route>
       <Route path={"/create/grocerychain"} exact>
@@ -576,7 +646,12 @@ const App = () => {
         />
       </Route>
       <Route path={"/customer/view/orderhistory"} exact>
-        <ViewOrderHistoryPage/>
+        <ViewOrderHistoryPage
+          username={localStorage.username}
+          orderIDs={customerViewOrdeRIDs}
+          orderInfo={customerViewOrderInfo}
+          onSelect={onSelectViewOrderID}
+        />
       </Route>
     </BrowserRouter>
   );

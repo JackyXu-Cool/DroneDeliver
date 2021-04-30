@@ -372,26 +372,15 @@ BEGIN
 	
 	create table customer_view_order_history_result
 		select round(@temp_total_amount, 2) as total_amount, round(@temp_total_item) as total_items, 
-		OrderDate as orderdate, DroneID as droneID, DroneTech as dronetech, OrderStatus as orderstatus
-		from ORDERS join DRONE on DRONE.ID = DroneID
+		OrderDate as orderdate, DroneID as droneID, concat(FirstName, " ", LastName) as dronetech, OrderStatus as orderstatus
+		from ORDERS join DRONE join USERS on DRONE.ID = DroneID and USERS.username = DRONE.DroneTech 
 		where ORDERS.ID = i_orderid and (select CustomerUsername from ORDERS where ID = i_orderid) = i_username and (select Username from CUSTOMER where Username = i_username) is not null;
 
-	if (select Username from CUSTOMER where Username = i_username) is not null and 
-    (select CustomerUsername from ORDERS where ID = i_orderid) = i_username then
-    
-		set @temp_total_item = (select sum(Quantity) from CONTAINS where OrderID = i_orderid);
-		set @temp_total_amount = (select sum(CONTAINS.Quantity * Price) from CONTAINS join CHAIN_ITEM on 
-        ItemName = ChainItemName and CONTAINS.ChainName = CHAIN_ITEM.ChainName and CONTAINS.PLUNumber = CHAIN_ITEM.PLUNumber
-        where OrderID = i_orderid);
-        
-        create table customer_view_order_history_result
-        select @temp_total_price;
-	end if;
 -- End of solution
 END //
 DELIMITER ;
 
--- CALL customer_view_order_history('akarev16', 10002);
+-- CALL customer_view_order_history('hpeterson55', 10001);
 -- SELECT * FROM grocery_drone_delivery.customer_view_order_history_result;
 
 -- ID: 15a

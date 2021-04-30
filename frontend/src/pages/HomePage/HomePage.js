@@ -18,7 +18,7 @@ const HomePage = (props) => {
                     </Link>
                 </button>
                 <button className={classes.button_click}>Review Order</button>
-                <button className={classes.button_click}>
+                <button className={classes.button_click} onClick={props.onEnterViewOrderHistory}>
                     <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom:15}} to="/customer/view/orderhistory">
                         View Order History
                     </Link>
