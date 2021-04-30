@@ -50,7 +50,42 @@ const get_filtered_drones = async (req, res, next) => {
     })
 };
 
+// Manager view drone technicians
+const view_drone_technicians = async (req, res, next) => {
+  let sql = `CALL manager_view_drone_technicians(?,?,?)`;
+  const { chainName, dronTech, storName } = req.body;
+  pool.query(sql, [chainName, dronTech, storName], (err, result) => {
+    if (err) return next(new HttpError(err.message, 500));
+
+    // Select from manager_view_drone_technicians_result table
+    pool.query(
+      "select * from manager_view_drone_technicians_result",
+      (err, r) => {
+        if (err) return next(new HttpError("Fail to select table", 500));
+        res.status(200).json({ result: r });
+      }
+    );
+  });
+};
+
+// Manager manage stores
+const manage_stores = async (req, res, next) => {
+  let sql = `CALL manager_manage_stores(?,?,?,?)`;
+  const { userName, storeName, minTotal, maxTotal } = req.body;
+  pool.query(sql, [userName, storeName, minTotal, maxTotal], (err, result) => {
+    if (err) return next(new HttpError(err.message, 500));
+
+    //Select from manager_manage_stores_result
+    pool.query("select * from manager_manage_stores_result", (err, r) => {
+      if (err) return next(new HttpError("Fail to select table", 500));
+      res.status(200).json({ result: r });
+    });
+  });
+};
+
 exports.create_chain_item = create_chain_item;
 exports.get_all_items = get_all_items;
 exports.get_PLU = get_PLU;
 exports.get_filtered_drones = get_filtered_drones;
+exports.view_drone_technicians = view_drone_technicians;
+exports.manage_stores = manage_stores;

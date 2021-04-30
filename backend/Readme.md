@@ -27,7 +27,6 @@ https://stackoverflow.com/questions/52815608/er-not-supported-auth-mode-client-d
 To initialize the database，run grocery_drone_delivery.mysql in the workbench
 <br />
 
-
 ### Backend API
 
 When sending request from frontend，put data in request body
@@ -209,11 +208,13 @@ output
     ]
 }
 ```
+
 9. **/admin/get/droneid** GET
-Get the (lastID+1) from the drone table. Might be helpful for Screen 6, Drone ID textfield
+   Get the (lastID+1) from the drone table. Might be helpful for Screen 6, Drone ID textfield
+
 ```json
 {
-    "id": 122
+  "id": 122
 }
 ```
 
@@ -294,8 +295,10 @@ sample output
     "success": true
 }
 ```
-14. **/manager/get/items**  GET <br/>
-Get all items created by admin. Useful for Screen 9
+
+14. **/manager/get/items** GET <br/>
+    Get all items created by admin. Useful for Screen 9
+
 ```json
 output
 {
@@ -304,7 +307,8 @@ output
 ```
 
 15. **/manager/get/plu** GET <br />
-Get the (plu of last created item) + 1.
+    Get the (plu of last created item) + 1.
+
 ```json
 output
 {
@@ -312,9 +316,76 @@ output
 }
 ```
 
+16. **/manager/view/technicians** GET <br />
+    Manager view drone technicians
+
+```json
+sample input
+{
+    "chainName": "Moss Market",
+    "droneTech": "fdavenport49",
+    "storeName": "College Park"
+}
+
+sample output
+{
+    "result": [
+        {
+            "Username": "fdavenport49",
+            "FullName": "Felicia Devenport",
+            "StoreName": "College Park"
+        },
+        {
+            "Username": "mgeller3",
+            "FullName": "Monica  Geller",
+            "StoreName": "College Park"
+        },
+        {
+            "Username": "lchen27",
+            "FullName": "Liang Chen",
+            "StoreName": "KSU Center"
+        }
+    ]
+}
+```
+
+17. **/manager/manage/stores** GET <br />
+    Manager manage store
+
+```json
+sample input
+{
+    "userName": "rgreen97",
+    "storeName": null,
+    "minTotal": 10,
+    "maxTotal": 120
+}
+
+sample output
+{
+    "result": [
+        {
+            "StoreName": "Midtown",
+            "Address": "725 Ponce De Leon Ave Atlanta, GA 30332",
+            "Orders": 1,
+            "Employees": 2,
+            "Total": 13.98
+        },
+        {
+            "StoreName": "Norcross",
+            "Address": "650 Singleton Road Duluth, GA 30047",
+            "Orders": 1,
+            "Employees": 2,
+            "Total": 111.5
+        }
+    ]
+}
+
+```
 
 Note:
 For any of the above APIs, if there is a request failure，the response will be like this.
+
 ```json
 {
     "message": "xxxxxxxxx"
