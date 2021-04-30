@@ -22,7 +22,69 @@
             position: relative;
             width: 100%;
             align-self: center;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            position: relative;
+            height: 25px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+
+            .label {
+                font-size: 20px;
+                text-decoration: none;
+                float: left;
+                margin-left: 75px;
+            }
+
+            .entry {
+                border-radius: 3px;
+                border: 1px solid black;
+                display: inline;
+                float: right;
+                margin-right: 120px;
+                width: 200px;
+                height: 25px;
+                background: #ddd;
+                font-size: 18px;
+                color: black;
+            }
+
+            .droplist {
+                border-radius: 3px;
+                border: 1px solid black;
+                display: inline;
+                float: right;
+                margin-right: 120px;
+                width: 200px;
+                height: 25px;
+                background: white;
+                font-size: 18px;
+            }
+        }
+
+        .btn_back {
+            margin-top: 50px;
+            float: left;
+            margin-left: 50px;
+            width: 100px;
+            height: 30px;
+            background-color: #808080;
+
+            &:hover {
+                background-color: slategray;
+            }
+            
+            .link_back {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                padding-left: 25px;
+                padding-right: 25px;
+                padding-top: 7%;
+                padding-bottom: 7%;
+            }
         }
     }
 }
