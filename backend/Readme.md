@@ -250,7 +250,7 @@ output
 }
 ```
 
-12. **/admin/view/customers** GET
+12. **/admin/view/customers** POST
 ```json
 input (Should always have lastName and firstName sent as request body. If the user
 does not enter firstName or lastName, just leave it as empty string)

@@ -13,6 +13,7 @@ import CreateItemPage from "./pages/CreateItemPage/CreateItemPage";
 import CreateDronePage from "./pages/CreateDronePage/CreateDronePage";
 import ViewOrderHistoryPage from "./pages/ViewOrderHistoryPage/ViewOrderHistoryPage";
 import ViewDronesPage from "./pages/ViewDronesPage/ViewDronesPage";
+import ViewCustomerPage from "./pages/ViewCustomerPage/ViewCustomerPage";
 
 import states from "./assets/states";
 import types from "./assets/types";
@@ -625,8 +626,11 @@ const App = () => {
       </Route>
       <Route path={"/create/drone"} exact>
           <CreateDronePage
-
           />
+      </Route>
+      <Route path={"/admin/view/customers"} exact>
+        <ViewCustomerPage
+        />
       </Route>
       <Route path={"/manager/view/drones"} exact>
         <ViewDronesPage

@@ -59,7 +59,11 @@ const HomePage = (props) => {
                         Create Drone
                     </Link>
                 </button>
-                <button className={classes.button_click}>View Customer Info</button>
+                <button className={classes.button_click}>
+                    <Link className={classes.link_click} to="/admin/view/customers">
+                        View Customer Info
+                    </Link>
+                </button>
                 <button className={classes.button_click}>
                     <Link className={classes.link_click} to="/create/grocerychain">
                         Create Grocery Chain
