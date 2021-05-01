@@ -42,7 +42,7 @@ const create_drone = async (req, res, next) => {
 
 // This path is to get zip codes of existing store locations.
 const get_zipcode = async (req, res, next) => {
-    let sql = `select zipcode from store`;
+    let sql = `select distinct zipcode from store`;
     pool.query(sql, (err, result) => {
         if (err) return next(new HttpError(err.message, 500));
         zipcodeList = [];

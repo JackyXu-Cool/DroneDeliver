@@ -189,7 +189,7 @@ successful response
 
 ```
 
-8. **/admin/get/usernameforstore**  GET <br />
+8. **/admin/get/usernameforstore**  POST <br />
 Get all usernames of employees who work for a store in the given zipcode <br />
 Especially for Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”
 ```json
