@@ -1,8 +1,6 @@
 ### Backend setup instructions
-
 1. Change environment variables in **‘nodemon.json’**.
 2. MySQL database clean-up and setup
-
 ```
 Open MySQL workbench
 
@@ -10,9 +8,7 @@ Run ./SQL_database/grocery_drone_deliverym.sql
 
 Run ./SQL_database/cs4400_phase3_shell.sql
 ```
-
 3. run backend
-
 ```
 cd node_backend
 
@@ -22,7 +18,6 @@ npm install
 // Start the server
 npm start
 ```
-
 Note:
 
 Check out these articles if you run into some bugs
@@ -36,13 +31,12 @@ To initialize the database，run grocery_drone_delivery.mysql in the workbench
 
 When sending request from frontend，put data in request body
 
-1. **/user/register/customer** POST
-
+1. **/user/register/customer**   POST
 ```json
 sample input format:
 {
-    "username": "testcustomers",
-    "password": "password42",
+    "username": "testcustomers", 
+    "password": "password42", 
     "fname": "Jacky",
     "lname": "Xu",
     "street": "930 Spring street",
@@ -60,14 +54,12 @@ successful output format
 }
 
 ```
-
-2. **/user/register/dronetech** POST
-
+2. **/user/register/dronetech**  POST
 ```json
 sample input format
 {
-    "username": "testdronetech",
-    "password": "password42",
+    "username": "testdronetech", 
+    "password": "password42", 
     "fname": "test",
     "lname": "dronetech",
     "street": "930 Spring street",
@@ -84,13 +76,11 @@ successful output
 }
 
 ```
-
-3. **/user/register/manager** POST
-
+3. **/user/register/manager**  POST
 ```json
 {
-    "username": "testmanager",
-    "password": "password42",
+    "username": "testmanager", 
+    "password": "password42", 
     "fname": "test",
     "lname": "manager",
     "street": "930 Spring street",
@@ -106,12 +96,11 @@ successful output
 
 ```
 
-4. **/user/login** POST
-
+4. **/user/login**  POST
 ```json
 sample input format
 {
-    "username": "rgreen97",
+    "username": "rgreen97", 
     "password": "password23"
 }
 
@@ -126,7 +115,7 @@ Successful output will differ according to the identity of the users (customer o
 
 examples for customer:
 {
-    "username": "mscott845",
+    "username": "mscott845", 
     "password": "password30"
 }
 
@@ -143,7 +132,7 @@ examples for customer:
 ----
 example for drone_tech
 {
-    "username": "lchen27",
+    "username": "lchen27", 
     "password": "password3"
 }
 
@@ -158,9 +147,7 @@ example for drone_tech
 
 
 ```
-
-5. **admin/create/grocerychain** POST
-
+5. **admin/create/grocerychain**  POST
 ```json
 {
     "chainName": "Wegmans"
@@ -174,8 +161,7 @@ successful response
 
 ```
 
-6. **admin/create/store** POST
-
+6. **admin/create/store**   POST
 ```json
 {
     "storeName": "Cumberland",
@@ -191,10 +177,9 @@ successful response
 }
 ```
 
-7. **/admin/get/zipcode** GET <br/>
-   This API will return all zipcodes of existing stores <br />
-   Especially for Screen 6 “Dropdown for zip codes should only display zip codes of existing store locations."
-
+7. **/admin/get/zipcode**  GET <br/>
+This API will return all zipcodes of existing stores <br />
+Especially for Screen 6 “Dropdown for zip codes should only display zip codes of existing store locations."
 ```json
 successful response
 
@@ -204,12 +189,11 @@ successful response
 
 ```
 
-8. **/admin/get/usernameforstore** GET <br />
-   Get all usernames of employees who work for a store in the given zipcode <br />
-   Especially for Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”
-
+8. **/admin/get/usernameforstore**  POST <br />
+Get all usernames of employees who work for a store in the given zipcode <br />
+Especially for Screen 6 “Dropdown of store associate should only display the usernames of employees who work for a store in the previously selected zip code”
 ```json
-input
+input 
 
 {
     "zipcode": "30332"
@@ -235,7 +219,6 @@ output
 ```
 
 10 **/admin/create/drone** POST
-
 ```json
 input
 {
@@ -252,7 +235,6 @@ output
 ```
 
 11. **/admin/create/item** POST
-
 ```json
 {
     "itemName": "Dog Shampoo",
@@ -268,8 +250,7 @@ output
 }
 ```
 
-12. **/admin/view/customers** GET
-
+12. **/admin/view/customers** POST
 ```json
 input (Should always have lastName and firstName sent as request body. If the user
 does not enter firstName or lastName, just leave it as empty string)
@@ -300,7 +281,6 @@ sample output
 ```
 
 13. **/manager/create/chainItem** POST
-
 ```json
 {
     "chainName": "Moss Market",
@@ -369,67 +349,7 @@ sample output
 }
 ```
 
-17. **/manager/view/drones** GET <br />
-    Manager view drones
-
-```json
-sample input
-{
-    "userName": "cbing101",
-    "droneID": null,
-    "droneRadius": null
-}
-
-sample output
-{
-    "result": [
-        {
-            "ID": 110,
-            "DroneTech": "hliu88",
-            "Radius": 5,
-            "Zip": "30363",
-            "DroneStatus": "Available"
-        },
-        {
-            "ID": 120,
-            "DroneTech": "rgeller9",
-            "Radius": 7,
-            "Zip": "30363",
-            "DroneStatus": "Available"
-        },
-        {
-            "ID": 104,
-            "DroneTech": "dmcstuffins7",
-            "Radius": 8,
-            "Zip": "30303",
-            "DroneStatus": "Busy"
-        },
-        {
-            "ID": 114,
-            "DroneTech": "jhilborn97",
-            "Radius": 8,
-            "Zip": "30303",
-            "DroneStatus": "Available"
-        },
-        {
-            "ID": 105,
-            "DroneTech": "jhilborn98",
-            "Radius": 4,
-            "Zip": "30309",
-            "DroneStatus": "Available"
-        },
-        {
-            "ID": 115,
-            "DroneTech": "mgrey91",
-            "Radius": 7,
-            "Zip": "30309",
-            "DroneStatus": "Available"
-        }
-    ]
-}
-```
-
-18. **/manager/manage/stores** GET <br />
+17. **/manager/manage/stores** GET <br />
     Manager manage store
 
 ```json

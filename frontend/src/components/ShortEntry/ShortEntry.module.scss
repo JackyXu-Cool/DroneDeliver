@@ -1,0 +1,43 @@
+@import "../../assets/design.scss";
+
+.entry {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+
+  .label {
+    position: relative;
+    align-self: center;
+    margin: 5px;
+    font-size: 15px;
+    top: 10px;
+  }
+
+  .input {
+    position: absolute;
+    align-self: center;
+    height: 30px;
+    width: 200px;
+    left: 150px;
+  }
+
+  .dropDown {
+    position: absolute;
+    align-self: center;
+    height: 30px;
+    width: 200px;
+    left: 150px;
+
+    .control {
+      height: 30px;
+      width: 200px;
+    }
+
+    .placeholder {
+      position: relative;
+      top: -5px;
+      font-size: 15px;
+    }
+  }
+}

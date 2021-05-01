@@ -36,6 +36,26 @@ const get_PLU = async (req, res, next) => {
   });
 };
 
+// Get filtered drones
+const get_filtered_drones = async (req, res, next) => {
+  let sql = `call manager_view_drones(?,?,?)`;
+  let { username, droneID, radius } = req.query;
+
+  droneID = droneID === "" ? null : parseInt(droneID, 10);
+  radius = radius === "" ? null : parseInt(radius, 10);
+
+  pool.query(sql, [username, droneID, radius], (err) => {
+    if (err)
+      return next(new HttpError("Fail to get customer information", 500));
+
+    // Select from manager_view_drones_result table
+    pool.query("select * from manager_view_drones_result", (err, r) => {
+      if (err) return next(new HttpError("Fail to select table", 500));
+      res.status(200).json({ result: r });
+    });
+  });
+};
+
 // Manager view drone technicians
 const view_drone_technicians = async (req, res, next) => {
   let sql = `CALL manager_view_drone_technicians(?,?,?)`;
@@ -51,21 +71,6 @@ const view_drone_technicians = async (req, res, next) => {
         res.status(200).json({ result: r });
       }
     );
-  });
-};
-
-// Manager view drones
-const view_drones = async (req, res, next) => {
-  let sql = `CALL manager_view_drones(?,?,?)`;
-  const { userName, droneID, droneRadius } = req.body;
-  pool.query(sql, [userName, droneID, droneRadius], (err, result) => {
-    if (err) return next(new HttpError(err.message, 500));
-
-    //Select from manager_view_drones_result
-    pool.query("select * from manager_view_drones_result", (err, r) => {
-      if (err) return next(new HttpError("Fail to select table", 500));
-      res.status(200).json({ result: r });
-    });
   });
 };
 
@@ -87,6 +92,6 @@ const manage_stores = async (req, res, next) => {
 exports.create_chain_item = create_chain_item;
 exports.get_all_items = get_all_items;
 exports.get_PLU = get_PLU;
+exports.get_filtered_drones = get_filtered_drones;
 exports.view_drone_technicians = view_drone_technicians;
-exports.view_drones = view_drones;
 exports.manage_stores = manage_stores;

@@ -10,8 +10,15 @@ import CreateGroceryChainPage from "./pages/CreateGroceryChainPage/CreateGrocery
 import ChangeCreditCardPage from "./pages/ChangeCreditCardPage/ChangeCreditCardPage";
 import CreateStorePage from "./pages/CreateStorePage/CreateStorePage";
 import CreateItemPage from "./pages/CreateItemPage/CreateItemPage";
+import CreateDronePage from "./pages/CreateDronePage/CreateDronePage";
+import ViewOrderHistoryPage from "./pages/ViewOrderHistoryPage/ViewOrderHistoryPage";
+import ViewDronesPage from "./pages/ViewDronesPage/ViewDronesPage";
+import ViewCustomerPage from "./pages/ViewCustomerPage/ViewCustomerPage";
+import CreateChainItemPage from "./pages/CreateChainItemPage/CreateChainItemPage";
+
 import states from "./assets/states";
 import types from "./assets/types";
+import initialItems from "./assets/InitialItems";
 
 import classes from "./App.module.scss";
 
@@ -66,8 +73,6 @@ const App = () => {
     cvv: "",
     exp_date: "",
   });
-  const [ccInfoFirstName, setCCInfoFirstName] = useState("First Name");
-  const [ccInfoLastName, setCCInfoLastName] = useState("Last Name");
 
   // Create Grocery Chain State
   const [chainName, setChainName] = useState("");
@@ -89,6 +94,41 @@ const App = () => {
     organic: "",
     origin: "",
   });
+
+  const [generalItems, setGeneralItems] = useState(initialItems);
+
+  // View drones State
+  const [droneFilters, setDroneFilters] = useState({
+    droneID: "",
+    radius: "",
+  });
+
+  const [displayedDrones, setDisplayedDrones] = useState([]);
+
+  // View drones State
+  const [customerViewOrdeRIDs, setCustomerViewOrdeRIDs] = useState([]);
+  const [customerViewOrderInfo, setCustomerViewOrderInfo] = useState({
+    total_amount: "",
+    total_items: "",
+    orderdate: "",
+    droneID: "",
+    dronetech: "",
+    orderstatus: "",
+  });
+
+  // Manager create chain item state
+  const [newChainItem, setNewChainItem] = useState({
+    chainname: "",
+    item: "",
+    quantityavailable: "",
+    limitperorder: "",
+    plunumber: "",
+    priceperunit: "",
+  });
+  const [canCreateChainItem, setCanCreateChainItem] = useState(false);
+  const [createChainItemSuccess, setCreateChainItemSuccess] = useState(false);
+
+  // Create chain items state
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -329,7 +369,7 @@ const App = () => {
       });
   };
 
-  /** --------------- Create new item handler ------------------------------*/
+  /** --------------- Admin create new item handler ------------------------------*/
   const onCreateNewItem = (event) => {
     var temp = createItemInfo;
     if (event.target === undefined) {
@@ -340,6 +380,9 @@ const App = () => {
       }
     } else {
       temp[event.target.name] = event.target.value;
+      var temp1 = generalItems;
+      temp1.push(event.target.name);
+      setGeneralItems(temp1);
     }
     setCreateItemInfo(temp);
   };
@@ -368,24 +411,144 @@ const App = () => {
         alert(error.response.data.message);
       });
   };
+  /*------------------------------ manager view drones page handlers ------------------------------*/
+  const enterDroneFilter = (event) => {
+    var temp = droneFilters;
+    temp[event.target.name] = event.target.value;
+    setDroneFilters(temp);
+  };
 
-  /*------------------------------ change credit card info page handlers ------------------------------*/
-  const userInfoPrefillChangeCCInfo = async () => {
+  const onViewDroneScreen = async () => {
+    setDroneFilters({
+      droneID: "",
+      radius: "",
+    });
+
+    // Previous set droneFilter statement always lag behind 1 button click for some reason
+    // (i.e. after clicking once, droneFilter does not get reset, after another click it get reset)
+    // thus making get request with hardcoded parameters instead of calling onFilter(). Same reason for functions below
     axios
-      .get("http://localhost:5000/customer/get/userfullname", {
+      .get("http://localhost:5000/manager/get/filteredDrones", {
         params: {
           username: localStorage.username,
+          droneID: "",
+          radius: "",
         },
       })
       .then((res) => {
-        setCCInfoFirstName(res.data.FirstName);
-        setCCInfoLastName(res.data.LastName);
+        setDisplayedDrones(res.data.result);
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
   };
 
+  const onFilterDrones = async () => {
+    axios
+      .get("http://localhost:5000/manager/get/filteredDrones", {
+        params: {
+          username: localStorage.username,
+          droneID: droneFilters.droneID,
+          radius: droneFilters.radius,
+        },
+      })
+      .then((res) => {
+        setDisplayedDrones(res.data.result);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
+  const onResetDroneFilters = async () => {
+    axios
+      .get("http://localhost:5000/manager/get/filteredDrones", {
+        params: {
+          username: localStorage.username,
+          droneID: "",
+          radius: "",
+        },
+      })
+      .then((res) => {
+        setDisplayedDrones(res.data.result);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
+  const onSelectDroneSortBy = (event) => {
+    let sort_by = event.target.value;
+    let temp = displayedDrones;
+    if (sort_by === "DroneIDUp") {
+      temp.sort((a, b) => a.ID - b.ID);
+    } else if (sort_by === "DroneIDDown") {
+      temp.sort((a, b) => b.ID - a.ID);
+    } else if (sort_by === "RadiusUp") {
+      temp.sort((a, b) => a.Radius - b.Radius);
+    } else if (sort_by === "RadiusDown") {
+      temp.sort((a, b) => b.Radius - a.Radius);
+    } else if (sort_by === "ZipcodeUp") {
+      temp.sort((a, b) => a.Zip - b.Zip);
+    } else if (sort_by === "ZipcodeDown") {
+      temp.sort((a, b) => b.Zip - a.Zip);
+    } else if (sort_by === "StatusUp") {
+      temp.sort((a, b) => (a.DroneStatus > b.DroneStatus ? 1 : -1));
+    } else if (sort_by === "StatusDown") {
+      temp.sort((a, b) => (a.DroneStatus > b.DroneStatus ? -1 : 1));
+    }
+
+    setDisplayedDrones(temp);
+    setDummy(dummy + 1);
+  };
+
+  /*------------------------------ manager create new chain item handlers ------------------------------*/
+  const enterChainItem = (event) => {
+    var temp = newChainItem;
+    if (event.target === undefined) {
+      temp["item"] = event.value;
+    } else {
+      temp[event.target.name] = event.target.value;
+    }
+    setNewChainItem(temp);
+    if (
+      temp.chainname !== "" &&
+      temp.item !== "" &&
+      temp.item !== "Select Item" &&
+      temp.quantityavailable !== "" &&
+      temp.limitperorder !== "" &&
+      temp.plunumber !== "" &&
+      temp.priceperunit !== ""
+    ) {
+      setCanCreateChainItem(true);
+    } else {
+      setCanCreateChainItem(false);
+    }
+  };
+
+  const onCreateChainItem = async (event) => {
+    if (canCreateChainItem) {
+      axios
+        .post("http://localhost:5000/manager/create/chainItem", {
+          chainName: newChainItem.chainname,
+          itemName: newChainItem.item,
+          quantity: parseInt(newChainItem.quantityavailable),
+          orderLimit: parseInt(newChainItem.limitperorder),
+          PLU: parseInt(newChainItem.plunumber),
+          price: parseFloat(newChainItem.priceperunit),
+        })
+        .then((response) => {
+          setCreateChainItemSuccess(true);
+          console.log(response);
+        })
+        .catch((error) => {
+          setCreateChainItemSuccess(false);
+          console.log(error);
+        });
+    }
+  };
+
+  /*------------------------------ customer change credit card info page handlers ------------------------------*/
   const enterCCInfo = (event) => {
     var temp = ccInfo;
     temp[event.target.name] = event.target.value;
@@ -436,6 +599,64 @@ const App = () => {
       });
   };
 
+  /*------------------------------ customer view order history page handler ------------------------------*/
+  const onViewOrderHistory = async () => {
+    axios
+      .get("http://localhost:5000/customer/get/orderIDs", {
+        params: {
+          username: localStorage.username,
+        },
+      })
+      .then((res) => {
+        let temp = res.data.res.map((entry) => entry.ID).sort();
+        setCustomerViewOrdeRIDs(temp);
+        if (temp.length > 0) {
+          let id = temp[0];
+          axios
+            .get("http://localhost:5000/customer/get/orderInfo", {
+              params: {
+                username: localStorage.username,
+                orderId: id,
+              },
+            })
+            .then((res) => {
+              let order_detail_info = res.data.result[0];
+              let order_date = order_detail_info.orderdate;
+              order_detail_info.orderdate = order_date.substring(0, 10);
+
+              setCustomerViewOrderInfo(order_detail_info);
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const onSelectViewOrderID = async (event) => {
+    let order_id = event.target.value;
+    axios
+      .get("http://localhost:5000/customer/get/orderInfo", {
+        params: {
+          username: localStorage.username,
+          orderId: order_id,
+        },
+      })
+      .then((res) => {
+        let order_detail_info = res.data.result[0];
+        let order_date = order_detail_info.orderdate;
+        order_detail_info.orderdate = order_date.substring(0, 10);
+
+        setCustomerViewOrderInfo(order_detail_info);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <BrowserRouter className={classes.app}>
       <Route path={"/"} exact>
@@ -466,33 +687,67 @@ const App = () => {
         />
       </Route>
       <Route path={"/home"} exact>
-        <HomePage onCustomerChangeCCInfo={userInfoPrefillChangeCCInfo} />
+        <HomePage
+          onEnterViewDrones={onViewDroneScreen}
+          onEnterViewOrderHistory={onViewOrderHistory}
+        />
       </Route>
-      <Route path={"/create/grocerychain"} exact>
+      <Route path={"/admin/create/grocerychain"} exact>
         <CreateGroceryChainPage
           onCreateChainHandler={createChainHandler}
           createChain={createChain}
         />
       </Route>
-      <Route path={"/create/store"} exact>
+      <Route path={"/admin/create/store"} exact>
         <CreateStorePage
           onCreateStore={onCreateStore}
           createStore={submitCreateStore}
         />
       </Route>
-      <Route path={"/create/item"} exact>
+      <Route path={"/admin/create/item"} exact>
         <CreateItemPage
           onCreateItem={onCreateNewItem}
           submitCreateNewItem={submitNewItem}
         />
       </Route>
+      <Route path={"admin/create/drone"} exact>
+        <CreateDronePage />
+      </Route>
+      <Route path={"/admin/view/customers"} exact>
+        <ViewCustomerPage />
+      </Route>
+      <Route path={"/manager/view/drones"} exact>
+        <ViewDronesPage
+          droneFilters={droneFilters}
+          onEnter={enterDroneFilter}
+          onFilter={onFilterDrones}
+          onSort={onSelectDroneSortBy}
+          displayedDrones={displayedDrones}
+          onReset={onResetDroneFilters}
+        />
+      </Route>
       <Route path={"/customer/changeCCInfo"} exact>
         <ChangeCreditCardPage
           username={localStorage.username}
-          firstname={ccInfoFirstName}
-          lastname={ccInfoLastName}
           onEnter={enterCCInfo}
           onSubmit={submitCCInfo}
+        />
+      </Route>
+      <Route path={"/customer/view/orderhistory"} exact>
+        <ViewOrderHistoryPage
+          username={localStorage.username}
+          orderIDs={customerViewOrdeRIDs}
+          orderInfo={customerViewOrderInfo}
+          onSelect={onSelectViewOrderID}
+        />
+      </Route>
+      <Route path={"/manager/create/chainitem"} exact>
+        <CreateChainItemPage
+          generalItems={generalItems}
+          canCreateChainItem={canCreateChainItem}
+          createChainItemSuccess={createChainItemSuccess}
+          enterChainItem={enterChainItem}
+          onCreateChainItem={onCreateChainItem}
         />
       </Route>
     </BrowserRouter>
