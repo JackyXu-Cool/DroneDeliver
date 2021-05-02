@@ -349,7 +349,53 @@ sample output
 }
 ```
 
-17. **/manager/manage/stores** GET <br />
+17. **/customer/view/store/items/** GET (Get the information needed to display screen 15) <br />
+localhost:5000/customer/view/store/items/?type={type}&chainName={chainName}&storeName={stosreName}&username={username}
+```
+For any query parameter input, replace space with "-". For example:
+
+localhost:5000/customer/view/store/items/?type=ALL&chainName=Moss-Market&storeName=Bobby-Dodd&username=dkim99
+
+Also, do not support type = null
+```
+```json
+output:
+{
+    "result": [
+        {
+            "ChainItemName": "Gala Apple",
+            "Orderlimit": 8
+        },
+        {
+            "ChainItemName": "Fuji Apple",
+            "Orderlimit": 2
+        },
+        {
+            "ChainItemName": "Campbells Soup",
+            "Orderlimit": 8
+        }
+    ]
+}
+```
+
+18. **/customer/preplace/order** POST (When click place order on Screen 15)<br /> 
+```json
+input 
+{
+    "username": "dkim99",
+    "chainName": "Moss Market",
+    "storeName": "Bobby Dodd",
+    "quantity": 1,
+    "itemName": "Fuji Apple"
+}
+
+output
+{
+    "success": true
+}
+```
+
+19. **/manager/manage/stores** GET <br />
     Manager manage store
 
 ```json
@@ -383,7 +429,7 @@ sample output
 
 ```
 
-18. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
+20. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
 sample url: localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16
 ```json
 
@@ -413,7 +459,7 @@ output:
 }
 ```
 
-19. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
+21. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
 If id or status is null, just don't put them in the query paramters. <br />
 Sample: 
 - localhost:5000/dronetech/view/drones/?username=lchen27

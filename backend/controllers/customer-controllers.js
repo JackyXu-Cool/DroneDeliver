@@ -42,9 +42,34 @@ const get_order_info = async (req, res, next) => {
             res.status(200).json({result: r});
         });
     })
-}
+};
+
+const view_store_item = async (req, res, next) => {
+    let sql = `CALL customer_view_store_items(?,?,?,?)`;
+    let { username, chainName, storeName, type } = req.query;
+    chainName = chainName.replace("-", " ");
+    storeName = storeName.replace("-", " ");
+    pool.query(sql, [username, chainName, storeName, type], (err) => {
+        if (err) return next(new HttpError(err.message, 500));
+        pool.query("select * from customer_view_store_items_result", (err, result) => {
+            if (err) return next(new HttpError(err.message, 500));
+            res.status(200).json({result});
+        });
+    });
+};
+
+const pre_place_order = async (req, res, next) => {
+    let sql = `call customer_select_items(?,?,?,?,?)`;
+    let { username, chainName, storeName, itemName, quantity } = req.body;
+    pool.query(sql, [username, chainName, storeName, itemName, quantity], (err) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(201).json({ success: true });
+    })
+};
 
 exports.get_customer_full_name = get_customer_full_name;
 exports.change_credit_card_info = change_credit_card_info;
 exports.get_order_ids_by_customer = get_order_ids_by_customer;
 exports.get_order_info = get_order_info;
+exports.view_store_item = view_store_item;
+exports.pre_place_order = pre_place_order;

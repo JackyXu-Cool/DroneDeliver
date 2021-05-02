@@ -339,9 +339,6 @@ BEGIN
 END //
 DELIMITER ;
 
-call manager_manage_stores('cbing101', null, null, null);
-select * from manager_manage_stores_result;
-
 -- ID: 13a
 -- Author: vtata6
 -- Name: customer_change_credit_card_information
@@ -416,17 +413,21 @@ BEGIN
 	set @userZipcode = (select Zipcode from USERS where Username = i_username);
     -- check chainName validity given same zipCode, storeName, and ChainName
     set @validChainName = (select ChainName from STORE where StoreName = i_store_name and zipcode = @userZipcode and ChainName = i_chain_name);
-    if i_item_type = "ALL" 
-		then drop table if exists customer_view_store_items_result;
-			 create table customer_view_store_items_result
-			select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = @validChainName; 
+    if (select count(@validChainName)) = 0 then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ' customer can only shop from stores that have the same zip code as their address';
 	else
-		drop table if exists customer_view_store_items_result;
-			 create table customer_view_store_items_result
-			 select ChainItemName, Orderlimit 
-			 from CHAIN_ITEM join ITEM on ItemName = ChainItemName 
-			 where ChainName = @validChainName and ItemType = i_item_type;
+		if i_item_type = "ALL" 
+			then drop table if exists customer_view_store_items_result;
+				create table customer_view_store_items_result
+				select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = @validChainName; 
+		else
+			drop table if exists customer_view_store_items_result;
+				create table customer_view_store_items_result
+				select ChainItemName, Orderlimit 
+				from CHAIN_ITEM join ITEM on ItemName = ChainItemName 
+				where ChainName = @validChainName and ItemType = i_item_type;
 		end if;
+	end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -452,15 +453,18 @@ BEGIN
     if (@userZip = @targetZip) and (i_quantity <= @orderLimit) then 
 		set @lastusername = (SELECT customerusername FROM orders ORDER BY ID DESC LIMIT 1);
         set @lastOrderID = (select ID from orders order by ID desc limit 1);
-        set @creatingOrder = (select count(*) from orders where orderstatus = "Creating");
-        if @creatingOrder = 1 then 
+        if (select count(*) from orders where orderstatus = "Creating") = 1 then 
 			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
 			insert into CONTAINS values (@lastOrderID, i_item_name, i_chain_name, @PLU, i_quantity);
-		else
+		end if;
+		if (select count(*) from orders where orderstatus = "Creating") = 0 then
 			insert into ORDERS values (@lastOrderID + 1, "Creating", current_date(), i_username, null);
 			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
 			insert into CONTAINS values (@lastOrderID + 1, i_item_name, i_chain_name, @PLU, i_quantity);
 		end if;
+        if (select count(*) from orders where orderstatus = "Creating") > 1 then
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot have two or more creating orders';
+        end if;
     end if;
 -- End of solution
 END //
