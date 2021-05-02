@@ -59,7 +59,7 @@ Junqi Xu <br/>
 - [x] Screen 12: Chain Manager - Manage Stores
 - [x] Screen 13: Customer - Change Credit Card Info
 - [x] Screen 14: Customer - View Order History
-- [ ] Screen 15: Customer - View Store Item (In Progress)
+- [x] Screen 15: Customer - View Store Item
 - [ ] Screen 16: Customer - Review Order (In progress)
 - [ ] Screen 17: Drone Tech - View Store Orders (In progress)
 - [x] Screen 18: Drone Tech - View Order Details
