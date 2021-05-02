@@ -86,7 +86,7 @@ const App = () => {
     street: "",
     city: "",
     state: "",
-    zipcode: "",
+    zipcode: ""
   });
 
   // Create Item State
@@ -94,7 +94,7 @@ const App = () => {
     itemName: "",
     type: "",
     organic: "",
-    origin: "",
+    origin: ""
   });
 
   const [generalItems, setGeneralItems] = useState(initialItems);
@@ -124,7 +124,7 @@ const App = () => {
   const [managedStoresFilters, setManagedStoresFilters] = useState({
     store_name: "",
     min_range: "",
-    max_range: "",
+    max_range: ""
   });
   const [displayedManagedStores, setDisplayedManagedStores] = useState([]);
 
@@ -162,10 +162,7 @@ const App = () => {
         })
         .then((response) => {
           localStorage.clear();
-          localStorage.setItem(
-            "identity",
-            response.data.information["identity"]
-          );
+          localStorage.setItem("identity", response.data.information["identity"]);
           localStorage.setItem("username", login.loginUsername);
           if (response.data.information["identity"] === "Manager") {
             localStorage.setItem(
@@ -328,16 +325,15 @@ const App = () => {
   };
 
   const createChain = async (event) => {
-    axios
-      .post("http://localhost:5000/admin/create/grocerychain", {
-        chainName: chainName,
-      })
-      .then(() => {
-        alert("successfully created a new chain");
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    axios.post("http://localhost:5000/admin/create/grocerychain", {
+      chainName: chainName
+    })
+    .then(() => {
+      alert("successfully created a new chain")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
   };
 
   /* ------------------- Create new store handler -----------------------------*/
@@ -355,16 +351,9 @@ const App = () => {
     setCreateStoreInfo(temp);
   };
 
-  const submitCreateStore = async () => {
-    if (
-      createStoreInfo.storeName === "" ||
-      createStoreInfo.chainName === "" ||
-      createStoreInfo.street === "" ||
-      createStoreInfo.street === "" ||
-      createStoreInfo.city === "" ||
-      createStoreInfo.state === "" ||
-      createStoreInfo.zipcode === ""
-    ) {
+  const submitCreateStore = async() => {
+    if (createStoreInfo.storeName === "" || createStoreInfo.chainName === "" || createStoreInfo.street === ""
+        || createStoreInfo.street === "" || createStoreInfo.city === "" || createStoreInfo.state === "" || createStoreInfo.zipcode === "") {
       alert("Please fill in all the information!");
       return;
     }
@@ -401,15 +390,10 @@ const App = () => {
       setGeneralItems(temp1);
     }
     setCreateItemInfo(temp);
-  };
+  }
 
   const submitNewItem = () => {
-    if (
-      createItemInfo.origin === "" ||
-      createItemInfo.type === "" ||
-      createItemInfo.itemName === "" ||
-      createItemInfo.organic === ""
-    ) {
+    if (createItemInfo.origin === "" || createItemInfo.type === "" || createItemInfo.itemName === "" || createItemInfo.organic === "") {
       alert("Please fill in all the information!");
       return;
     }
@@ -547,121 +531,117 @@ const App = () => {
     setManagedStoresFilters({
       store_name: "",
       min_range: "",
-      max_range: "",
+      max_range: ""
     });
-    axios
-      .get("http://localhost:5000/manager/get/stores", {
-        params: {
-          username: localStorage.username,
-        },
-      })
-      .then((res) => {
-        let temp = res.data.res;
-        setManageStoresChainName(temp[0].ChainName);
-        temp = temp.map((entry) => {
+    axios.get("http://localhost:5000/manager/get/stores", {
+      params: {
+          username: localStorage.username
+      }
+    })
+    .then((res)=> {
+      let temp = res.data.res;
+      setManageStoresChainName(temp[0].ChainName);
+      temp = temp.map((entry) => {
           if (entry.StoreName) {
-            return entry.StoreName;
+              return entry.StoreName;
           }
-        });
-        temp = ["All", ...temp];
-        setManagedStores(temp);
       })
-      .catch((error) => {
-        alert(error);
-      });
+      temp = ["All", ...temp];
+      setManagedStores(temp);
+    })
+    .catch((error) => {
+      alert(error);
+    })
 
-    axios
-      .get("http://localhost:5000/manager/manage/stores", {
-        params: {
-          userName: localStorage.username,
-          storeName: "All",
-          minTotal: "",
-          maxTotal: "",
-        },
-      })
-      .then((res) => {
-        setDisplayedManagedStores(res.data.result);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+    axios.get("http://localhost:5000/manager/manage/stores", {
+      params: {
+        userName: localStorage.username,
+        storeName: "All",
+        minTotal: "",
+        maxTotal: ""
+      }
+    })
+    .then((res)=> {
+      setDisplayedManagedStores(res.data.result);
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
 
   const onEnterManagedStoresFilters = (event) => {
     var temp = managedStoresFilters;
     temp[event.target.name] = event.target.value;
     setManagedStoresFilters(temp);
-  };
+  }
 
   const onFilterManagedStores = async () => {
-    axios
-      .get("http://localhost:5000/manager/manage/stores", {
-        params: {
-          userName: localStorage.username,
-          storeName: managedStoresFilters.store_name,
-          minTotal: managedStoresFilters.min_range,
-          maxTotal: managedStoresFilters.max_range,
-        },
-      })
-      .then((res) => {
-        setDisplayedManagedStores(res.data.result);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+    axios.get("http://localhost:5000/manager/manage/stores", {
+      params: {
+        userName: localStorage.username,
+        storeName: managedStoresFilters.store_name,
+        minTotal: managedStoresFilters.min_range,
+        maxTotal: managedStoresFilters.max_range
+      }
+    })
+    .then((res)=> {
+      setDisplayedManagedStores(res.data.result)
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
 
   const onResetManagedStoresFilter = async () => {
     setManagedStoresFilters({
       store_name: "",
       min_range: "",
-      max_range: "",
+      max_range: ""
     });
-    axios
-      .get("http://localhost:5000/manager/manage/stores", {
-        params: {
-          userName: localStorage.username,
-          storeName: "",
-          minTotal: "",
-          maxTotal: "",
-        },
-      })
-      .then((res) => {
-        setDisplayedManagedStores(res.data.result);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+    axios.get("http://localhost:5000/manager/manage/stores", {
+      params: {
+        userName: localStorage.username,
+        storeName: "",
+        minTotal: "",
+        maxTotal: ""
+      }
+    })
+    .then((res)=> {
+      setDisplayedManagedStores(res.data.result)
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
 
   const onSelectManagedStoresSortBy = async (event) => {
     let sort_by = event.target.value;
     let temp = displayedManagedStores;
     if (sort_by === "NameUp") {
-      temp.sort((a, b) => (a.StoreName > b.StoreName ? 1 : -1));
+      temp.sort((a,b)=>(a.StoreName > b.StoreName ? 1 : -1));
     } else if (sort_by === "NameDown") {
-      temp.sort((a, b) => (a.StoreName > b.StoreName ? -1 : 1));
+      temp.sort((a,b)=>(a.StoreName > b.StoreName ? -1 : 1));
     } else if (sort_by === "AddressUp") {
-      temp.sort((a, b) => (a.address > b.address ? 1 : -1));
+      temp.sort((a,b)=>(a.address > b.address ? 1 : -1));
     } else if (sort_by === "AddressDown") {
-      temp.sort((a, b) => (a.address > b.address ? -1 : 1));
+      temp.sort((a,b)=>(a.address > b.address ? -1 : 1));
     } else if (sort_by === "OrdersUp") {
-      temp.sort((a, b) => a.Orders - b.Orders);
+      temp.sort((a,b) => a.Orders - b.Orders);
     } else if (sort_by === "OrdersDown") {
-      temp.sort((a, b) => b.Orders - a.Orders);
+      temp.sort((a,b) => b.Orders - a.Orders);
     } else if (sort_by === "EmployeesUp") {
-      temp.sort((a, b) => (a.Employees > b.Employees ? 1 : -1));
+      temp.sort((a,b)=> (a.Employees > b.Employees ? 1 : -1))
     } else if (sort_by === "EmployeesDown") {
-      temp.sort((a, b) => (a.Employees > b.Employees ? -1 : 1));
+      temp.sort((a,b)=> (a.Employees > b.Employees ? -1 : 1))
     } else if (sort_by === "TotalUp") {
-      temp.sort((a, b) => (a.Total > b.Total ? 1 : -1));
+      temp.sort((a,b)=> (a.Total > b.Total ? 1 : -1))
     } else if (sort_by === "TotalDown") {
-      temp.sort((a, b) => (a.Total > b.Total ? -1 : 1));
+      temp.sort((a,b)=> (a.Total > b.Total ? -1 : 1))
     }
-
+        
     setDisplayedManagedStores(temp);
-    setDummy(dummy + 1);
-  };
+    setDummy(dummy+1);
+  }
 
   /*------------------------------ change credit card info page handlers ------------------------------*/
   const onCreateChainItem = async (event) => {
@@ -691,88 +671,89 @@ const App = () => {
     var temp = ccInfo;
     temp[event.target.name] = event.target.value;
     setCCInfo(temp);
-  };
+  }
 
   const submitCCInfo = () => {
     console.log({
       username: localStorage.username,
       ccNumber: ccInfo.ccNumber,
       cvv: ccInfo.cvv,
-      exp_date: ccInfo.exp_date,
+      exp_date: ccInfo.exp_date
     });
 
     let today = new Date();
-    console.log(today.getTime());
-    console.log(Date.parse());
+    console.log(today.getTime())
+    console.log(Date.parse())
 
     if (ccInfo.ccNumber === "") {
       alert("Credit Card Number must not be empty");
-      return;
+      return
     }
     if (ccInfo.cvv === "") {
       alert("Security Code must not be empty");
-      return;
+      return
     }
     if (ccInfo.exp_date === "") {
       alert("Expiration Date must not be empty");
-      return;
+      return
     }
     if (Date.parse(new Date()) >= Date.parse(ccInfo.exp_date)) {
       alert("Card must not be expired");
-      return;
+      return
     }
-
-    axios
-      .post("http://localhost:5000/customer/change/ccinfo", {
-        username: localStorage.username,
-        ccNumber: ccInfo.ccNumber,
-        cvv: ccInfo.cvv,
-        exp_date: ccInfo.exp_date,
-      })
-      .then(() => {
-        alert("successfully updated credit card information");
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    
+    
+    axios.post("http://localhost:5000/customer/change/ccinfo", {
+      username: localStorage.username,
+      ccNumber: ccInfo.ccNumber,
+      cvv: ccInfo.cvv,
+      exp_date: ccInfo.exp_date
+    })
+    .then(() => {
+      alert("successfully updated credit card information")
+    })
+    .catch((error) => {
+      alert(error.response.data.message);
+    })
   };
 
   /*------------------------------ customer view order history page handler ------------------------------*/
   const onViewOrderHistoryScreen = async () => {
-    axios
-      .get("http://localhost:5000/customer/get/orderIDs", {
-        params: {
-          username: localStorage.username,
-        },
-      })
-      .then((res) => {
-        let temp = res.data.res.map((entry) => entry.ID).sort();
-        setCustomerViewOrdeRIDs(temp);
-        if (temp.length > 0) {
-          let id = temp[0];
-          axios
-            .get("http://localhost:5000/customer/get/orderInfo", {
-              params: {
-                username: localStorage.username,
-                orderId: id,
-              },
-            })
-            .then((res) => {
-              let order_detail_info = res.data.result[0];
-              let order_date = order_detail_info.orderdate;
-              order_detail_info.orderdate = order_date.substring(0, 10);
+    axios.get("http://localhost:5000/customer/get/orderIDs", {
+      params: {
+        username: localStorage.username,
+      }
+    })
+    .then((res)=> {
+      let temp = res.data.res.map((entry=>entry.ID)).sort()
+      setCustomerViewOrdeRIDs(temp);
+      if (temp.length > 0) {
+        let id = temp[0];
+        axios.get("http://localhost:5000/customer/get/orderInfo", {
+          params: {
+            username: localStorage.username,
+            orderId: id
+          }
+        })
+        .then((res)=> {
+          let order_detail_info = res.data.result[0];
+          let order_date = order_detail_info.orderdate;
+          order_detail_info.orderdate = order_date.substring(0,10);
 
-              setCustomerViewOrderInfo(order_detail_info);
-            })
-            .catch((error) => {
-              alert(error);
-            });
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+          setCustomerViewOrderInfo(order_detail_info);
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        
+      }
+
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
+
   const onViewOrderHistory = async () => {
     axios
       .get("http://localhost:5000/customer/get/orderIDs", {
@@ -860,11 +841,11 @@ const App = () => {
         />
       </Route>
       <Route path={"/home"} exact>
-        <HomePage
-          onEnterManageStores={onManageStoresScreen}
-          onEnterViewDrones={onViewDroneScreen}
-          onEnterViewOrderHistory={onViewOrderHistoryScreen}
-        />
+          <HomePage
+            onEnterManageStores={onManageStoresScreen}
+            onEnterViewDrones={onViewDroneScreen}
+            onEnterViewOrderHistory={onViewOrderHistoryScreen}
+          />
       </Route>
       <Route path={"/admin/create/grocerychain"} exact>
         <CreateGroceryChainPage
@@ -901,15 +882,15 @@ const App = () => {
         />
       </Route>
       <Route path={"/manager/manage/stores"}>
-        <ManageStoresPage
-          chainName={manageStoresChainName}
-          stores={managedStores}
-          displayedStores={displayedManagedStores}
-          onEnter={onEnterManagedStoresFilters}
-          onFilter={onFilterManagedStores}
-          onReset={onResetManagedStoresFilter}
-          onSort={onSelectManagedStoresSortBy}
-        />
+          <ManageStoresPage
+            chainName={manageStoresChainName}
+            stores={managedStores}
+            displayedStores={displayedManagedStores}
+            onEnter={onEnterManagedStoresFilters}
+            onFilter={onFilterManagedStores}
+            onReset={onResetManagedStoresFilter}
+            onSort={onSelectManagedStoresSortBy}
+          />
       </Route>
       <Route path={"/customer/changeCCInfo"} exact>
         <ChangeCreditCardPage

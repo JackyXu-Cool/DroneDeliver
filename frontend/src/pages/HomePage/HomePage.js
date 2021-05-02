@@ -73,12 +73,8 @@ const HomePage = (props) => {
           </Link>
         </button>
         <button className={classes.button_click}>
-          <Link
-            className={classes.link_click}
-            to="/manager/manage/stores"
-            onClick={props.onEnterManageStores}
-          >
-            Manage Stores
+            <Link className={classes.link_click} to="/manager/manage/stores" onClick={props.onEnterManageStores}>
+                Manage Stores
           </Link>
         </button>
       </div>

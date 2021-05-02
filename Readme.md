@@ -24,7 +24,6 @@ Shiyi Wang <br/>
 Junqi Xu <br/>
 
 ### Frontend Screen
-
 - [x] Screen 1: Login
 - [x] Screen 2: Register
 - [x] Screen 3: Home Screen
@@ -46,7 +45,6 @@ Junqi Xu <br/>
 - [ ] Screen 19: Drone Tech - Tracke Assigned Drones
 
 ### Backend Route
-
 - [x] Screen 1: Login
 - [x] Screen 2: Register
 - [x] Screen 3: Home Screen
@@ -61,8 +59,8 @@ Junqi Xu <br/>
 - [x] Screen 12: Chain Manager - Manage Stores
 - [x] Screen 13: Customer - Change Credit Card Info
 - [x] Screen 14: Customer - View Order History
-- [ ] Screen 15: Customer - View Store Item
-- [ ] Screen 16: Customer - Review Order
-- [ ] Screen 17: Drone Tech - View Store Orders
+- [ ] Screen 15: Customer - View Store Item (In Progress)
+- [ ] Screen 16: Customer - Review Order (In progress)
+- [ ] Screen 17: Drone Tech - View Store Orders (In progress)
 - [x] Screen 18: Drone Tech - View Order Details
 - [x] Screen 19: Drone Tech - Track Assigned Drones
