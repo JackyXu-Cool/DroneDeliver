@@ -33,7 +33,7 @@ Junqi Xu <br/>
 - [x] Screen 7: Admin - Create Item
 - [x] Screen 8: Admin - View Customers
 - [x] Screen 9: Chain Manager - Create Chain Item
-- [ ] Screen 10: Chain Manager - View Drone Technicians
+- [x] Screen 10: Chain Manager - View Drone Technicians
 - [x] Screen 11: Chain Manager - View Drones
 - [x] Screen 12: Chain Manager - Manage Stores
 - [x] Screen 13: Customer - Change Credit Card Info
@@ -41,8 +41,8 @@ Junqi Xu <br/>
 - [ ] Screen 15: Customer - View Store Item
 - [ ] Screen 16: Customer - Review Order
 - [ ] Screen 17: Drone Tech - View Store Orders
-- [ ] Screen 18: Drone Tech - View Order Details
-- [ ] Screen 19: Drone Tech - Tracke Assigned Drones
+- [ ] Screen 18: Drone Tech - View Order Details (In progress)
+- [ ] Screen 19: Drone Tech - Tracke Assigned Drones (In progress)
 
 ### Backend Route
 - [x] Screen 1: Login
