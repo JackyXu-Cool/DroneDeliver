@@ -441,7 +441,63 @@ output
 }
 ```
 
-22. **/manager/manage/stores** GET <br />
+22. **/dronetech/view/store** GET (For screen 17 table information) <br />
+```
+pass in input as query parameters:
+
+localhost:5000/dronetech/view/store/drones?username={username}&startDate={yyyy-mm-dd}&endDate={yyyy-mm-dd}
+```
+```json
+{
+    "result": [
+        {
+            "ID": 10003,
+            "Operator": "KermitFrog",
+            "Date": "2021-01-13T05:00:00.000Z",
+            "DroneID": 117,
+            "Status": "Delivered",
+            "Total": 64.22
+        },
+        {
+            "ID": 10011,
+            "Operator": "KermitFrog",
+            "Date": "2021-02-05T05:00:00.000Z",
+            "DroneID": 117,
+            "Status": "Delivered",
+            "Total": 31.68
+        }
+    ]
+}
+```
+
+23. **/dronetech/assign/drontech** POST <br />
+```json
+input
+{
+    "username": "sstrange11",
+    "droneid": 113,
+    "orderid": 10015,
+    "status": "Drone Assigned"
+}
+
+output
+{
+    "success": true
+}
+```
+
+24. **/dronetech/get/available/drones?username={username}** GET <br /> 
+(Get availabe drones of the logged in drone technician. Screen 17)
+```json
+output
+{
+    "dronesId": [
+        113
+    ]
+}
+```
+
+25. **/manager/manage/stores** GET <br />
     Manager manage store
 
 ```json
@@ -475,7 +531,7 @@ sample output
 
 ```
 
-23. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
+26. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
 sample url: localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16
 ```json
 
@@ -505,7 +561,7 @@ output:
 }
 ```
 
-21. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
+27. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
 If id or status is null, just don't put them in the query paramters. <br />
 Sample: 
 - localhost:5000/dronetech/view/drones/?username=lchen27

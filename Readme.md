@@ -61,6 +61,6 @@ Junqi Xu <br/>
 - [x] Screen 14: Customer - View Order History
 - [x] Screen 15: Customer - View Store Item
 - [x] Screen 16: Customer - Review Order
-- [ ] Screen 17: Drone Tech - View Store Orders (In progress)
+- [x] Screen 17: Drone Tech - View Store Orders
 - [x] Screen 18: Drone Tech - View Order Details
 - [x] Screen 19: Drone Tech - Track Assigned Drones
