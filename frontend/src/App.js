@@ -16,6 +16,7 @@ import ViewDronesPage from "./pages/ViewDronesPage/ViewDronesPage";
 import ViewCustomerPage from "./pages/ViewCustomerPage/ViewCustomerPage";
 import ManageStoresPage from "./pages/ManageStoresPage/ManageStoresPage";
 import CreateChainItemPage from "./pages/CreateChainItemPage/CreateChainItemPage";
+import ViewDroneTechniciansPage from "./pages/ViewDroneTechniciansPage/ViewDroneTechniciansPage";
 
 import states from "./assets/states";
 import types from "./assets/types";
@@ -126,7 +127,7 @@ const App = () => {
     max_range: ""
   });
   const [displayedManagedStores, setDisplayedManagedStores] = useState([]);
-  
+
   // Manager create chain item state
   const [newChainItem, setNewChainItem] = useState({
     chainname: "",
@@ -138,8 +139,6 @@ const App = () => {
   });
   const [canCreateChainItem, setCanCreateChainItem] = useState(false);
   const [createChainItemSuccess, setCreateChainItemSuccess] = useState(false);
-
-  // Create chain items state
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -165,6 +164,12 @@ const App = () => {
           localStorage.clear();
           localStorage.setItem("identity", response.data.information["identity"]);
           localStorage.setItem("username", login.loginUsername);
+          if (response.data.information["identity"] === "Manager") {
+            localStorage.setItem(
+              "chainname",
+              response.data.information["chainname"]
+            );
+          }
           setLoginSuccess(true);
         })
         .catch((error) => {
@@ -748,6 +753,7 @@ const App = () => {
       alert(error);
     })
   }
+
   const onViewOrderHistory = async () => {
     axios
       .get("http://localhost:5000/customer/get/orderIDs", {
@@ -908,6 +914,12 @@ const App = () => {
           createChainItemSuccess={createChainItemSuccess}
           enterChainItem={enterChainItem}
           onCreateChainItem={onCreateChainItem}
+        />
+      </Route>
+      <Route path={"/manager/view/dronetechnicians"} exact>
+        <ViewDroneTechniciansPage
+          chainname={localStorage.chainname}
+          userName={localStorage.username}
         />
       </Route>
     </BrowserRouter>

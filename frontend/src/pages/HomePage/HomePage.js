@@ -47,7 +47,14 @@ const HomePage = (props) => {
   } else if (identity === "Manager") {
     html = (
       <div className={classes.buttons}>
-        <button className={classes.button_click}>View Drone Technicians</button>
+        <button className={classes.button_click}>
+          <Link
+            className={classes.link_click}
+            to="/manager/view/dronetechnicians"
+          >
+            View Drone Technicians
+          </Link>
+        </button>
         <button
           className={classes.button_click}
           onClick={props.onEnterViewDrones}

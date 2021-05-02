@@ -53,8 +53,8 @@ const get_filtered_drones = async (req, res, next) => {
 // Manager view drone technicians
 const view_drone_technicians = async (req, res, next) => {
   let sql = `CALL manager_view_drone_technicians(?,?,?)`;
-  const { chainName, dronTech, storName } = req.body;
-  pool.query(sql, [chainName, dronTech, storName], (err, result) => {
+  const { chainName, droneTech, storeName } = req.query;
+  pool.query(sql, [chainName, droneTech, storeName], (err, result) => {
     if (err) return next(new HttpError(err.message, 500));
 
     // Select from manager_view_drone_technicians_result table
