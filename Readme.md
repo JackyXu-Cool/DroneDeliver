@@ -42,7 +42,7 @@ Junqi Xu <br/>
 - [ ] Screen 16: Customer - Review Order
 - [ ] Screen 17: Drone Tech - View Store Orders
 - [ ] Screen 18: Drone Tech - View Order Details
-- [ ] Screen 19: Drone Tech - Tracke Assigned Drones
+- [ ] Screen 19: Drone Tech - Tracke Assigned Drones (In progress)
 
 ### Backend Route
 - [x] Screen 1: Login
