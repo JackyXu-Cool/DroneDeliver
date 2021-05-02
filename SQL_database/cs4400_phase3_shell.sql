@@ -675,13 +675,13 @@ BEGIN
 		select count(*) as count from users where username = i_username and pass = @hashedpassword;
 	else
 		if (select count(*) from customer where username = i_username) = 1 then
-			select count(*) as count, ccnumber, cvv, exp_date from customer where username = i_username;
+			select count(*) as count, ccnumber, cvv, exp_date from customer where username = i_username group by username;
 		end if;
         if (select count(*) from manager where username = i_username) = 1 then
-			select count(*) as count, chainname from manager where username = i_username;
+			select count(*) as count, chainname from manager where username = i_username group by username;
 		end if;
 		if (select count(*) from drone_tech where username = i_username) = 1 then
-			select count(*) as count, chainName, storeName from drone_tech where username = i_username;
+			select count(*) as count, chainName, storeName from drone_tech where username = i_username group by username;
 		end if;
         if (select count(*) from admin where username = i_username) = 1 then
 			select count(*) as count from admin where username = i_username;
