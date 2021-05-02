@@ -67,9 +67,42 @@ const pre_place_order = async (req, res, next) => {
     })
 };
 
+const review_order = async (req, res, next) => {
+    let sql = `CALL customer_review_order(?)`;
+    let { username } = req.query;
+    pool.query(sql, [username], (err) => {
+        if (err) return next(new HttpError(err.message, 500));
+        pool.query('SELECT * FROM grocery_drone_delivery.customer_review_order_result', (err, result) => {
+            if (err) return next(new HttpError(err.message, 500));
+            res.status(200).json({result});
+        });
+    });
+};
+
+const update_order = async (req, res, next) => {
+    let { username, itemName, quantity } = req.body;
+    let sql = `CALL customer_update_order(?,?,?)`;
+    pool.query(sql, [username, itemName, quantity], (err) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(201).json({ success: true });
+    })
+};
+
+const confirm_order = async (req, res, next) => {
+    let { username } = req.body;
+    let sql = `call order_confirm(?)`;
+    pool.query(sql, [username], (err) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(201).json({ success: true });
+    })
+}
+
 exports.get_customer_full_name = get_customer_full_name;
 exports.change_credit_card_info = change_credit_card_info;
 exports.get_order_ids_by_customer = get_order_ids_by_customer;
 exports.get_order_info = get_order_info;
 exports.view_store_item = view_store_item;
 exports.pre_place_order = pre_place_order;
+exports.review_order = review_order;
+exports.update_order = update_order;
+exports.confirm_order = confirm_order;

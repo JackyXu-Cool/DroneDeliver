@@ -448,23 +448,24 @@ BEGIN
 -- Type solution below
 	set @userZip = (select Zipcode from USERS where Username = i_username);
     set @targetZip = (select Zipcode from STORE where StoreName = i_store_name and ChainName = i_chain_name);
-	set @orderLimit = (select Orderlimit from CHAIN_ITEM where ChainItemName = i_item_name and ChainName = i_chain_name);
     
-    if (@userZip = @targetZip) and (i_quantity <= @orderLimit) then 
+    if (@userZip = @targetZip) and (i_quantity <= (select Orderlimit from CHAIN_ITEM where ChainItemName = i_item_name and ChainName = i_chain_name)) then 
 		set @lastusername = (SELECT customerusername FROM orders ORDER BY ID DESC LIMIT 1);
         set @lastOrderID = (select ID from orders order by ID desc limit 1);
         if (select count(*) from orders where orderstatus = "Creating") = 1 then 
-			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
+			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName limit 1);
 			insert into CONTAINS values (@lastOrderID, i_item_name, i_chain_name, @PLU, i_quantity);
 		end if;
 		if (select count(*) from orders where orderstatus = "Creating") = 0 then
 			insert into ORDERS values (@lastOrderID + 1, "Creating", current_date(), i_username, null);
-			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
+			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName limit 1);
 			insert into CONTAINS values (@lastOrderID + 1, i_item_name, i_chain_name, @PLU, i_quantity);
 		end if;
         if (select count(*) from orders where orderstatus = "Creating") > 1 then
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot have two or more creating orders';
         end if;
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Quantity > limit OR Customers cannot buy in a store that is not within his zipcode';
     end if;
 -- End of solution
 END //
@@ -480,10 +481,10 @@ CREATE PROCEDURE customer_review_order(
 )
 BEGIN
 -- Type solution below
-	set @orderID = (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating");
     drop table if exists customer_review_order_result;
-	create table customer_review_order_result
-    select ItemName, CONTAINS.Quantity, Price from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName where OrderID = @orderID;
+	create table customer_review_order_result as
+    select ItemName, CONTAINS.Quantity, Price from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
+    where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating");
 -- End of solution
 END //
 DELIMITER ;
@@ -768,3 +769,19 @@ BEGIN
 -- End of solution
 END //
 DELIMITER ;
+
+-- Order confirm procedure --
+DROP PROCEDURE IF EXISTS order_confirm;
+DELIMITER //
+CREATE PROCEDURE order_confirm(
+        IN i_username VARCHAR(40)
+)
+BEGIN
+	if i_username in (SELECT customerusername FROM orders where orderstatus = "Creating" ) then
+		update orders set orderstatus = "Pending"
+        where orderstatus = "Creating";
+	end if;
+END //
+DELIMITER ;
+
+

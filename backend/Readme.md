@@ -349,8 +349,9 @@ sample output
 }
 ```
 
-17. **/customer/view/store/items/** GET (Get the information needed to display screen 15) <br />
-localhost:5000/customer/view/store/items/?type={type}&chainName={chainName}&storeName={stosreName}&username={username}
+17. **/customer/view/store/items/?type={type}&chainName={chainName}&storeName={stosreName}&username={username}**  GET <br />
+(Get the information needed to display screen 15)
+
 ```
 For any query parameter input, replace space with "-". For example:
 
@@ -395,7 +396,52 @@ output
 }
 ```
 
-19. **/manager/manage/stores** GET <br />
+19. **/customer/review/order/?username={username}** (Screen 16 information)
+```json
+{
+    "result": [
+        {
+            "ItemName": "Fuji Apple",
+            "Quantity": 1,
+            "Price": 1.99
+        },
+        {
+            "ItemName": "Gala Apple",
+            "Quantity": 6,
+            "Price": 15.32
+        }
+    ]
+}
+```
+20. **/customer/update/order** POST <br />
+```json
+input 
+{
+    "username": "dkim99",
+    "quantity": 3,
+    "itemName": "Gala Apple"
+}
+
+output
+{
+    "success": true
+}
+```
+
+21.**/customer/confirm/order** POST <br /> (When user clicks place order on Screen 16)
+```json
+input
+{
+    "username": "dkim99"
+}
+
+output
+{
+    "success": true
+}
+```
+
+22. **/manager/manage/stores** GET <br />
     Manager manage store
 
 ```json
@@ -429,7 +475,7 @@ sample output
 
 ```
 
-20. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
+23. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
 sample url: localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16
 ```json
 
