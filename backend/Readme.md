@@ -383,7 +383,55 @@ sample output
 
 ```
 
-Note:
+18. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
+sample url: localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16
+```json
+
+output: 
+{
+    "Details": {
+        "Customer_name": "Leroy Piper",
+        "OrderID": 10015,
+        "Total_Amount": 83.28,
+        "Total_Items": 8,
+        "Date_Of_Purchase": "2021-02-24T05:00:00.000Z",
+        "Drone_ID": null,
+        "Store_Associate": null,
+        "Order_Status": "Pending",
+        "Address": "262 Stonecliffe Aisle, Kennesaw, GA 30144",
+        "Items": [
+            {
+                "Item": "Black Tea",
+                "Count": 2
+            },
+            {
+                "Item": "Earl Grey Tea",
+                "Count": 2
+            }
+        ]
+    }
+}
+```
+
+19. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
+If id or status is null, just don't put them in the query paramters. <br />
+Sample: 
+- localhost:5000/dronetech/view/drones/?username=lchen27
+- localhost:5000/dronetech/view/drones/?username=hliu88&status=All
+```json
+output:
+{
+    "result": [
+        {
+            "Drone_ID": 103,
+            "Drone_Status": "Available",
+            "Radius": 3
+        }
+    ]
+}
+```
+
+**Note:** <br />
 For any of the above APIs, if there is a request failure，the response will be like this.
 
 ```json
