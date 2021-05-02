@@ -95,6 +95,33 @@ const confirm_order = async (req, res, next) => {
         if (err) return next(new HttpError(err.message, 500));
         res.status(201).json({ success: true });
     })
+};
+
+const get_chain_in_zipcode = async (req, res, next) => {
+    const { zipcode } = req.query;
+    let sql = `select distinct chainName from store where zipcode = ${zipcode}`;
+    pool.query(sql, (err, result) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(200).json({ result });
+    })
+};
+
+const get_store_in_zipcode = async (req, res, next) => {
+    const { zipcode, chainName } = req.query;
+    let sql = `select distinct storeName from store where zipcode = ${zipcode} and chainName="${chainName}"`;
+    pool.query(sql, (err, result) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(200).json({ result });
+    })
+}
+
+const get_zipcode = async(req, res, next) => {
+    let { username } = req.query;
+    let sql = `select zipcode from users where username = "${username}"`;
+    pool.query(sql, (err, result) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(200).json({ zip: result[0]["zipcode"] });
+    });
 }
 
 exports.get_customer_full_name = get_customer_full_name;
@@ -106,3 +133,6 @@ exports.pre_place_order = pre_place_order;
 exports.review_order = review_order;
 exports.update_order = update_order;
 exports.confirm_order = confirm_order;
+exports.get_chain_in_zipcode = get_chain_in_zipcode;
+exports.get_zipcode = get_zipcode;
+exports.get_store_in_zipcode = get_store_in_zipcode;

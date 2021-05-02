@@ -17,6 +17,8 @@ import ViewCustomerPage from "./pages/ViewCustomerPage/ViewCustomerPage";
 import ManageStoresPage from "./pages/ManageStoresPage/ManageStoresPage";
 import CreateChainItemPage from "./pages/CreateChainItemPage/CreateChainItemPage";
 import ViewDroneTechniciansPage from "./pages/ViewDroneTechniciansPage/ViewDroneTechniciansPage";
+import ViewStoreItemPage from "./pages/ViewStoreItemPage/ViewStoreItemPage";
+import ReviewOrderPage from "./pages/ReviewOrderPage/ReviewOrderPage";
 
 import states from "./assets/states";
 import types from "./assets/types";
@@ -941,6 +943,15 @@ const App = () => {
           chainname={localStorage.chainname}
           userName={localStorage.username}
         />
+      </Route>
+      <Route path={"/customer/view/store/items"} exact>
+          <ViewStoreItemPage
+
+          />
+      </Route>
+      <Route path={"/customer/review/order"} exact>
+          <ReviewOrderPage 
+          />
       </Route>
     </BrowserRouter>
   );

@@ -410,22 +410,23 @@ CREATE PROCEDURE customer_view_store_items(
 )
 BEGIN
 -- Type solution below
-	set @userZipcode = (select Zipcode from USERS where Username = i_username);
     -- check chainName validity given same zipCode, storeName, and ChainName
-    set @validChainName = (select ChainName from STORE where StoreName = i_store_name and zipcode = @userZipcode and ChainName = i_chain_name);
-    if (select count(@validChainName)) = 0 then
+    if (select count(ChainName) from STORE 
+    where StoreName = i_store_name 
+    and zipcode in (select Zipcode from USERS where Username = i_username) 
+    and ChainName = i_chain_name) = 0 then
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ' customer can only shop from stores that have the same zip code as their address';
 	else
 		if i_item_type = "ALL" 
 			then drop table if exists customer_view_store_items_result;
 				create table customer_view_store_items_result
-				select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = @validChainName; 
+				select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = i_chain_name; 
 		else
 			drop table if exists customer_view_store_items_result;
 				create table customer_view_store_items_result
 				select ChainItemName, Orderlimit 
 				from CHAIN_ITEM join ITEM on ItemName = ChainItemName 
-				where ChainName = @validChainName and ItemType = i_item_type;
+				where ChainName = i_chain_name and ItemType = i_item_type;
 		end if;
 	end if;
 -- End of solution

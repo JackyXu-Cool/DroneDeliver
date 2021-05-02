@@ -34,7 +34,11 @@ const HomePage = (props) => {
             View Order History
           </Link>
         </button>
-        <button className={classes.button_click}>View Store Item</button>
+        <button className={classes.button_click}>
+          <Link className={classes.link_click} to={"/customer/view/store/items"}>
+            View Store Items
+          </Link>
+        </button>
       </div>
     );
   } else if (identity === "Drone Tech") {
