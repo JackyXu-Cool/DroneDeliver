@@ -68,10 +68,25 @@ const view_drone_technicians = async (req, res, next) => {
   });
 };
 
+
 // Manager manage stores
+const get_stores_by_manager = async (req, res, next) => {
+  const { username } = req.query;
+  let sql = `select MANAGER.ChainName, StoreName from MANAGER left join STORE on MANAGER.ChainName = STORE.ChainName where MANAGER.username = '${username}';`;
+  pool.query(sql, (err, result) => {
+    if (err) return next(new HttpError(err.message, 500));
+    res.status(200).json({res: result});
+  })
+}
+
 const manage_stores = async (req, res, next) => {
   let sql = `CALL manager_manage_stores(?,?,?,?)`;
-  const { userName, storeName, minTotal, maxTotal } = req.body;
+  let { userName, storeName, minTotal, maxTotal } = req.query;
+
+  storeName = (storeName === "All" || storeName === "") ? null : storeName;
+  minTotal = minTotal === "" ? null : parseInt(minTotal, 10);
+  maxTotal = maxTotal === "" ? null : parseInt(maxTotal, 10);
+
   pool.query(sql, [userName, storeName, minTotal, maxTotal], (err, result) => {
     if (err) return next(new HttpError(err.message, 500));
 
@@ -88,4 +103,5 @@ exports.get_all_items = get_all_items;
 exports.get_PLU = get_PLU;
 exports.get_filtered_drones = get_filtered_drones;
 exports.view_drone_technicians = view_drone_technicians;
+exports.get_stores_by_manager = get_stores_by_manager;
 exports.manage_stores = manage_stores;

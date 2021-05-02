@@ -1,0 +1,111 @@
+@import "../../assets/design.scss";
+
+.entry_odd {
+    margin-top: 1px;
+    margin-bottom: 0px;
+    height: 40px;
+    list-style-type: none;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Avenir", serif;
+
+    .entry_1 {
+        float: left;
+        width: 90px;
+        background-color: #aaa;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_2 {
+        float: left;
+        width: 200px;
+        height: 40px;
+        background-color: #aaa;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_3 {
+        float: left;
+        width: 80px;
+        background-color: #aaa;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_4 {
+        float: left;
+        width: 100px;
+        height: 40px;
+        background-color: #aaa;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_5 {
+        float: left;
+        width: 91px;
+        height: 40px;
+        background-color: #aaa;
+        padding-top: 8px;
+    }
+}
+
+.entry_even {
+    margin-top: 1px;
+    margin-bottom: 0px;
+    height: 40px;
+    list-style-type: none;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Avenir", serif;
+
+    .entry_1 {
+        float: left;
+        width: 90px;
+        background-color: #efefef;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_2 {
+        float: left;
+        width: 200px;
+        height: 40px;
+        background-color: #efefef;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_3 {
+        float: left;
+        width: 80px;
+        background-color: #efefef;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_4 {
+        float: left;
+        width: 100px;
+        height: 40px;
+        background-color: #efefef;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .entry_5 {
+        float: left;
+        width: 91px;
+        height: 40px;
+        background-color: #efefef;
+        padding-top: 8px;
+    }
+}

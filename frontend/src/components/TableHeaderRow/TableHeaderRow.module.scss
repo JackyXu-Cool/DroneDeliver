@@ -1,0 +1,56 @@
+@import "../../assets/design.scss";
+
+.header_row {
+    margin: 5px 13px 0px 10px;
+    height: 40px;
+    list-style-type: none;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Avenir", serif;
+    color: white;
+
+    .header_1 {
+        float: left;
+        width: 90px;
+        background-color: #4473c4;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .header_2 {
+        float: left;
+        width: 200px;
+        height: 40px;
+        background-color: #4473c4;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .header_3 {
+        float: left;
+        width: 80px;
+        background-color: #4473c4;
+        height: 40px;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .header_4 {
+        float: left;
+        width: 100px;
+        height: 40px;
+        background-color: #4473c4;
+        padding-top: 8px;
+        margin-right: 1px;
+    }
+
+    .header_5 {
+        float: left;
+        width: 91px;
+        height: 40px;
+        background-color: #4473c4;
+        padding-top: 8px;
+    }
+}

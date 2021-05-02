@@ -43,7 +43,11 @@ const HomePage = (props) => {
                     </Link>
                 </button>
                 <button className={classes.button_click}>Create Chain Item</button>
-                <button className={classes.button_click}>Manage Stores</button>
+                <button className={classes.button_click} onClick={props.onEnterManageStores}>
+                    <Link className={classes.link_click} style={{paddingTop: 15, paddingBottom:15}} to="/manager/manage/stores">
+                        Manage Stores
+                    </Link>
+                </button>
             </div>
         );
     } else if (identity === "Admin") {
