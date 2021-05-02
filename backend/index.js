@@ -6,6 +6,7 @@ const userRoute = require("./routes/user-route");
 const adminRoute = require("./routes/admin_route");
 const managerRoute = require("./routes/chainManager-route");
 const customerRoute = require("./routes/customer-route");
+const dronetechRoute = require("./routes/dronetech_route");
 
 const app = express();
 app.use(cors());
@@ -29,6 +30,7 @@ app.use("/user", userRoute);
 app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
 app.use("/customer", customerRoute);
+app.use("/dronetech", dronetechRoute);
 
 app.use((req, res, next) => {
   const error = new Error("Could not find the route", 404);

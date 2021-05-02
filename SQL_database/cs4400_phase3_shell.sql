@@ -11,7 +11,6 @@ Directions:
 Please follow all instructions from the Phase III assignment PDF.
 This file must run without error for credit.
 */
-
 -- ID: 2a
 -- Author: asmith457
 -- Name: register_customer
@@ -30,6 +29,7 @@ CREATE PROCEDURE register_customer(
 	   IN i_cvv CHAR(3),
        IN i_exp_date DATE
 )
+
 BEGIN
 -- Type solution below
 	if length(i_zipcode) = 5 then
@@ -284,43 +284,63 @@ BEGIN
     
     set @chain_name = (select ChainName from MANAGER where Username = i_mgr_username);
     
+    drop table if exists manager_manage_stores_address;
+    create table manager_manage_stores_address
+		select STORE.StoreName, concat(Street, " ", City, ", ", State, " ", Zipcode) as Address from STORE
+        where STORE.ChainName = @chain_name;
+        
     drop table if exists manager_manage_stores_orders;
     create table manager_manage_stores_orders
-		select DRONE_TECH.StoreName, count(*) as Orders from ORDERS join DRONE join DRONE_TECH
-		on ORDERS.DroneID = DRONE.ID and DRONE.DroneTech = DRONE_TECH.UserName and DRONE_TECH.ChainName = @chain_name
-		group by DRONE_TECH.StoreName;
-    
-    drop table if exists manager_manage_stores_total;
-    create table manager_manage_stores_total
-		select Store.StoreName ,sum(Price * CONTAINS.Quantity) as Total 
-		from STORE join DRONE_TECH join DRONE join ORDERS join CONTAINS join CHAIN_ITEM
-		on DRONE_TECH.StoreName = STORE.StoreName and DRONE_TECH.ChainName = STORE.ChainName and DRONE.DroneTech = DRONE_TECH.Username and DRONE.ID = ORDERS.DroneID and CONTAINS.OrderID = ORDERS.ID and ItemName = ChainItemName and CONTAINS.ChainName = CHAIN_ITEM.ChainName and CONTAINS.PLUNumber = CHAIN_ITEM.PLUNumber
-		where Store.ChainName = @chain_name group by STORE.StoreName;
+		select DRONE_TECH.StoreName, count(ORDERS.ID) as Orders from ORDERS join DRONE right join DRONE_TECH on
+        ORDERS.DroneID = DRONE.ID and DRONE.DroneTech = DRONE_TECH.username where DRONE_TECH.ChainName = @chain_name
+        group by Drone_Tech.StoreName;
     
     drop table if exists manager_manage_stores_employees;
     create table manager_manage_stores_employees
-		select Store.StoreName, count(*)+1 as Employees from STORE join DRONE_TECH
-        on DRONE_TECH.StoreName = STORE.StoreName and DRONE_TECH.ChainName = STORE.ChainName
-        where STORE.ChainName = @chain_name group by STORE.StoreName;
-	
-	drop table if exists manager_manage_stores_result;
-  create table manager_manage_stores_result
-    select STORE.StoreName, concat(Street, ' ', City, ', ', State, ' ', Zipcode) as Address, 
-    manager_manage_stores_orders.Orders, manager_manage_stores_employees.Employees, manager_manage_stores_total.Total
-		from STORE join manager_manage_stores_orders join manager_manage_stores_employees join manager_manage_stores_total
-    on STORE.StoreName = manager_manage_stores_total.StoreName 
-			and manager_manage_stores_total.StoreName = manager_manage_stores_orders.StoreName 
-			and manager_manage_stores_employees.StoreName = manager_manage_stores_orders.StoreName
-        where (manager_manage_stores_total.Total >= i_minTotal or i_minTotal is null)
-			and (manager_manage_stores_total.Total <= i_maxTotal or i_maxTotal is null) 
-			and (STORE.StoreName = i_storeName or i_storeName is null);
+		select DRONE_TECH.StoreName, count(drone_tech.username) + 1 as Employees from drone_tech where drone_tech.chainname = @chain_name
+        group by (drone_tech.storeName);
+        
+	drop table if exists manager_manage_stores_order_total;
+	create table manager_manage_stores_order_total
+		select DRONE_TECH.StoreName, ORDERS.ID, sum(CONTAINS.quantity*price) as OrderTotal
+        from ORDERS join CONTAINS join CHAIN_ITEM join DRONE join DRONE_TECH on
+        ORDERS.DroneID = DRONE.ID and DRONE_TECH.Username = DRONE.DroneTech and
+        ORDERS.ID = CONTAINS.OrderID and CONTAINS.ItemName = CHAIN_ITEM.ChainItemName and 
+        CONTAINS.ChainName = CHAIN_ITEM.ChainName and CONTAINS.PLUNumber = CHAIN_ITEM.PLUNumber
+        where DRONE_TECH.ChainName = @chain_name
+        group by ORDERS.ID;
+
+	drop table if exists manager_manage_stores_store_total;
+	create table manager_manage_stores_store_total
+		select StoreName, sum(OrderTotal) as StoreTotal from manager_manage_stores_order_total group by StoreName;
+        
+	drop table if exists manager_manage_stores_temp;
+    create table manager_manage_stores_temp
+		select manager_manage_stores_address.StoreName, address, ifnull(StoreTotal, 0) as total from 
+        manager_manage_stores_address left join manager_manage_stores_store_total on
+        manager_manage_stores_address.StoreName = manager_manage_stores_store_total.StoreName;
     
+    drop table if exists manager_manage_stores_result;
+    create table manager_manage_stores_result
+		select manager_manage_stores_temp.StoreName, address, Orders, Employees, Total from 
+		manager_manage_stores_temp join manager_manage_stores_orders
+		on manager_manage_stores_temp.StoreName = manager_manage_stores_orders.StoreName
+		join manager_manage_stores_employees on manager_manage_stores_orders.StoreName = manager_manage_stores_employees.StoreName
+        where (manager_manage_stores_temp.StoreName = i_storeName or i_storeName is null)
+        and (total >= i_minTotal or i_minTotal is null) and (total <= i_maxtotal or i_maxTotal is null);
+        
+	drop table if exists manager_manage_stores_address;
+	drop table if exists manager_manage_stores_orders;
+	drop table if exists manager_manage_stores_employees;
+	drop table if exists manager_manage_stores_order_total;
+	drop table if exists manager_manage_stores_store_total;
+	drop table if exists manager_manage_stores_temp;
 -- End of solution
 END //
 DELIMITER ;
 
--- call manager_manage_stores('rgreen97',null ,null,null);
--- select * from manager_manage_stores_result;
+call manager_manage_stores('cbing101', null, null, null);
+select * from manager_manage_stores_result;
 
 -- ID: 13a
 -- Author: vtata6

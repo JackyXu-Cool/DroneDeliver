@@ -1,17 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import TableHeaderRow from "../../components/TableHeaderRow/TableHeaderRow"
+import TableEntryRow from "../../components/TableEntryRow/TableEntryRow"
+
 import classes from "./ViewDronesPage.module.scss";
 
 const ViewDronesPage = (props) => {
     const dronesEntries = props.displayedDrones.map((entry, index) => {
-        return (<ul className={index % 2 === 1 ? classes.drone_entry_odd : classes.drone_entry_even} key={entry["ID"]}>
-            <li className={classes.drone_id_entry}>{entry["ID"]}</li>
-            <li className={classes.operator_entry}>{entry["DroneTech"]}</li>
-            <li className={classes.radius_entry}>{entry["Radius"]}</li>
-            <li className={classes.zip_entry}>{entry["Zip"]}</li>
-            <li className={classes.status_entry}>{entry["DroneStatus"]}</li>
-        </ul>);
+        return (        
+        <TableEntryRow 
+            key={index}
+            index={index}
+            entry_1={entry["ID"]}
+            entry_2={entry["DroneTech"]}
+            entry_3={entry["Radius"]}
+            entry_4={entry["Zip"]}
+            entry_5={entry["DroneStatus"]}
+        />
+        );
     });
 
     return (
@@ -53,14 +60,13 @@ const ViewDronesPage = (props) => {
                     </select>
                     <button className={classes.btn_filter} onClick={props.onFilter}>Filter</button>
                 </div>
-                <ul className={classes.header_row}>
-                    <li className={classes.drone_id_header}>Drone ID</li>
-                    <li className={classes.operator_header}>Operator</li>
-                    <li className={classes.radius_header}>Radius</li>
-                    <li className={classes.zip_header}>Zipcode</li>
-                    <li className={classes.status_header}>Status</li>
-
-                </ul>
+                <TableHeaderRow 
+                    header_1="Drone ID"
+                    header_2="Operator"
+                    header_3="Radius"
+                    header_4="Zipcode"
+                    header_5="Status"
+                />
                 <div className={classes.displayed_drones_container}>
                     {dronesEntries}
                 </div>
