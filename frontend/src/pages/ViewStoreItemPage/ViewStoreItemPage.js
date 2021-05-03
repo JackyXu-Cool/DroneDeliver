@@ -104,10 +104,8 @@ const ViewStoreItemPage = (props) => {
     };
 
     const placeOrder = async () => {
+        console.log(itemsForOrder);
         itemsForOrder.forEach((item) => {
-            console.log(item);
-            console.log("quantity", item["quantity"]);
-            console.log("name", item["name"]);
             axios.post("http://localhost:5000/customer/preplace/order", {
                 username: localStorage.getItem("username"),
                 chainName: ViewStorePageInfo["chainName"],
@@ -116,12 +114,12 @@ const ViewStoreItemPage = (props) => {
                 itemName: item["name"]
             }).then(() => {
                 console.log("success");
-                localStorage.setItem("chainName", ViewStorePageInfo["chainName"]);
-                localStorage.setItem("storeName", ViewStorePageInfo["storeName"]);
-                history.push(`/customer/review/order`);
             }).catch((err) => {
                 alert(err.response.data.message);
-            })
+            });
+        localStorage.setItem("chainName", ViewStorePageInfo["chainName"]);
+        localStorage.setItem("storeName", ViewStorePageInfo["storeName"]);
+        history.push(`/customer/review/order`);
         });
     };
 

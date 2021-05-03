@@ -361,10 +361,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- select * from CUSTOMER where Username = 'dsmith102';
--- CALL customer_change_credit_card_information('dsmith102','1247 0598 9213 1562', 173,'2021-05-02');
--- select * from CUSTOMER where Username = 'dsmith102';
-
 -- ID: 14a
 -- Author: ftsang3
 -- Name: customer_view_order_history
@@ -484,8 +480,10 @@ BEGIN
 -- Type solution below
     drop table if exists customer_review_order_result;
 	create table customer_review_order_result as
-    select ItemName, CONTAINS.Quantity, Price, orderlimit from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
-    where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating");
+    select ItemName, CONTAINS.Quantity, Price, orderlimit 
+		from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
+		and OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating")
+		and CHAIN_ITEM.chainName in (select chainName from contains where orderid in (select max(orderid) from contains));
 -- End of solution
 END //
 DELIMITER ;

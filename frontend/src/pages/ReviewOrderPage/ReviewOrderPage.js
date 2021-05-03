@@ -21,7 +21,7 @@ const ReviewOrderPage = (props) => {
             });
         }
         getReviewOrder();
-    }, []);
+    });
 
     const changeQuantity = (event) => {
         var temp = orderInfo;
