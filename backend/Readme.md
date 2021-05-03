@@ -349,7 +349,155 @@ sample output
 }
 ```
 
-17. **/manager/manage/stores** GET <br />
+17. **/customer/view/store/items/?type={type}&chainName={chainName}&storeName={stosreName}&username={username}**  GET <br />
+(Get the information needed to display screen 15)
+
+```
+For any query parameter input, replace space with "-". For example:
+
+localhost:5000/customer/view/store/items/?type=ALL&chainName=Moss-Market&storeName=Bobby-Dodd&username=dkim99
+
+Also, do not support type = null
+```
+```json
+output:
+{
+    "result": [
+        {
+            "ChainItemName": "Gala Apple",
+            "Orderlimit": 8
+        },
+        {
+            "ChainItemName": "Fuji Apple",
+            "Orderlimit": 2
+        },
+        {
+            "ChainItemName": "Campbells Soup",
+            "Orderlimit": 8
+        }
+    ]
+}
+```
+
+18. **/customer/preplace/order** POST (When click place order on Screen 15)<br /> 
+```json
+input 
+{
+    "username": "dkim99",
+    "chainName": "Moss Market",
+    "storeName": "Bobby Dodd",
+    "quantity": 1,
+    "itemName": "Fuji Apple"
+}
+
+output
+{
+    "success": true
+}
+```
+
+19. **/customer/review/order/?username={username}** (Screen 16 information)
+```json
+{
+    "result": [
+        {
+            "ItemName": "Fuji Apple",
+            "Quantity": 1,
+            "Price": 1.99
+        },
+        {
+            "ItemName": "Gala Apple",
+            "Quantity": 6,
+            "Price": 15.32
+        }
+    ]
+}
+```
+20. **/customer/update/order** POST <br />
+```json
+input 
+{
+    "username": "dkim99",
+    "quantity": 3,
+    "itemName": "Gala Apple"
+}
+
+output
+{
+    "success": true
+}
+```
+
+21.**/customer/confirm/order** POST <br /> (When user clicks place order on Screen 16)
+```json
+input
+{
+    "username": "dkim99"
+}
+
+output
+{
+    "success": true
+}
+```
+
+22. **/dronetech/view/store** GET (For screen 17 table information) <br />
+```
+pass in input as query parameters:
+
+localhost:5000/dronetech/view/store/drones?username={username}&startDate={yyyy-mm-dd}&endDate={yyyy-mm-dd}
+```
+```json
+{
+    "result": [
+        {
+            "ID": 10003,
+            "Operator": "KermitFrog",
+            "Date": "2021-01-13T05:00:00.000Z",
+            "DroneID": 117,
+            "Status": "Delivered",
+            "Total": 64.22
+        },
+        {
+            "ID": 10011,
+            "Operator": "KermitFrog",
+            "Date": "2021-02-05T05:00:00.000Z",
+            "DroneID": 117,
+            "Status": "Delivered",
+            "Total": 31.68
+        }
+    ]
+}
+```
+
+23. **/dronetech/assign/drontech** POST <br />
+```json
+input
+{
+    "username": "sstrange11",
+    "droneid": 113,
+    "orderid": 10015,
+    "status": "Drone Assigned"
+}
+
+output
+{
+    "success": true
+}
+```
+
+24. **/dronetech/get/available/drones?username={username}** GET <br /> 
+(Get availabe drones of the logged in drone technician. Screen 17)
+```json
+output
+{
+    "dronesId": [
+        113
+    ]
+}
+```
+
+25. **/manager/manage/stores** GET <br />
     Manager manage store
 
 ```json
@@ -383,7 +531,7 @@ sample output
 
 ```
 
-18. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
+26. **/dronetech/get/order/details/?id={orderId}&username={username}** GET (For Screen 18) <br />
 sample url: localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16
 ```json
 
@@ -413,7 +561,7 @@ output:
 }
 ```
 
-19. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
+27. **/dronetech/view/drones/?username={username}&id={droneid}&status={status}** GET (For screen 19) <br />
 If id or status is null, just don't put them in the query paramters. <br />
 Sample: 
 - localhost:5000/dronetech/view/drones/?username=lchen27

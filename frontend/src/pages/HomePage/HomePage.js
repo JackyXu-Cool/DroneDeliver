@@ -21,7 +21,11 @@ const HomePage = (props) => {
             Change Credit Card Information
           </Link>
         </button>
-        <button className={classes.button_click}>Review Order</button>
+        <button className={classes.button_click}>
+          <Link to="/customer/review/order" className={classes.link_click}>
+            Review Order
+          </Link>
+        </button>
         <button
           className={classes.button_click}
           onClick={props.onEnterViewOrderHistory}
@@ -34,7 +38,11 @@ const HomePage = (props) => {
             View Order History
           </Link>
         </button>
-        <button className={classes.button_click}>View Store Item</button>
+        <button className={classes.button_click}>
+          <Link className={classes.link_click} to={"/customer/view/store/items"}>
+            View Store Items
+          </Link>
+        </button>
       </div>
     );
   } else if (identity === "Drone Tech") {
@@ -80,8 +88,12 @@ const HomePage = (props) => {
           </Link>
         </button>
         <button className={classes.button_click}>
-            <Link className={classes.link_click} to="/manager/manage/stores" onClick={props.onEnterManageStores}>
-                Manage Stores
+          <Link
+            className={classes.link_click}
+            to="/manager/manage/stores"
+            onClick={props.onEnterManageStores}
+          >
+            Manage Stores
           </Link>
         </button>
       </div>

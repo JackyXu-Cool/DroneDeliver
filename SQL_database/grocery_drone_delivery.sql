@@ -494,3 +494,5 @@ INSERT INTO `grocery_drone_delivery`.`contains`(`OrderID`,`ItemName`,`ChainName`
 
 -- Update all user password to hashed
 update users set Pass = MD5(Pass);
+
+SET FOREIGN_KEY_CHECKS=0;
