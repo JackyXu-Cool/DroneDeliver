@@ -17,6 +17,10 @@ import ViewCustomerPage from "./pages/ViewCustomerPage/ViewCustomerPage";
 import ManageStoresPage from "./pages/ManageStoresPage/ManageStoresPage";
 import CreateChainItemPage from "./pages/CreateChainItemPage/CreateChainItemPage";
 import ViewDroneTechniciansPage from "./pages/ViewDroneTechniciansPage/ViewDroneTechniciansPage";
+import TrackAssignedDronesPage from "./pages/TrackAssignedDronesPage/TrackAssignedDronesPage";
+import ViewStoreItemPage from "./pages/ViewStoreItemPage/ViewStoreItemPage";
+import ReviewOrderPage from "./pages/ReviewOrderPage/ReviewOrderPage";
+import ViewStoreOrdersPage from "./pages/ViewStoreOrdersPage/ViewStoreOrdersPage";
 
 import states from "./assets/states";
 import types from "./assets/types";
@@ -139,6 +143,13 @@ const App = () => {
   });
   const [canCreateChainItem, setCanCreateChainItem] = useState(false);
   const [createChainItemSuccess, setCreateChainItemSuccess] = useState(false);
+
+  // Track assigned drones state
+  const [displayedAssignedDrones, setDisplayedAssignedDrones] = useState([]);
+  const [assignedDronesFilters, setAssignedDronesFilters] = useState({
+    drone_id: "",
+    status: "None",
+  });
 
   /*------------------------------ login page handlers ------------------------------*/
   // enter login data
@@ -549,6 +560,9 @@ const App = () => {
       min_range: "",
       max_range: "",
     });
+
+    console.log(localStorage.username);
+
     axios
       .get("http://localhost:5000/manager/get/stores", {
         params: {
@@ -746,42 +760,11 @@ const App = () => {
         },
       })
       .then((res) => {
-        let temp = res.data.res.map((entry) => entry.ID).sort();
-        setCustomerViewOrdeRIDs(temp);
-        if (temp.length > 0) {
-          let id = temp[0];
-          axios
-            .get("http://localhost:5000/customer/get/orderInfo", {
-              params: {
-                username: localStorage.username,
-                orderId: id,
-              },
-            })
-            .then((res) => {
-              let order_detail_info = res.data.result[0];
-              let order_date = order_detail_info.orderdate;
-              order_detail_info.orderdate = order_date.substring(0, 10);
-
-              setCustomerViewOrderInfo(order_detail_info);
-            })
-            .catch((error) => {
-              alert(error);
-            });
+        if (res.data.res.length === 0) {
+          alert("You have no order to be viewed!");
+          return;
         }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
 
-  const onViewOrderHistory = async () => {
-    axios
-      .get("http://localhost:5000/customer/get/orderIDs", {
-        params: {
-          username: localStorage.username,
-        },
-      })
-      .then((res) => {
         let temp = res.data.res.map((entry) => entry.ID).sort();
         setCustomerViewOrdeRIDs(temp);
         if (temp.length > 0) {
@@ -831,6 +814,72 @@ const App = () => {
       });
   };
 
+  /*------------------------------ track assigned drones page handlers ------------------------------*/
+  const onTrackAssignedDronesScreen = async () => {
+    axios
+      .get("http://localhost:5000/dronetech/view/drones", {
+        params: {
+          username: localStorage.username,
+          id: "",
+          status: "",
+        },
+      })
+      .then((res) => {
+        setDisplayedAssignedDrones(res.data.result);
+        setDummy(dummy + 1);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const enterTrackAssignedDrones = async (event) => {
+    let temp = assignedDronesFilters;
+    temp[event.target.name] = event.target.value;
+    setAssignedDronesFilters(temp);
+  };
+
+  const onResetAssignedDrones = async () => {
+    axios
+      .get("http://localhost:5000/dronetech/view/drones", {
+        params: {
+          username: localStorage.username,
+          id: "",
+          status: "",
+        },
+      })
+      .then((res) => {
+        setDisplayedAssignedDrones(res.data.result);
+        setDummy(dummy + 1);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const onFilterAssignedDrones = async () => {
+    console.log({
+      username: localStorage.username,
+      id: assignedDronesFilters.drone_id,
+      status: assignedDronesFilters.status,
+    });
+    axios
+      .get("http://localhost:5000/dronetech/view/drones", {
+        params: {
+          username: localStorage.username,
+          id: assignedDronesFilters.drone_id,
+          status: assignedDronesFilters.status,
+        },
+      })
+      .then((res) => {
+        setDisplayedAssignedDrones(res.data.result);
+        console.log(res.data.result);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <BrowserRouter className={classes.app}>
       <Route path={"/"} exact>
@@ -865,6 +914,7 @@ const App = () => {
           onEnterManageStores={onManageStoresScreen}
           onEnterViewDrones={onViewDroneScreen}
           onEnterViewOrderHistory={onViewOrderHistoryScreen}
+          onEnterTrackAssignedDrone={onTrackAssignedDronesScreen}
         />
       </Route>
       <Route path={"/admin/create/grocerychain"} exact>
@@ -912,6 +962,21 @@ const App = () => {
           onSort={onSelectManagedStoresSortBy}
         />
       </Route>
+      <Route path={"/manager/create/chainitem"} exact>
+        <CreateChainItemPage
+          generalItems={generalItems}
+          canCreateChainItem={canCreateChainItem}
+          createChainItemSuccess={createChainItemSuccess}
+          enterChainItem={enterChainItem}
+          onCreateChainItem={onCreateChainItem}
+        />
+      </Route>
+      <Route path={"/manager/view/dronetechnicians"} exact>
+        <ViewDroneTechniciansPage
+          chainname={localStorage.chainname}
+          userName={localStorage.username}
+        />
+      </Route>
       <Route path={"/customer/changeCCInfo"} exact>
         <ChangeCreditCardPage
           username={localStorage.username}
@@ -927,20 +992,22 @@ const App = () => {
           onSelect={onSelectViewOrderID}
         />
       </Route>
-      <Route path={"/manager/create/chainitem"} exact>
-        <CreateChainItemPage
-          generalItems={generalItems}
-          canCreateChainItem={canCreateChainItem}
-          createChainItemSuccess={createChainItemSuccess}
-          enterChainItem={enterChainItem}
-          onCreateChainItem={onCreateChainItem}
+      <Route path={"/customer/view/storeitems"} exact>
+        <ViewStoreItemPage />
+      </Route>
+      <Route path={"/customer/review/order"} exact>
+        <ReviewOrderPage />
+      </Route>
+      <Route path={"/dronetech/drones"}>
+        <TrackAssignedDronesPage
+          drones={displayedAssignedDrones}
+          onEnter={enterTrackAssignedDrones}
+          onFilter={onFilterAssignedDrones}
+          onReset={onResetAssignedDrones}
         />
       </Route>
-      <Route path={"/manager/view/dronetechnicians"} exact>
-        <ViewDroneTechniciansPage
-          chainname={localStorage.chainname}
-          userName={localStorage.username}
-        />
+      <Route path={"/dronetech/view/storeorders"} exact>
+        <ViewStoreOrdersPage userName={localStorage.username} />
       </Route>
     </BrowserRouter>
   );

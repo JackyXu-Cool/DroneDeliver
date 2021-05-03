@@ -339,9 +339,6 @@ BEGIN
 END //
 DELIMITER ;
 
-call manager_manage_stores('cbing101', null, null, null);
-select * from manager_manage_stores_result;
-
 -- ID: 13a
 -- Author: vtata6
 -- Name: customer_change_credit_card_information
@@ -363,10 +360,6 @@ BEGIN
 -- End of solution
 END //
 DELIMITER ;
-
--- select * from CUSTOMER where Username = 'dsmith102';
--- CALL customer_change_credit_card_information('dsmith102','1247 0598 9213 1562', 173,'2021-05-02');
--- select * from CUSTOMER where Username = 'dsmith102';
 
 -- ID: 14a
 -- Author: ftsang3
@@ -413,20 +406,25 @@ CREATE PROCEDURE customer_view_store_items(
 )
 BEGIN
 -- Type solution below
-	set @userZipcode = (select Zipcode from USERS where Username = i_username);
     -- check chainName validity given same zipCode, storeName, and ChainName
-    set @validChainName = (select ChainName from STORE where StoreName = i_store_name and zipcode = @userZipcode and ChainName = i_chain_name);
-    if i_item_type = "ALL" 
-		then drop table if exists customer_view_store_items_result;
-			 create table customer_view_store_items_result
-			select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = @validChainName; 
+    if (select count(ChainName) from STORE 
+    where StoreName = i_store_name 
+    and zipcode in (select Zipcode from USERS where Username = i_username) 
+    and ChainName = i_chain_name) = 0 then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ' customer can only shop from stores that have the same zip code as their address';
 	else
-		drop table if exists customer_view_store_items_result;
-			 create table customer_view_store_items_result
-			 select ChainItemName, Orderlimit 
-			 from CHAIN_ITEM join ITEM on ItemName = ChainItemName 
-			 where ChainName = @validChainName and ItemType = i_item_type;
+		if i_item_type = "ALL" 
+			then drop table if exists customer_view_store_items_result;
+				create table customer_view_store_items_result
+				select ChainItemName, Orderlimit from CHAIN_ITEM join ITEM on ItemName = ChainItemName where ChainName = i_chain_name; 
+		else
+			drop table if exists customer_view_store_items_result;
+				create table customer_view_store_items_result
+				select ChainItemName, Orderlimit 
+				from CHAIN_ITEM join ITEM on ItemName = ChainItemName 
+				where ChainName = i_chain_name and ItemType = i_item_type;
 		end if;
+	end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -447,20 +445,24 @@ BEGIN
 -- Type solution below
 	set @userZip = (select Zipcode from USERS where Username = i_username);
     set @targetZip = (select Zipcode from STORE where StoreName = i_store_name and ChainName = i_chain_name);
-	set @orderLimit = (select Orderlimit from CHAIN_ITEM where ChainItemName = i_item_name and ChainName = i_chain_name);
     
-    if (@userZip = @targetZip) and (i_quantity <= @orderLimit) then 
+    if (@userZip = @targetZip) and (i_quantity <= (select Orderlimit from CHAIN_ITEM where ChainItemName = i_item_name and ChainName = i_chain_name)) then 
 		set @lastusername = (SELECT customerusername FROM orders ORDER BY ID DESC LIMIT 1);
         set @lastOrderID = (select ID from orders order by ID desc limit 1);
-        set @creatingOrder = (select count(*) from orders where orderstatus = "Creating");
-        if @creatingOrder = 1 then 
-			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
+        if (select count(*) from orders where orderstatus = "Creating") = 1 then 
+			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName limit 1);
 			insert into CONTAINS values (@lastOrderID, i_item_name, i_chain_name, @PLU, i_quantity);
-		else
+		end if;
+		if (select count(*) from orders where orderstatus = "Creating") = 0 then
 			insert into ORDERS values (@lastOrderID + 1, "Creating", current_date(), i_username, null);
-			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName);
+			set @PLU = (select PLUNumber from CHAIN_ITEM where i_chain_name = ChainName and i_item_name = ChainItemName limit 1);
 			insert into CONTAINS values (@lastOrderID + 1, i_item_name, i_chain_name, @PLU, i_quantity);
 		end if;
+        if (select count(*) from orders where orderstatus = "Creating") > 1 then
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot have two or more creating orders';
+        end if;
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Quantity > limit OR Customers cannot buy in a store that is not within his zipcode';
     end if;
 -- End of solution
 END //
@@ -476,10 +478,12 @@ CREATE PROCEDURE customer_review_order(
 )
 BEGIN
 -- Type solution below
-	set @orderID = (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating");
     drop table if exists customer_review_order_result;
-	create table customer_review_order_result
-    select ItemName, CONTAINS.Quantity, Price from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName where OrderID = @orderID;
+	create table customer_review_order_result as
+    select ItemName, CONTAINS.Quantity, Price, orderlimit 
+		from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
+		and OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating")
+		and CHAIN_ITEM.chainName in (select chainName from contains where orderid in (select max(orderid) from contains));
 -- End of solution
 END //
 DELIMITER ;
@@ -503,10 +507,10 @@ BEGIN
     
     if (i_quantity <= @orderLimit) and (current_date() <= @expDate) then
 		if i_quantity > 0 then
-			update CONTAINS set Quantity = i_quantity where OrderID = @orderID and i_item_name = ItemName;
+			update CONTAINS set Quantity = i_quantity where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating") and i_item_name = ItemName;
 		end if;
 		if i_quantity = 0 then
-			delete from contains where OrderID = @orderID and i_item_name = ItemName;
+			delete from contains where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating") and i_item_name = ItemName;
 		end if;
     end if;
 -- End of solution
@@ -527,20 +531,67 @@ BEGIN
 -- Type solution below
     set @storeName = (select StoreName from DRONE_TECH where Username = i_username);
 	set @chainName = (select chainName from DRONE_TECH where Username = i_username);
-    drop table if exists drone_technician_view_order_history_result;
-			 create table drone_technician_view_order_history_result
-    select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
-	(select ID from DRONE where DroneTech in 
-	(select Username from DRONE_TECH 
-	where StoreName = @storeName
-	and ChainName = @chainName))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
-	(select ID from DRONE where DroneTech in 
-	(select Username from DRONE_TECH 
-	where StoreName = @storeName
-	and ChainName = @chainName))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
-	where StoreName = @storeName
-	and ChainName = @chainName)) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
     
+    if not i_start_date is null and not i_end_date is null
+    then
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	elseif not i_start_date is null
+    then 
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate > i_start_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate > i_start_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	elseif not i_end_date is null
+    then
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate < i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate < i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	else
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+    end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -762,5 +813,33 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Incorrect chain name or chainname has already been assigned a manager';
 	end if;
 -- End of solution
+END //
+DELIMITER ;
+
+-- Order confirm procedure --
+DROP PROCEDURE IF EXISTS order_confirm;
+DELIMITER //
+CREATE PROCEDURE order_confirm(
+        IN i_username VARCHAR(40)
+)
+BEGIN
+	if i_username in (SELECT customerusername FROM orders where orderstatus = "Creating" ) then
+		update orders set orderstatus = "Pending"
+        where orderstatus = "Creating";
+	end if;
+END //
+DELIMITER ;
+
+-- cancel order procedure --
+DROP PROCEDURE IF EXISTS order_cancel;
+DELIMITER //
+CREATE PROCEDURE order_cancel(
+        IN i_username VARCHAR(40)
+)
+BEGIN
+	if i_username in (SELECT customerusername FROM orders where orderstatus = "Creating" ) then
+		delete from contains where orderid in (select * from (select max(orderid) from contains) as t);
+		delete from orders where orderstatus = "Creating";
+	end if;
 END //
 DELIMITER ;

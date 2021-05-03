@@ -97,7 +97,7 @@ const ViewDroneTechniciansPage = (props) => {
         <div
           key={index}
           className={
-            index % 2 == 1 ? classes.element_odd : classes.element_even
+            index % 2 === 1 ? classes.element_odd : classes.element_even
           }
         >
           <div className={classes.element_user}>
@@ -113,6 +113,8 @@ const ViewDroneTechniciansPage = (props) => {
       );
     });
   };
+
+  console.log(stores);
 
   return (
     <div className={classes.viewDroneTechniciansPage}>
@@ -164,7 +166,7 @@ const ViewDroneTechniciansPage = (props) => {
           </div>
         </div>
         <button className={classes.back}>
-          <Link to="/home" className={classes.link}>
+          <Link className={classes.link} to="/home">
             Back
           </Link>
         </button>
