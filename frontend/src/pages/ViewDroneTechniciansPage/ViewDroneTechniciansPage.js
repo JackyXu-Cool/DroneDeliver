@@ -163,10 +163,8 @@ const ViewDroneTechniciansPage = (props) => {
             {constructTable(technicians)}
           </div>
         </div>
-        <button className={classes.back}>
-          <Link to="/home" className={classes.link}>
-            Back
-          </Link>
+        <button className={classes.btn_back}>
+          <Link className={classes.link_back} to="/home">Back</Link>
         </button>
       </div>
     </div>

@@ -163,11 +163,10 @@
       }
     }
 
-    .back {
-      position: absolute;
-      left: 5%;
-      bottom: 5%;
-      height: 40px;
+    .btn_back {
+      margin-top: 15px;
+      float: left;
+      margin-left: 10px;
       width: 100px;
 
       .link {

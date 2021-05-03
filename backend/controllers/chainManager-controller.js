@@ -75,8 +75,8 @@ const view_drone_technicians = async (req, res, next) => {
 
 // Manager manage stores
 const get_stores_by_manager = async (req, res, next) => {
-  const { userName } = req.query;
-  let sql = `select MANAGER.ChainName, StoreName from MANAGER left join STORE on MANAGER.ChainName = STORE.ChainName where MANAGER.username = '${userName}';`;
+  const { username } = req.query;
+  let sql = `select MANAGER.ChainName, StoreName from MANAGER left join STORE on MANAGER.ChainName = STORE.ChainName where MANAGER.username = '${username}';`;
   pool.query(sql, (err, result) => {
     if (err) return next(new HttpError(err.message, 500));
     res.status(200).json({ res: result });

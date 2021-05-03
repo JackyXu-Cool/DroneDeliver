@@ -27,8 +27,8 @@ const get_order_details = async (req, res, next) => {
 
 const view_drones = async (req, res, next) => {
     const username = req.query.username;
-    const id = req.query.id === undefined ? null : req.query.id;
-    const status = req.query.status === undefined ? null : req.query.id;
+    const id = req.query.id === "" ? null : parseInt(req.query.id, 10);
+    const status = (req.query.status === "" || req.query.status === "None") ? null : req.query.status;
     let sql = `CALL dronetech_assigned_drones(?, ?, ?)`;
     pool.query(sql, [username, id, status], (err, result) => {
         if (err) return next(HttpError("Cannot get drones information", 500));
