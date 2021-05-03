@@ -540,7 +540,7 @@ BEGIN
     then
 		drop table if exists drone_technician_view_order_history_result;
 				 create table drone_technician_view_order_history_result
-		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
+		select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
 		(select ID from DRONE where DroneTech in 
 		(select Username from DRONE_TECH 
 		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
@@ -555,7 +555,7 @@ BEGIN
     then 
 		drop table if exists drone_technician_view_order_history_result;
 				 create table drone_technician_view_order_history_result
-		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate > i_start_date) and DroneID in
+		select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate > i_start_date) and DroneID in
 		(select ID from DRONE where DroneTech in 
 		(select Username from DRONE_TECH 
 		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
@@ -570,7 +570,7 @@ BEGIN
     then
 		drop table if exists drone_technician_view_order_history_result;
 				 create table drone_technician_view_order_history_result
-		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate < i_end_date) and DroneID in
+		select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate < i_end_date) and DroneID in
 		(select ID from DRONE where DroneTech in 
 		(select Username from DRONE_TECH 
 		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
@@ -584,7 +584,7 @@ BEGIN
 	else
 		drop table if exists drone_technician_view_order_history_result;
 				 create table drone_technician_view_order_history_result
-		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where DroneID in
+		select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where DroneID in
 		(select ID from DRONE where DroneTech in 
 		(select Username from DRONE_TECH 
 		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
@@ -640,6 +640,7 @@ CREATE PROCEDURE dronetech_order_details(
 )
 BEGIN
 -- Type solution below
+if i_username is not null and (select droneID from orders where id = i_orderid) is not null then
 drop table if exists dronetech_order_details_result;
 create table dronetech_order_details_result
 select distinct CONCAT(ctmr.FirstName, ' ', ctmr.LastName) as Customer_name, 
@@ -673,7 +674,40 @@ where ctmr.Username in (select CustomerUsername from ORDERS where ID = i_orderid
 	temp1.OrderID = i_orderid and
     temp2.OrderID = i_orderid and
     temp3.OrderID = i_orderid;
-
+else
+drop table if exists dronetech_order_details_result;
+create table dronetech_order_details_result
+select distinct CONCAT(ctmr.FirstName, ' ', ctmr.LastName) as Customer_name, 
+	ORDERS.ID as OrderID,
+    temp1.total_amount as Total_Amount,
+    temp2.total_items as Total_Items,
+	ORDERS.OrderDate as Date_Of_Purchase,
+	ORDERS.DroneID as Drone_ID,
+	CONCAT(temp3.FirstName, ' ', temp3.LastName) as Store_Associate,
+	ORDERS.OrderStatus as Order_Status,
+	CONCAT(ctmr.Street, ', ', ctmr.City, ', ', ctmr.State, ' ', ctmr.Zipcode) as Address
+from USERS as ctmr, USERS as dt, ORDERS, CONTAINS, CHAIN_ITEM, 
+	(select CONTAINS.OrderID, SUM(Price * CONTAINS.Quantity) as total_amount
+		from CHAIN_ITEM join CONTAINS on CONTAINS.PLUNumber = CHAIN_ITEM.PLUNumber 
+		and CONTAINS.ItemName = CHAIN_ITEM.ChainItemName 
+		and CONTAINS.ChainName = CHAIN_ITEM.ChainName
+		group by OrderID) as temp1,
+	(select OrderID, SUM(Quantity) as total_items
+		from CONTAINS
+		group by OrderID) as temp2,
+	(select ORDERS.ID as OrderID, dt.FirstName, dt.LastName 
+		from ORDERS left outer join (select DRONE.ID as drone_id, USERS.FirstName, USERS.LastName 
+		from DRONE join USERS 
+		on DRONE.DroneTech = USERS.Username) as dt
+		on ORDERS.DroneID = dt.drone_id) as temp3
+    
+where ctmr.Username in (select CustomerUsername from ORDERS where ID = i_orderid) and 
+	ORDERS.ID = i_orderid and
+    CONTAINS.OrderID = i_orderid and
+	temp1.OrderID = i_orderid and
+    temp2.OrderID = i_orderid and
+    temp3.OrderID = i_orderid;	
+end if;
 -- End of solution
 END //
 DELIMITER ;
@@ -848,4 +882,23 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Pending order -----
+DROP PROCEDURE IF EXISTS get_pending_order;
+DELIMITER //
+CREATE PROCEDURE get_pending_order(
+        IN i_username VARCHAR(40)
+)
+BEGIN
+	drop table if exists get_pending_order_result;
+	create table get_pending_order_result
+	select distinct orders.id, orders.orderstatus as Status, orders.orderdate, temp1.Total, 'null' as operator, 'null' as droneID from orders
+		join users on orders.customerUsername = users.username
+		join contains on orders.id = contains.orderid
+		join store on store.chainName = contains.chainName and store.zipcode = users.zipcode
+		join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS 
+		join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName group by orderID) as temp1
+		on temp1.orderID = orders.id
+		where orderstatus = "Pending" and storeName in (select storename from drone_tech where drone_tech.username = i_username);
 
+END //
+DELIMITER ;

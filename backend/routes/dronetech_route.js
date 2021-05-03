@@ -7,5 +7,6 @@ router.get("/view/drones", dronetechController.view_drones);
 router.get("/view/store/drones", dronetechController.view_store_orders);
 router.post("/assign/drontech", dronetechController.assign_drone_tech);
 router.get("/get/available/drones", dronetechController.get_available_drones);
+router.get("/get/pending/order", dronetechController.get_pending_order);
 
 module.exports = router;

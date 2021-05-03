@@ -73,8 +73,20 @@ const get_available_drones = async (req, res, next) => {
     })
 };
 
+const get_pending_order = async (req, res, next) => {
+    const { username } = req.query;
+    let sql = `call get_pending_order(?)`;
+    pool.query(sql, [username], (err) => {
+        if (err) return next(new HttpError(err.message), 500);
+        pool.query('select * from get_pending_order_result', (err, result) => {
+            res.status(200).json({ result });
+        })
+    })
+}
+
 exports.get_order_details = get_order_details;
 exports.view_drones = view_drones;
 exports.view_store_orders = view_store_orders;
 exports.assign_drone_tech = assign_drone_tech;
 exports.get_available_drones = get_available_drones;
+exports.get_pending_order = get_pending_order;

@@ -132,49 +132,53 @@
           position: relative;
           display: flex;
           flex-direction: row;
-          height: 35px;
+          height: 50px;
           width: 100%;
           background-color: #aaa;
           border-bottom: 1px solid white;
 
           .element_id {
             width: 10.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_operator {
             width: 18.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_date {
             width: 16%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_drone_id {
             width: 15.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_status {
             width: 15.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
+
+            h3 {
+              top: 0;
+            }
           }
 
           .element_total {
             width: 15.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_selection {
-            height: 35px;
+            height: 50px;
           }
         }
 
@@ -182,49 +186,49 @@
           position: relative;
           display: flex;
           flex-direction: row;
-          height: 35px;
+          height: 50px;
           width: 100%;
           background-color: #efefef;
           border-bottom: 1px solid white;
 
           .element_id {
             width: 10.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_operator {
             width: 18.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_date {
             width: 16%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_drone_id {
             width: 15.5%;
-            height: 35px;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_status {
-            width: 15.5%;
-            height: 35px;
+            width: 16.5%;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_total {
-            width: 15.5%;
-            height: 35px;
+            width: 14.5%;
+            height: 50px;
             border-right: 1px solid white;
           }
 
           .element_selection {
-            height: 35px;
+            height: 50px;
           }
         }
       }

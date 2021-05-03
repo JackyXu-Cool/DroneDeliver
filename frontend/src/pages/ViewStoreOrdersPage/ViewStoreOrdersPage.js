@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Dropdown from "react-dropdown";
 import axios from "axios";
 
@@ -11,7 +11,11 @@ const ViewStoreOrdersPage = (props) => {
   const [currentID, setCurrentID] = useState(null);
   const [drones, setDrones] = useState([]);
   const status = ["In Transit", "Drone Assigned", "Delivered"];
-  const operator = [props.userName];
+  const [pendingOrders, setPendingOrders] = useState([]);
+
+  const history = useHistory();
+  
+  const operators = ["N/A", localStorage.getItem("username")];
 
   const enterFilters = (event) => {
     var temp = filters;
@@ -33,8 +37,10 @@ const ViewStoreOrdersPage = (props) => {
         },
       })
       .then((response) => {
-        setOrders(response.data.result);
-        setCurrentID(response.data.result[0].ID);
+        if (response.data.result.length > 0) {
+          setOrders(response.data.result);
+          setCurrentID(response.data.result[0].ID);
+        }
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -56,10 +62,48 @@ const ViewStoreOrdersPage = (props) => {
       });
   };
 
+  const getPendingOrders = async () => {
+    axios.get(`http://localhost:5000/dronetech/get/pending/order/?username=${localStorage.getItem("username")}`)
+    .then((res) => {
+      setPendingOrders(res.data.result);
+    }).catch((err) => {
+      alert(err.response.data.message);
+    })
+  };
+
+  const onChangeDropDown = (event) => {
+    if (drones.includes(event.label)) {
+      var temp = pendingOrders;
+      temp[event.value]["droneID"] = event.label;
+      setPendingOrders(temp);
+    } else if (status.includes(event.label)) {
+      var temp = pendingOrders;
+      temp[event.value]["newStatus"] = event.label;
+      setPendingOrders(temp);
+    } else if (operators.includes(event.label)) {
+      var temp = pendingOrders;
+      temp[event.value]["operator"] = event.label;
+      setPendingOrders(temp);
+    }
+    console.log(pendingOrders);
+  };
+
   const constructTable = (list) => {
-    if (list.length === 0) return null;
+    if (list.length === 0) return "";
     return list.map((order, index) => {
       if (order.Status === "Pending") {
+        const statusMenu = [];
+        for (var i = 0; i < status.length; i++) {
+          statusMenu.push({label: status[i], value: index});
+        }
+        const droneMenu = []
+        for (var i = 0; i < drones.length; i++) {
+          droneMenu.push({label: drones[i], value: index});
+        }
+        const operatorsMenu = [];
+        for (var i = 0; i < operators.length; i++) {
+          operatorsMenu.push({label: operators[i], value: index});
+        }
         return (
           <div
             key={index}
@@ -69,24 +113,25 @@ const ViewStoreOrdersPage = (props) => {
             name={order.ID}
           >
             <div className={classes.element_id}>
-              <h3 className={classes.h3}>{order["ID"]}</h3>
+              <h3 className={classes.h3}>{order["id"]}</h3>
             </div>
             <div className={classes.element_operator}>
               <Dropdown
                 name="Operator"
                 placeholder={"NULL"}
-                options={operator}
+                options={operatorsMenu}
+                onChange={onChangeDropDown}
               />
             </div>
             <div className={classes.element_date}>
-              <h3 className={classes.h3}>{order["Date"].substring(0, 10)}</h3>
+              <h3 className={classes.h3}>{order["orderdate"].substring(0, 10)}</h3>
             </div>
             <div className={classes.element_drone_id}>
-              <Dropdown name="DroneID" placeholder={"NULL"} options={drones} />
+              <Dropdown name="DroneID" placeholder={"NULL"} options={droneMenu} onChange={onChangeDropDown}/>
             </div>
             <div className={classes.element_status}>
               <h3 className={classes.h3}>
-                <Dropdown name="Status" placeholder={"NULL"} options={status} />
+                <Dropdown name="Status" placeholder={"Pending"} options={statusMenu} onChange={onChangeDropDown}/>
               </h3>
             </div>
             <div className={classes.element_total}>
@@ -95,11 +140,11 @@ const ViewStoreOrdersPage = (props) => {
             <div className={classes.element_selection}>
               <button
                 className={
-                  currentID === order.ID
+                  currentID === order.id
                     ? classes.check_blue
                     : classes.check_white
                 }
-                name={order.ID}
+                name={order.id}
                 onClick={onSelectID}
               ></button>
             </div>
@@ -156,20 +201,22 @@ const ViewStoreOrdersPage = (props) => {
 
   const onSelectID = (event) => {
     setCurrentID(parseInt(event.target.name));
+    console.log(currentID);
   };
 
   const onSave = async (event) => {
-    for (var i = 0; i < orders.length; i++) {
-      if (orders[i].ID === currentID) {
+    for (var i = 0; i < pendingOrders.length; i++) {
+      if (pendingOrders[i].id === currentID) {
         axios
           .post("http://localhost:5000/dronetech/assign/drontech", {
             username: props.userName,
-            droneid: orders[i].DroneID,
-            orderid: orders[i].ID,
-            status: orders[i].Status,
+            droneid: pendingOrders[i].droneID,
+            orderid: pendingOrders[i].id,
+            status: pendingOrders[i].newStatus,
           })
           .then((response) => {
             console.log(response);
+            alert("Assign successfully");
           })
           .catch((error) => {
             alert(error.response.data.message);
@@ -181,11 +228,13 @@ const ViewStoreOrdersPage = (props) => {
 
   const onViewOrderDetails = (event) => {
     localStorage.setItem("orderID", currentID);
+    history.push("/dronetech/order/details");
   };
 
   useEffect(() => {
     getOrders();
     getAvailableDrones();
+    getPendingOrders();
   }, []);
 
   return (
@@ -228,7 +277,10 @@ const ViewStoreOrdersPage = (props) => {
             <h2 className={classes.h2}>Total</h2>
           </div>
           <div className={classes.selection}></div>
-          <div className={classes.wrapper}>{constructTable(orders)}</div>
+          <div className={classes.wrapper}>
+            {constructTable(pendingOrders)}
+            {constructTable(orders)}
+          </div>
         </div>
         <button className={classes.filter} onClick={onFilter}>
           Filter

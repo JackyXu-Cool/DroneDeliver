@@ -30,7 +30,7 @@ const ViewOrderDetailsPage = (props) => {
 
     useEffect(() => {
         async function getDetails() {
-            let response = await fetch(`http://localhost:5000/dronetech/get/order/details/?id=10015&username=${localStorage.getItem("username")}`);
+            let response = await fetch(`http://localhost:5000/dronetech/get/order/details/?id=${localStorage.getItem("orderID")}&username=${localStorage.getItem("username")}`);
             response = await response.json();
             setUsername(response.Details["Customer_name"]);
             setOrderID(response.Details["OrderID"]);
@@ -105,7 +105,7 @@ const ViewOrderDetailsPage = (props) => {
                 </div>
 
                 <button className={classes.btn_back}>
-                    <Link className={classes.link_back} to="/home">Back</Link>
+                    <Link className={classes.link_back} to="/dronetech/view/storeorders">Back</Link>
                 </button>
             </div>
         </div>
