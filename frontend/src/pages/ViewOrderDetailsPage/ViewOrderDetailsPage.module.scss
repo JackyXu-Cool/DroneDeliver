@@ -1,0 +1,209 @@
+@import "../../assets/design.scss";
+
+.ViewOrderDetailsPage {
+    position: relative;
+    width: 100vh;
+    height: 100vh;
+    background-color: white;
+    margin: 0;
+
+    .content {
+        position: relative;
+        width: 600px;
+        height: 750px;
+        top: 10%;
+        left: 10%;
+        border: 4px solid $tech-metallic-gold;
+        border-radius: 8px;
+        align-content: center;
+        text-align: center;
+
+        .title {
+            position: relative;
+            width: 100%;
+            align-self: center;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            position: relative;
+            height: 25px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+
+            .label {
+                font-size: 20px;
+                text-decoration: none;
+                float: left;
+                margin-left: 75px;
+            }
+
+            .entry {
+                border-radius: 3px;
+                border: 1px solid black;
+                display: inline;
+                float: right;
+                margin-right: 120px;
+                width: 200px;
+                height: 25px;
+                background: #ddd;
+                font-size: 18px;
+                color: black;
+            }
+
+            .droplist {
+                border-radius: 3px;
+                border: 1px solid black;
+                display: inline;
+                float: right;
+                margin-right: 120px;
+                width: 200px;
+                height: 25px;
+                background: white;
+                font-size: 18px;
+            }
+        }
+
+        .orders_container {
+            width: 65%;
+            margin: auto;
+            overflow-y: scroll;
+            scrollbar-width: 5px;
+            height: 225px;
+            margin-bottom: 10px;
+
+            .drone_entry_odd {
+                margin-top: 1px;
+                margin-bottom: 0px;
+                height: 40px;
+                list-style-type: none;
+                padding: 0;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: "Avenir", serif;
+
+                .username_entry {
+                    float: left;
+                    width: 120px;
+                    background-color: #aaa;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .name_entry {
+                    float: left;
+                    width: 120px;
+                    height: 40px;
+                    background-color: #aaa;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .address_entry {
+                    float: left;
+                    width: 230px;
+                    background-color: #aaa;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+            }
+
+            .drone_entry_even {
+                margin-top: 1px;
+                margin-bottom: 0px;
+                height: 40px;
+                list-style-type: none;
+                padding: 0;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: "Avenir", serif;
+
+                .username_entry {
+                    float: left;
+                    width: 120px;
+                    background-color: #efefef;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .name_entry {
+                    float: left;
+                    width: 120px;
+                    height: 40px;
+                    background-color: #efefef;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+                .address_entry {
+                    float: left;
+                    width: 230px;
+                    background-color: #efefef;
+                    height: 40px;
+                    padding-top: 8px;
+                    margin-right: 1px;
+                }
+    
+            }
+        }
+
+
+
+        .header_row {
+            margin: 5px 100px 0px 102px;
+            height: 40px;
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "Avenir", serif;
+            color: white;
+        
+            .header_1 {
+                float: left;
+                width: 120px;
+                background-color: #4473c4;
+                height: 40px;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+        
+            .header_2 {
+                float: left;
+                width: 120px;
+                height: 40px;
+                background-color: #4473c4;
+                padding-top: 8px;
+                margin-right: 1px;
+            }
+        }
+   
+
+        .btn_back {
+            margin-top: -50px;
+            float: left;
+            margin-left: 50px;
+            width: 100px;
+            height: 30px;
+            background-color: #808080;
+
+            &:hover {
+                background-color: slategray;
+            }
+            
+            .link_back {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                padding-left: 25px;
+                padding-right: 25px;
+                padding-top: 7%;
+                padding-bottom: 7%;
+            }
+        }
+    }
+}

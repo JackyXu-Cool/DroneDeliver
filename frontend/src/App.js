@@ -20,6 +20,9 @@ import ViewDroneTechniciansPage from "./pages/ViewDroneTechniciansPage/ViewDrone
 import TrackAssignedDronesPage from "./pages/TrackAssignedDronesPage/TrackAssignedDronesPage"
 import ViewStoreItemPage from "./pages/ViewStoreItemPage/ViewStoreItemPage";
 import ReviewOrderPage from "./pages/ReviewOrderPage/ReviewOrderPage";
+import ViewOrderDetailsPage from "./pages/ViewOrderDetailsPage/ViewOrderDetailsPage";
+
+
 
 import states from "./assets/states";
 import types from "./assets/types";
@@ -1006,6 +1009,10 @@ const App = () => {
       </Route>
       <Route path={"/customer/review/order"} exact>
           <ReviewOrderPage 
+          />
+      </Route>
+      <Route path={"/dronetech/order/details"} exact>
+          <ViewOrderDetailsPage 
           />
       </Route>
     </BrowserRouter>
