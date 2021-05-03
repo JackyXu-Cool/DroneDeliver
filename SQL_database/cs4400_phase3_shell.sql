@@ -535,20 +535,67 @@ BEGIN
 -- Type solution below
     set @storeName = (select StoreName from DRONE_TECH where Username = i_username);
 	set @chainName = (select chainName from DRONE_TECH where Username = i_username);
-    drop table if exists drone_technician_view_order_history_result;
-			 create table drone_technician_view_order_history_result
-    select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
-	(select ID from DRONE where DroneTech in 
-	(select Username from DRONE_TECH 
-	where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
-	and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
-	(select ID from DRONE where DroneTech in 
-	(select Username from DRONE_TECH 
-	where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
-	and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
-	where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
-	and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
     
+    if not i_start_date is null and not i_end_date is null
+    then
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate between i_start_date and i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	elseif not i_start_date is null
+    then 
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate > i_start_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate > i_start_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	elseif not i_end_date is null
+    then
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate < i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where (OrderDate < i_end_date) and DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+	else
+		drop table if exists drone_technician_view_order_history_result;
+				 create table drone_technician_view_order_history_result
+		select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) as temp join (select OrderID, sum(CONTAINS.Quantity * Price) as Total from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName and CHAIN_ITEM.ChainName = CONTAINS.ChainName where OrderID in (select ID from ORDERS where DroneID in
+		(select ID from DRONE where DroneTech in 
+		(select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username)))) group by OrderID) as temp2 on ID = OrderID) as temp4 join (select FirstName, LastName, ID from (select * from USERS natural join DRONE_TECH where Username in (select Username from DRONE_TECH 
+		where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
+		and ChainName in (select chainName from DRONE_TECH where Username = i_username))) as temp3 join Drone on Username = DroneTech) as temp5 on DroneID = temp5.ID; 
+    end if;
 -- End of solution
 END //
 DELIMITER ;

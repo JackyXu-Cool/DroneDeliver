@@ -1,10 +1,9 @@
-/* DatabChainNamease Initialization for Phase 3
+/* Database Initialization for Phase 3
 CS 4400 - Spring 2021 */
 
 drop database if exists grocery_drone_delivery;
 create database if not exists grocery_drone_delivery;
 use grocery_drone_delivery;
-
 
 Create table CHAIN( 
 	ChainName VARCHAR(40) NOT NULL, 
@@ -19,7 +18,8 @@ Create table STORE(
 	State VARCHAR(2) NOT NULL, 
 	Zipcode char(5) NOT NULL, 
 	FOREIGN KEY (ChainName) REFERENCES CHAIN(ChainName), 
-	PRIMARY KEY(StoreName, ChainName, Zipcode)
+	PRIMARY KEY(StoreName, ChainName),
+	UNIQUE KEY (ChainName, Zipcode)
 ); 
 
 Create table ITEM( 
@@ -152,7 +152,7 @@ VALUES
 ('Whole Foods'	,'North Avenue'	,'120 North Avenue NW'	,'Atlanta'	,'GA'	,30313),
 ('Sprouts'	,'Piedmont'	,'564 Piedmont ave NW'	,'Atlanta'	,'GA'	,30318),
 ('Kroger'	,'Midtown'	,'725 Ponce De Leon Ave'	,'Atlanta'	,'GA'	,30332),
-('Moss Market'	,'Tech Square'	,'740 Ferst Drive '	,'Atlanta'	,'GA'	,30332),
+('Moss Market'	,'Tech Square'	,'740 Ferst Drive '	,'Atlanta'	,'GA'	,30331),
 ('Moss Market'	,'Bobby Dodd'	,'150 Bobby Dodd Way NW'	,'Atlanta'	,'GA'	,30332),
 ('Query Mart'	,'Tech Square'	,'280 Ferst Drive NW'	,'Atlanta'	,'GA'	,30332),
 ('Moss Market'	,'College Park'	,'1895 Phoenix Blvd'	,'College Park'	,'GA'	,30339),

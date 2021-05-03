@@ -39,7 +39,10 @@ const HomePage = (props) => {
           </Link>
         </button>
         <button className={classes.button_click}>
-          <Link className={classes.link_click} to={"/customer/view/store/items"}>
+          <Link
+            className={classes.link_click}
+            to={"/customer/view/store/items"}
+          >
             View Store Items
           </Link>
         </button>
@@ -48,15 +51,26 @@ const HomePage = (props) => {
   } else if (identity === "Drone Tech") {
     html = (
       <div className={classes.buttons}>
-        <button className={classes.button_click} style={{marginLeft:75}}>View Store Orders</button>
-        <button className={classes.button_click} onClick={props.onEnterTrackAssignedDrone}>          
+        <button className={classes.button_click} style={{ marginLeft: 75 }}>
+          <Link
+            className={classes.link_click}
+            to={"/dronetech/view/storeorders"}
+          >
+            View Store Orders
+          </Link>
+        </button>
+        <button
+          className={classes.button_click}
+          onClick={props.onEnterTrackAssignedDrone}
+        >
           <Link
             className={classes.link_click}
             style={{ paddingTop: 15, paddingBottom: 15 }}
             to="/dronetech/drones"
           >
             Track Drone Delivery
-          </Link></button>
+          </Link>
+        </button>
       </div>
     );
   } else if (identity === "Manager") {

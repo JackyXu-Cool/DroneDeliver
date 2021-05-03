@@ -97,7 +97,7 @@ const ViewDroneTechniciansPage = (props) => {
         <div
           key={index}
           className={
-            index % 2 == 1 ? classes.element_odd : classes.element_even
+            index % 2 === 1 ? classes.element_odd : classes.element_even
           }
         >
           <div className={classes.element_user}>
@@ -113,6 +113,8 @@ const ViewDroneTechniciansPage = (props) => {
       );
     });
   };
+
+  console.log(stores);
 
   return (
     <div className={classes.viewDroneTechniciansPage}>
@@ -163,8 +165,10 @@ const ViewDroneTechniciansPage = (props) => {
             {constructTable(technicians)}
           </div>
         </div>
-        <button className={classes.btn_back}>
-          <Link className={classes.link_back} to="/home">Back</Link>
+        <button className={classes.back}>
+          <Link className={classes.link_back} to="/home">
+            Back
+          </Link>
         </button>
       </div>
     </div>
