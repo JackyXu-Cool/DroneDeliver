@@ -15,5 +15,6 @@ router.post("/confirm/order", customerController.confirm_order);
 router.get("/get/chain", customerController.get_chain_in_zipcode);
 router.get("/get/zipcode", customerController.get_zipcode);
 router.get("/get/store", customerController.get_store_in_zipcode);
+router.delete("/cancel/order", customerController.cancel_order);
 
 module.exports = router;

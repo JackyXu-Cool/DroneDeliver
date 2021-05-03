@@ -21,7 +21,11 @@ const HomePage = (props) => {
             Change Credit Card Information
           </Link>
         </button>
-        <button className={classes.button_click}>Review Order</button>
+        <button className={classes.button_click}>
+          <Link to="/customer/review/order" className={classes.link_click}>
+            Review Order
+          </Link>
+        </button>
         <button
           className={classes.button_click}
           onClick={props.onEnterViewOrderHistory}

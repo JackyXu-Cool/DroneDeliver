@@ -122,7 +122,16 @@ const get_zipcode = async(req, res, next) => {
         if (err) return next(new HttpError(err.message, 500));
         res.status(200).json({ zip: result[0]["zipcode"] });
     });
-}
+};
+
+const cancel_order = async(req, res, next) => {
+    let username = req.query.username;
+    let sql = `call order_cancel(?)`;
+    pool.query(sql, [username], (err, result) => {
+        if (err) return next(new HttpError(err.message, 500));
+        res.status(202).json({ success: true });
+    })
+};
 
 exports.get_customer_full_name = get_customer_full_name;
 exports.change_credit_card_info = change_credit_card_info;
@@ -136,3 +145,4 @@ exports.confirm_order = confirm_order;
 exports.get_chain_in_zipcode = get_chain_in_zipcode;
 exports.get_zipcode = get_zipcode;
 exports.get_store_in_zipcode = get_store_in_zipcode;
+exports.cancel_order = cancel_order;

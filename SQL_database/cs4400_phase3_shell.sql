@@ -484,7 +484,7 @@ BEGIN
 -- Type solution below
     drop table if exists customer_review_order_result;
 	create table customer_review_order_result as
-    select ItemName, CONTAINS.Quantity, Price from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
+    select ItemName, CONTAINS.Quantity, Price, orderlimit from CONTAINS join CHAIN_ITEM on ItemName = ChainItemName 
     where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating");
 -- End of solution
 END //
@@ -509,10 +509,10 @@ BEGIN
     
     if (i_quantity <= @orderLimit) and (current_date() <= @expDate) then
 		if i_quantity > 0 then
-			update CONTAINS set Quantity = i_quantity where OrderID = @orderID and i_item_name = ItemName;
+			update CONTAINS set Quantity = i_quantity where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating") and i_item_name = ItemName;
 		end if;
 		if i_quantity = 0 then
-			delete from contains where OrderID = @orderID and i_item_name = ItemName;
+			delete from contains where OrderID in (select ID from ORDERS where CustomerUsername = i_username and OrderStatus = "Creating") and i_item_name = ItemName;
 		end if;
     end if;
 -- End of solution
@@ -781,6 +781,20 @@ BEGIN
 	if i_username in (SELECT customerusername FROM orders where orderstatus = "Creating" ) then
 		update orders set orderstatus = "Pending"
         where orderstatus = "Creating";
+	end if;
+END //
+DELIMITER ;
+
+-- cancel order procedure --
+DROP PROCEDURE IF EXISTS order_cancel;
+DELIMITER //
+CREATE PROCEDURE order_cancel(
+        IN i_username VARCHAR(40)
+)
+BEGIN
+	if i_username in (SELECT customerusername FROM orders where orderstatus = "Creating" ) then
+		delete from contains where orderid in (select * from (select max(orderid) from contains) as t);
+		delete from orders where orderstatus = "Creating";
 	end if;
 END //
 DELIMITER ;
