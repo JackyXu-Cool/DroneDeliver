@@ -537,7 +537,7 @@ BEGIN
 	set @chainName = (select chainName from DRONE_TECH where Username = i_username);
     drop table if exists drone_technician_view_order_history_result;
 			 create table drone_technician_view_order_history_result
-    select temp4.ID, CONCAT(firstName, LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
+    select temp4.ID, CONCAT(firstName, ' ', LastName) as Operator, Date, DroneID, Status, Total from (select ID, OrderDate as Date, DroneID, OrderStatus as Status, Total  from (select * from ORDERS where (OrderDate between '2021-01-01' and '2021-12-31') and DroneID in
 	(select ID from DRONE where DroneTech in 
 	(select Username from DRONE_TECH 
 	where StoreName in (select StoreName from DRONE_TECH where Username = i_username)
