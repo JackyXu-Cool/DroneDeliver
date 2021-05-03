@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import ShortEntry from "../../components/ShortEntry/ShortEntry";
 import classes from "./ViewDroneTechniciansPage.module.scss";
@@ -162,7 +163,9 @@ const ViewDroneTechniciansPage = (props) => {
             {constructTable(technicians)}
           </div>
         </div>
-        <button className={classes.back}>Back</button>
+        <button className={classes.btn_back}>
+          <Link className={classes.link_back} to="/home">Back</Link>
+        </button>
       </div>
     </div>
   );
