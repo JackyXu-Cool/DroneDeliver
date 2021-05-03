@@ -22,28 +22,15 @@ const ViewOrderDetailsPage = (props) => {
         return list.map((item, index) => {
             return (
             <ul className={index % 2 === 1 ? classes.drone_entry_odd : classes.drone_entry_even}>
-                <li className={classes.username_entry}>{item["Item"]}</li>
-                <li className={classes.name_entry}>{item["Count"]}</li>
+                <li className={classes.item_entry}>{item["Item"]}</li>
+                <li className={classes.count_entry}>{item["Count"]}</li>
             </ul>);
         })
     };
 
-    // const [orderDetailInfo, setOrderDetailInfo] = useState({
-    //     username: localStorage.getItem("username"),
-    //     orderID: '',
-    //     amount: '',
-    //     total_items: '',
-    //     date: '',
-    //     droneID: '',
-    //     dronetech: '',
-    //     orderstatus: '',
-    //     storeAddress: '',
-    //     items: ''
-    //   });
-
     useEffect(() => {
         async function getDetails() {
-            let response = await fetch("http://localhost:5000/dronetech/get/order/details/?id=10015&username=akarev16");
+            let response = await fetch(`http://localhost:5000/dronetech/get/order/details/?id=10015&username=${localStorage.getItem("username")}`);
             response = await response.json();
             setUsername(response.Details["Customer_name"]);
             setOrderID(response.Details["OrderID"]);
