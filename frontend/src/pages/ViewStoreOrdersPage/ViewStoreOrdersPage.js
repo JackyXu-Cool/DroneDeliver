@@ -12,6 +12,9 @@ const ViewStoreOrdersPage = (props) => {
   const [drones, setDrones] = useState([]);
   const status = ["In Transit", "Drone Assigned", "Delivered"];
   const [pendingOrders, setPendingOrders] = useState([]);
+  const [dummy, setDummy] = useState(0);
+
+  const sortingOptions = ["ID+", "ID-", "Date+", "Date-", "Drone ID+", "Drone ID-", "Status+", "Status-", "Total+", "Total-"]
 
   const history = useHistory();
   
@@ -69,6 +72,33 @@ const ViewStoreOrdersPage = (props) => {
     }).catch((err) => {
       alert(err.response.data.message);
     })
+  };
+
+  const filterList = (event) => {
+    var temp = orders;
+    if (event.value === "ID+") {
+      temp.sort((a,b)=>(a.ID > b.ID ? 1 : -1));
+    } else if (event.value === "ID-") {
+      temp.sort((a,b)=>(a.ID < b.ID ? 1 : -1));
+    } else if (event.value === "Date+") {
+      temp.sort((a,b)=> (a.Date > b.Date ? 1 : -1))
+    } else if (event.value === "Date-") {
+      temp.sort((a,b)=> (a.Date < b.Date ? 1 : -1))
+    } else if (event.value === "Drone ID+") {
+      temp.sort((a,b)=> (a.DroneID > b.DroneID ? 1 : -1))
+    } else if (event.value === "Drone ID-") {
+      temp.sort((a,b)=> (a.DroneID < b.DroneID ? 1 : -1))
+    } else if (event.value === "Status+") {
+      temp.sort((a,b)=> (a.Status > b.Status ? 1 : -1))
+    } else if (event.value === "Status-") {
+      temp.sort((a,b)=> (a.Status > b.Status ? 1 : -1))
+    } else if (event.value === "Total+") {
+      temp.sort((a,b)=> (a.Total > b.Total ? 1 : -1))
+    } else if (event.value === "Total-") {
+      temp.sort((a,b)=> (a.Total < b.Total ? 1 : -1))
+    }
+    setOrders(temp);
+    setDummy(dummy + 1);
   };
 
   const onChangeDropDown = (event) => {
@@ -255,6 +285,15 @@ const ViewStoreOrdersPage = (props) => {
             name="end"
             placeholder=" yyyy-mm-dd"
             onChange={enterFilters}
+          />
+        </div>
+        <div className={classes.right_entry}>
+          <h2 className={classes.right_entry_label}>Sorting By: </h2>
+          <Dropdown 
+              controlClassName={classes.sorting}
+              name={"sort"} 
+              options={sortingOptions}
+              onChange={filterList}
           />
         </div>
         <div className={classes.table}>

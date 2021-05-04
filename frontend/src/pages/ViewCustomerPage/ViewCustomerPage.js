@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Dropdown from 'react-dropdown';
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,6 +10,9 @@ const ViewCustomerPage = (props) => {
     const [allUserList, setAllUserList] = useState([]);
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
+    const [dummy, setDummy] = useState(0);
+
+    const sorting = ["Username+", "Username-", "Name+", "Name-"];
 
     const constructTable = (list) => {
         if (list.length === 0) return "";
@@ -51,6 +55,20 @@ const ViewCustomerPage = (props) => {
         userList();
     }, []);
 
+    const onSortingFunc = (event) => {
+        let temp = allUserList;
+        if (event.value === "Username-") {
+            temp.sort((a,b)=> (a.Username < b.Username ? 1 : -1));
+        } else if (event.value === "Username+") {
+            temp.sort((a,b)=> (a.Username > b.Username ? 1 : -1));
+        } else if (event.value === "Name-") {
+            temp.sort((a,b)=> (a.FullName < b.FullName ? 1 : -1));
+        } else if (event.value === "Name+") {
+            temp.sort((a,b)=> (a.FullName > b.FullName ? 1 : -1));
+        }
+        setAllUserList(temp);
+        setDummy(dummy + 1);
+    };
 
 
     return (
@@ -76,6 +94,15 @@ const ViewCustomerPage = (props) => {
                         type="text"
                         placeholder="last name"
                         onChange={(event) => {setLname(event.target.value)}}
+                    />
+                </div>
+                <div className={classes.right_entry}>
+                    <h2 className={classes.right_entry_label}>Sorting By: </h2>
+                    <Dropdown 
+                        controlClassName={classes.sorting}
+                        name={"sort"} 
+                        options={sorting}
+                        onChange={onSortingFunc}
                     />
                 </div>
                 <ul className={classes.header_row}>

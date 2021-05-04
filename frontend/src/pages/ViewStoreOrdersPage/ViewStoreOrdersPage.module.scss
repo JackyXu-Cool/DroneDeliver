@@ -59,6 +59,27 @@
       }
     }
 
+    .right_entry {
+      margin-top: 40px;
+      left: 30%;
+      position: relative;
+      height: 50px;
+      display: flex;
+      flex-direction: row;
+
+      .right_entry_label {
+        position: relative;
+        align-self: center;
+        font-size: 20px;
+      }
+
+      .right_entry_input {
+        margin-left: 10px;
+        align-self: center;
+        width: 200px;
+      }
+    }
+
     .table {
       position: relative;
       display: grid;
@@ -66,9 +87,9 @@
       grid-template-rows: 15% auto;
       column-gap: 1px;
       width: 95%;
-      height: 290px;
+      height: 250px;
       left: 2.5%;
-      top: 10%;
+      top: 1%;
       border: 2px solid $list-header-blue;
       border-radius: 3px;
 
