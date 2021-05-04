@@ -48,7 +48,7 @@ const ViewDroneTechniciansPage = (props) => {
     axios
       .get("http://localhost:5000/manager/get/stores", {
         params: {
-          userName: props.userName,
+          username: props.userName,
         },
       })
       .then((response) => {
