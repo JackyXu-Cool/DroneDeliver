@@ -770,6 +770,8 @@ end if;
 END //
 DELIMITER ;
 
+call dronetech_assigned_drones("sstrange", 112, "Available");
+select * from dronetech_assigned_drones_result;
 
 -- Login Procedure
 DROP PROCEDURE IF EXISTS user_login;
