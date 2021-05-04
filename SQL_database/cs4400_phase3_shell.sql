@@ -764,14 +764,14 @@ elseif (i_status = 'All' or i_status is null)
 else
 	create table dronetech_assigned_drones_result select DRONE.ID as Drone_ID, DRONE.DroneStatus as Drone_Status, DRONE.Radius 
 		from DRONE
-		where DroneTech = i_username and DRONE.DroneStatus = i_status;
+		where DroneTech = i_username and DRONE.DroneStatus = i_status and DRONE.ID = i_droneid;
 end if;
 -- End of solution
 END //
 DELIMITER ;
 
-call dronetech_assigned_drones("sstrange", 112, "Available");
-select * from dronetech_assigned_drones_result;
+-- call dronetech_assigned_drones("sstrange11", 112, "Available");
+-- select * from dronetech_assigned_drones_result;
 
 -- Login Procedure
 DROP PROCEDURE IF EXISTS user_login;

@@ -72,7 +72,7 @@ const ViewOrderDetailsPage = (props) => {
 
                 <div className={classes.row}>
                     <h2 className={classes.label}>Date of Purchase: </h2>
-                    <input className={classes.entry} value={date} disabled />
+                    <input className={classes.entry} value={date.substring(0,10)} disabled />
                 </div>
 
                 <div className={classes.row}>
