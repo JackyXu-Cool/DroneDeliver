@@ -15,6 +15,7 @@ Shiyi Wang <br/>
 Junqi Xu <br/>
 
 ### Screenshots
-<img src="./screenshots/register.png" height="300"/>
-<img src="./screenshots/view_customer.png" height="300"/>
-<img src="./screenshots/admin_home.png" height="300"/>
+<p float="left">
+  <img src="./screenshots/register.png" height="300"/>
+  <img src="./screenshots/view_customer.png" height="300"/>
+</p>
