@@ -16,6 +16,5 @@ Junqi Xu <br/>
 
 ### Screenshots
 <p float="left">
-  <img src="./screenshots/register.png" height="300"/>
-  <img src="./screenshots/view_customer.png" height="300"/>
+  <img src="./screenshots/register.png" height="400"/>
 </p>
