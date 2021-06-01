@@ -1,5 +1,5 @@
 ## Drone Delivery App
-This is a group project developed with React.js, Node.js, Express.js, MySQL. 
+This is a web application developed with React.js, Node.js, Express.js, MySQL. 
 <br/>
 
 ### How to run it
@@ -18,5 +18,3 @@ Junqi Xu <br/>
 <p float="left">
   <img src="./screenshots/register.png" height="400"/>
 </p>
-<br />
-More sreenshots checkout [here](https://github.com/JackyXu-Cool/DroneDeliver/tree/master/frontend)
