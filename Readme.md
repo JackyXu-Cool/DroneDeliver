@@ -4,8 +4,8 @@ This is a group project developed with React.js, Node.js, Express.js, MySQL.
 
 ### How to run it
 
-- Set up backend environment [(link)](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/backend)
-- Set up frontend environment and run it [(link)](https://github.gatech.edu/cs4400group35/cs4400_Phase4/tree/master/frontend)
+- Set up backend environment [(link)](https://github.com/JackyXu-Cool/DroneDeliver/tree/master/backend)
+- Set up frontend environment and run it [(link)](https://github.com/JackyXu-Cool/DroneDeliver/tree/master/frontend)
 
 ### Developers
 
@@ -18,3 +18,5 @@ Junqi Xu <br/>
 <p float="left">
   <img src="./screenshots/register.png" height="400"/>
 </p>
+<br />
+More sreenshots checkout [here](https://github.com/JackyXu-Cool/DroneDeliver/tree/master/frontend)
